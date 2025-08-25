@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { User } from "../../../lib/auth-types";
 import { authClient } from "../../../lib/auth-client";
+import { Button } from "@/components/ui/button";
 
 export function WeddingHero() {
   const router = useRouter();
@@ -30,9 +31,9 @@ export function WeddingHero() {
   const handleAuthAction = () => {
     if (user) {
       // Scroll to RSVP section if authenticated
-      document.getElementById('rsvp-section')?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      document.getElementById("rsvp-section")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     } else {
       router.push("/login");
@@ -46,51 +47,76 @@ export function WeddingHero() {
 
       {/* Floating elements for visual interest */}
       <div className="absolute inset-0 z-5">
-        <div className="absolute top-20 left-10 text-6xl opacity-20 animate-bounce" style={{ animationDelay: '0s' }}>🌸</div>
-        <div className="absolute top-32 right-16 text-5xl opacity-30 animate-bounce" style={{ animationDelay: '1s' }}>💐</div>
-        <div className="absolute bottom-40 left-20 text-4xl opacity-25 animate-bounce" style={{ animationDelay: '2s' }}>🌿</div>
-        <div className="absolute bottom-32 right-12 text-5xl opacity-20 animate-bounce" style={{ animationDelay: '0.5s' }}>🌹</div>
+        <div
+          className="absolute top-20 left-10 text-6xl opacity-20 animate-bounce"
+          style={{ animationDelay: "0s" }}
+        >
+          🌸
+        </div>
+        <div
+          className="absolute top-32 right-16 text-5xl opacity-30 animate-bounce"
+          style={{ animationDelay: "1s" }}
+        >
+          💐
+        </div>
+        <div
+          className="absolute bottom-40 left-20 text-4xl opacity-25 animate-bounce"
+          style={{ animationDelay: "2s" }}
+        >
+          🌿
+        </div>
+        <div
+          className="absolute bottom-32 right-12 text-5xl opacity-20 animate-bounce"
+          style={{ animationDelay: "0.5s" }}
+        >
+          🌹
+        </div>
       </div>
 
       {/* Main content */}
       <div className="relative z-20 flex items-center justify-center min-h-screen px-4">
-        <div className={`text-center text-white transition-all duration-1000 ${
-          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}>
+        <div
+          className={`text-center text-white transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           {/* Main heading with elegant styling */}
           <div className="mb-8">
-            <h1 className="text-6xl md:text-8xl font-bold mb-4 wedding-text-glow">
-              Kasper
+            <h1 className="text-6xl md:text-8xl font-bold mb-4 wedding-script text-wedding-ivory drop-shadow-lg">
+              Tirill
             </h1>
             <div className="flex items-center justify-center mb-4">
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
-              <div className="text-4xl mx-6">💍</div>
-              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent"></div>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-wedding-bronze to-transparent"></div>
+              <div className="text-4xl mx-6 font-bold text-wedding-bronze">
+                ∞
+              </div>
+              <div className="flex-1 h-px bg-gradient-to-r from-transparent via-wedding-bronze to-transparent"></div>
             </div>
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 wedding-text-glow">
-              Sofie
+            <h1 className="text-6xl md:text-8xl font-bold mb-6 wedding-script text-wedding-ivory drop-shadow-lg">
+              Christian
             </h1>
           </div>
 
           {/* Wedding announcement */}
           <div className="mb-8">
-            <p className="text-xl md:text-2xl mb-4 font-light tracking-wider">
+            <p className="text-xl md:text-2xl mb-4 wedding-serif font-light tracking-wider text-wedding-ivory">
               Vi gifter os
             </p>
-            <div className="w-32 h-px bg-white/50 mx-auto mb-6"></div>
-            <p className="text-lg md:text-xl opacity-90 font-light">
+            <div className="w-32 h-px bg-wedding-bronze mx-auto mb-6 rounded-full"></div>
+            <p className="text-lg md:text-xl opacity-90 wedding-serif font-light text-wedding-ivory">
               Vi inviterer jer til at fejre vores kærlighed
             </p>
           </div>
 
           {/* Call to action button */}
           <div className="mb-8">
-            <button
+            <Button
               onClick={handleAuthAction}
+              size="lg"
               className="wedding-button px-8 py-4 rounded-full text-lg font-medium hover:scale-105 transition-all duration-300 shadow-2xl"
             >
-              {user ? 'Se invitationen' : 'Se invitation'}
-            </button>
+              {user ? "Se invitationen" : "Se invitation"}
+            </Button>
           </div>
 
           {/* Scroll indicator */}

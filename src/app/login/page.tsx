@@ -72,20 +72,6 @@ export default function LoginPage() {
             </button>
           </div>
 
-          <div className="mt-6 text-center">
-            <p className="text-sm text-gray-500">
-              By continuing, you agree to our terms of service and privacy
-              policy
-            </p>
-            <div className="mt-4">
-              <a
-                href="/"
-                className="text-blue-600 hover:text-blue-800 underline text-sm"
-              >
-                Se bryllupsinformation →
-              </a>
-            </div>
-          </div>
         </div>
       </div>
     </div>

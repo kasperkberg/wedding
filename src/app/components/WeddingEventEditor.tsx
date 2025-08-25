@@ -112,8 +112,8 @@ export function WeddingEventEditor() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">
+    <div className="wedding-card rounded-2xl p-8">
+      <h2 className="text-3xl font-bold text-wedding-charcoal mb-8 wedding-serif text-center">
         {event ? "Rediger bryllupsoplysninger" : "Opret bryllupsoplysninger"}
       </h2>
 
@@ -121,15 +121,15 @@ export function WeddingEventEditor() {
         {/* Basic Information */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-semibold text-wedding-charcoal mb-2 wedding-serif">
               Titel *
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => handleChange("title", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="f.eks. Kasper og Sofies bryllup"
+              className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-bronze bg-wedding-ivory wedding-serif"
+              placeholder="f.eks. Tirill og Christians bryllup"
               required
             />
           </div>
@@ -237,7 +237,11 @@ export function WeddingEventEditor() {
             disabled={saving}
             className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           >
-            {saving ? "Gemmer..." : event ? "Opdater oplysninger" : "Gem oplysninger"}
+            {saving
+              ? "Gemmer..."
+              : event
+              ? "Opdater oplysninger"
+              : "Gem oplysninger"}
           </button>
         </div>
       </form>
@@ -245,7 +249,7 @@ export function WeddingEventEditor() {
       {event && (
         <div className="mt-6 pt-6 border-t border-gray-200">
           <p className="text-sm text-gray-500">
-            Sidst opdateret: {new Date(event.updatedAt).toLocaleString('da-DK')}
+            Sidst opdateret: {new Date(event.updatedAt).toLocaleString("da-DK")}
           </p>
         </div>
       )}

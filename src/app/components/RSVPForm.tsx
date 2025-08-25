@@ -2,6 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { User } from "../../../lib/auth-types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface RSVP {
   id: number;
@@ -30,7 +35,9 @@ interface RSVPFormProps {
 
 export function RSVPForm({ user }: RSVPFormProps) {
   const [rsvp, setRsvp] = useState<RSVP | null>(null);
-  const [additionalGuests, setAdditionalGuests] = useState<AdditionalGuest[]>([]);
+  const [additionalGuests, setAdditionalGuests] = useState<AdditionalGuest[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -67,7 +74,9 @@ export function RSVPForm({ user }: RSVPFormProps) {
         });
 
         // Fetch additional guests
-        const guestsResponse = await fetch(`/api/additional-guests?rsvpId=${result.data.id}`);
+        const guestsResponse = await fetch(
+          `/api/additional-guests?rsvpId=${result.data.id}`
+        );
         const guestsResult = await guestsResponse.json();
 
         if (guestsResult.success && guestsResult.data.length > 0) {
@@ -163,7 +172,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
   };
 
   const updateGuestForm = (field: string, value: string | boolean) => {
-    setGuestForm(prev => ({
+    setGuestForm((prev) => ({
       ...prev,
       [field]: value,
     }));
@@ -172,8 +181,8 @@ export function RSVPForm({ user }: RSVPFormProps) {
   if (loading) {
     return (
       <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-        <p className="text-gray-600">Indlæser din RSVP...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+        <p className="text-muted-foreground">Indlæser din RSVP...</p>
       </div>
     );
   }
@@ -181,168 +190,199 @@ export function RSVPForm({ user }: RSVPFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Attendance */}
-      <div className="bg-wedding-sage-light rounded-xl p-6">
-        <label className="block text-xl font-bold text-wedding-charcoal mb-6">
-          Vil du deltage? *
-        </label>
-        <div className="grid md:grid-cols-2 gap-4">
-          <label className="flex items-center p-4 bg-white rounded-lg border-2 border-transparent hover:border-wedding-forest cursor-pointer transition-all">
-            <input
-              type="radio"
-              name="attending"
-              checked={formData.attending}
-              onChange={() => setFormData(prev => ({ ...prev, attending: true }))}
-              className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
-            />
-            <span className="ml-3 text-lg text-wedding-charcoal">Ja, jeg deltager med glæde! 🎉</span>
-          </label>
-          <label className="flex items-center p-4 bg-white rounded-lg border-2 border-transparent hover:border-wedding-rose cursor-pointer transition-all">
-            <input
-              type="radio"
-              name="attending"
-              checked={!formData.attending}
-              onChange={() => setFormData(prev => ({ ...prev, attending: false }))}
-              className="w-5 h-5 text-wedding-rose focus:ring-wedding-rose"
-            />
-            <span className="ml-3 text-lg text-wedding-charcoal">Desværre, jeg kan ikke deltage</span>
-          </label>
-        </div>
-      </div>
+      <Card>
+        <CardContent className="p-6">
+          <Label className="block text-xl font-bold mb-6">
+            Vil du deltage? *
+          </Label>
+          <div className="grid md:grid-cols-2 gap-4">
+            <label className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border">
+              <input
+                type="radio"
+                name="attending"
+                checked={formData.attending}
+                onChange={() =>
+                  setFormData((prev) => ({ ...prev, attending: true }))
+                }
+                className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+              />
+              <span className="ml-3 text-lg wedding-serif">
+                Ja, jeg deltager med glæde
+              </span>
+            </label>
+            <label className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border">
+              <input
+                type="radio"
+                name="attending"
+                checked={!formData.attending}
+                onChange={() =>
+                  setFormData((prev) => ({ ...prev, attending: false }))
+                }
+                className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+              />
+              <span className="ml-3 text-lg wedding-serif">
+                Desværre, jeg kan ikke deltage
+              </span>
+            </label>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Main Guest Details */}
       {formData.attending && (
-        <div className="bg-wedding-sage-light rounded-xl p-6">
-          <h3 className="text-xl font-bold text-wedding-charcoal mb-6 flex items-center">
-            <span className="text-2xl mr-3">🍽️</span>
-            Dine oplysninger
-          </h3>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
-                Allergier eller særlige kosthensyn
-              </label>
-              <input
-                type="text"
-                value={formData.allergies}
-                onChange={(e) => setFormData(prev => ({ ...prev, allergies: e.target.value }))}
-                placeholder="f.eks. nødder, laktose, vegetar"
-                className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
-              />
+        <Card>
+          <CardContent className="p-6">
+            <CardTitle className="text-xl mb-6 wedding-serif">
+              Dine oplysninger
+            </CardTitle>
+            <div className="space-y-4">
+              <div>
+                <Label className="block text-sm font-semibold mb-2">
+                  Allergier eller særlige kosthensyn
+                </Label>
+                <Input
+                  type="text"
+                  value={formData.allergies}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      allergies: e.target.value,
+                    }))
+                  }
+                  placeholder="f.eks. nødder, laktose, vegetar"
+                />
+              </div>
+              <div>
+                <Label className="block text-sm font-semibold mb-2">
+                  Madpræferencer
+                </Label>
+                <Input
+                  type="text"
+                  value={formData.foodPreferences}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      foodPreferences: e.target.value,
+                    }))
+                  }
+                  placeholder="f.eks. ingen fisk, kan lide spicy mad"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
-                Madpræferencer
-              </label>
-              <input
-                type="text"
-                value={formData.foodPreferences}
-                onChange={(e) => setFormData(prev => ({ ...prev, foodPreferences: e.target.value }))}
-                placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
-              />
-            </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Additional Guest */}
       {formData.attending && (
-        <div className="bg-wedding-sage-light rounded-xl p-6">
-          <h3 className="text-xl font-bold text-wedding-charcoal mb-6 flex items-center">
-            <span className="text-2xl mr-3">👥</span>
-            Ønsker du at medbringe én person?
-          </h3>
-          <div className="bg-white rounded-lg p-4 border border-wedding-sage-dark">
-            <div className="space-y-4">
-              <div>
-                <input
-                  type="text"
-                  placeholder="Navn på gæst"
-                  value={guestForm.name}
-                  onChange={(e) => updateGuestForm("name", e.target.value)}
-                  className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
-                />
-              </div>
-
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={guestForm.attending}
-                  onChange={(e) => updateGuestForm("attending", e.target.checked)}
-                  className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
-                />
-                <span className="ml-3 text-wedding-charcoal">Gæsten deltager også</span>
-              </div>
-
-              {guestForm.name.trim() && (
-                <div className="mt-6 pt-4 border-t border-wedding-sage-dark">
-                  <h4 className="text-lg font-semibold text-wedding-charcoal mb-4">
-                    {guestForm.name}s oplysninger
-                  </h4>
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
-                        Gæstens allergier eller særlige kosthensyn
-                      </label>
-                      <input
-                        type="text"
-                        value={guestForm.allergies}
-                        onChange={(e) => updateGuestForm("allergies", e.target.value)}
-                        placeholder="f.eks. nødder, laktose, vegetar"
-                        className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
-                        Gæstens madpræferencer
-                      </label>
-                      <input
-                        type="text"
-                        value={guestForm.foodPreferences}
-                        onChange={(e) => updateGuestForm("foodPreferences", e.target.value)}
-                        placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                        className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
-                      />
-                    </div>
+        <Card>
+          <CardContent className="p-6">
+            <CardTitle className="text-xl mb-6 wedding-serif">
+              Ønsker du at medbringe én person?
+            </CardTitle>
+            <Card className="bg-white">
+              <CardContent className="p-4">
+                <div className="space-y-4">
+                  <div>
+                    <Input
+                      type="text"
+                      placeholder="Navn på gæst"
+                      value={guestForm.name}
+                      onChange={(e) => updateGuestForm("name", e.target.value)}
+                    />
                   </div>
+
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={guestForm.attending}
+                      onChange={(e) =>
+                        updateGuestForm("attending", e.target.checked)
+                      }
+                      className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
+                    />
+                    <span className="ml-3">Gæsten deltager også</span>
+                  </div>
+
+                  {guestForm.name.trim() && (
+                    <div className="mt-6 pt-4 border-t">
+                      <h4 className="text-lg font-semibold mb-4">
+                        {guestForm.name}s oplysninger
+                      </h4>
+                      <div className="space-y-4">
+                        <div>
+                          <Label className="block text-sm font-semibold mb-2">
+                            Gæstens allergier eller særlige kosthensyn
+                          </Label>
+                          <Input
+                            type="text"
+                            value={guestForm.allergies}
+                            onChange={(e) =>
+                              updateGuestForm("allergies", e.target.value)
+                            }
+                            placeholder="f.eks. nødder, laktose, vegetar"
+                          />
+                        </div>
+                        <div>
+                          <Label className="block text-sm font-semibold mb-2">
+                            Gæstens madpræferencer
+                          </Label>
+                          <Input
+                            type="text"
+                            value={guestForm.foodPreferences}
+                            onChange={(e) =>
+                              updateGuestForm("foodPreferences", e.target.value)
+                            }
+                            placeholder="f.eks. ingen fisk, kan lide spicy mad"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        </div>
+              </CardContent>
+            </Card>
+          </CardContent>
+        </Card>
       )}
 
       {/* Message */}
-      <div className="bg-wedding-sage-light rounded-xl p-6">
-        <h3 className="text-xl font-bold text-wedding-charcoal mb-4 flex items-center">
-          <span className="text-2xl mr-3">💭</span>
-          Besked
-        </h3>
-        <textarea
-          value={formData.message}
-          onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
-          rows={4}
-          className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
-          placeholder="Eventuelle kommentarer, ønsker eller spørgsmål..."
-        />
-      </div>
+      <Card>
+        <CardContent className="p-6">
+          <CardTitle className="text-xl mb-4 wedding-serif">Besked</CardTitle>
+          <Textarea
+            value={formData.message}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, message: e.target.value }))
+            }
+            rows={4}
+            placeholder="Eventuelle kommentarer, ønsker eller spørgsmål..."
+          />
+        </CardContent>
+      </Card>
 
       {/* Submit Button */}
       <div className="text-center">
-        <button
+        <Button
           type="submit"
           disabled={saving}
+          size="lg"
           className="wedding-button px-12 py-4 text-xl font-bold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {saving ? "Gemmer..." : rsvp ? "Opdater RSVP" : "Send RSVP"}
-        </button>
+        </Button>
       </div>
 
       {/* Status */}
       {rsvp && (
-        <div className="text-center text-sm text-wedding-stone bg-wedding-sage-light rounded-lg p-3">
-          <p>Sidst opdateret: {new Date(rsvp.updatedAt).toLocaleString('da-DK')}</p>
-        </div>
+        <Card>
+          <CardContent className="p-3 text-center text-sm">
+            <p className="text-muted-foreground">
+              Sidst opdateret:{" "}
+              {new Date(rsvp.updatedAt).toLocaleString("da-DK")}
+            </p>
+          </CardContent>
+        </Card>
       )}
     </form>
   );

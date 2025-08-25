@@ -81,13 +81,15 @@ export default function AdminPage() {
               <div className="text-right">
                 <p className="font-medium text-gray-900">{user.name}</p>
                 <p className="text-sm text-gray-600">{user.email}</p>
-                <span className={`inline-block px-2 py-1 text-xs font-medium rounded-full mt-1 ${
-                  user.role === "admin"
-                    ? "bg-red-100 text-red-800"
-                    : user.role === "editor"
-                    ? "bg-blue-100 text-blue-800"
-                    : "bg-gray-100 text-gray-800"
-                }`}>
+                <span
+                  className={`inline-block px-2 py-1 text-xs font-medium rounded-full mt-1 ${
+                    user.role === "admin"
+                      ? "bg-red-100 text-red-800"
+                      : user.role === "editor"
+                      ? "bg-blue-100 text-blue-800"
+                      : "bg-gray-100 text-gray-800"
+                  }`}
+                >
                   {user.role}
                 </span>
               </div>
@@ -104,7 +106,7 @@ export default function AdminPage() {
           <div className="flex space-x-4">
             <Link
               href="/"
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+              className="wedding-button px-6 py-3 rounded-full text-lg wedding-serif inline-block"
             >
               ← Tilbage til RSVP
             </Link>
