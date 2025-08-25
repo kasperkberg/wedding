@@ -97,6 +97,8 @@ export function UserProfile() {
     switch (role) {
       case "admin":
         return "bg-red-100 text-red-800 border-red-200";
+      case "editor":
+        return "bg-purple-100 text-purple-800 border-purple-200";
       case "guest":
         return "bg-blue-100 text-blue-800 border-blue-200";
       default:
@@ -147,7 +149,7 @@ export function UserProfile() {
           <h4 className="text-sm font-medium text-gray-700 mb-2">
             Change Role:
           </h4>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <button
               onClick={() => handleRoleChange("guest")}
               disabled={user.role === "guest"}
@@ -158,6 +160,17 @@ export function UserProfile() {
               }`}
             >
               Set as Guest
+            </button>
+            <button
+              onClick={() => handleRoleChange("editor")}
+              disabled={user.role === "editor"}
+              className={`px-3 py-1 text-xs font-medium rounded border ${
+                user.role === "editor"
+                  ? "bg-gray-100 text-gray-500 border-gray-300 cursor-not-allowed"
+                  : "bg-purple-50 text-purple-700 border-purple-300 hover:bg-purple-100"
+              }`}
+            >
+              Set as Editor
             </button>
             <button
               onClick={() => handleRoleChange("admin")}
@@ -187,7 +200,16 @@ export function UserProfile() {
                 <p>✅ Can view and manage all things</p>
                 <p>✅ Can add, edit, and delete things</p>
                 <p>✅ Can manage user accounts</p>
+                <p>✅ Can edit wedding information</p>
                 <p>✅ Full administrative access</p>
+              </>
+            ) : user.role === "editor" ? (
+              <>
+                <p>✅ Can view all things</p>
+                <p>❌ Cannot add/delete things</p>
+                <p>✅ Can edit wedding information</p>
+                <p>✅ Can view all RSVPs with guest details</p>
+                <p>❌ Cannot manage user accounts</p>
               </>
             ) : (
               <>

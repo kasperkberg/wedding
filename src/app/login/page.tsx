@@ -13,7 +13,7 @@ export default function LoginPage() {
     const checkSession = async () => {
       const { data } = await authClient.getSession();
       if (data?.user) {
-        router.push("/demo");
+        router.push("/");
       }
     };
     checkSession();
@@ -24,7 +24,7 @@ export default function LoginPage() {
     try {
       await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/demo",
+        callbackURL: "/",
       });
     } catch (error) {
       console.error("Sign in error:", error);
@@ -38,9 +38,7 @@ export default function LoginPage() {
         {/* Login Section */}
         <div className="bg-white rounded-xl shadow-lg p-8">
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Wedding
-            </h1>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Wedding</h1>
             <p className="text-gray-600">
               Sign in to manage wedding details and guest information
             </p>
@@ -81,10 +79,10 @@ export default function LoginPage() {
             </p>
             <div className="mt-4">
               <a
-                href="/demo"
+                href="/"
                 className="text-blue-600 hover:text-blue-800 underline text-sm"
               >
-                View Data Fetching Demo →
+                Se bryllupsinformation →
               </a>
             </div>
           </div>
