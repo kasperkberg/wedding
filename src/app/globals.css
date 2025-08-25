@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+/* Wedding Color Palette - Nature Inspired */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Base Colors */
+  --wedding-sage: hsl(142, 10%, 78%);        /* #c4cdbf - Main background */
+  --wedding-sage-light: hsl(142, 12%, 88%);  /* #dbe1d7 - Light sage */
+  --wedding-sage-dark: hsl(142, 15%, 68%);   /* #a8b69c - Dark sage */
+
+  /* Neutral Greens */
+  --wedding-mint: hsl(160, 15%, 85%);        /* #cedcd3 - Mint */
+  --wedding-forest: hsl(140, 20%, 35%);      /* #4a6b52 - Forest green */
+
+  /* Warm Accents */
+  --wedding-blush: hsl(15, 25%, 88%);        /* #e6d4d1 - Soft blush */
+  --wedding-rose: hsl(10, 30%, 75%);         /* #d4a8a1 - Rose */
+
+  /* Text Colors */
+  --wedding-charcoal: hsl(210, 15%, 25%);    /* #3a4755 - Charcoal */
+  --wedding-stone: hsl(45, 10%, 65%);        /* #a8a090 - Stone */
+
+  /* Special Colors */
+  --wedding-gold: hsl(45, 40%, 75%);         /* #d4c4a1 - Soft gold */
+  --wedding-ivory: hsl(50, 15%, 95%);        /* #f5f2ed - Ivory */
+
+  /* Background and Foreground */
+  --background: var(--wedding-sage);
+  --foreground: var(--wedding-charcoal);
 }
 
 @theme inline {
@@ -10,17 +33,102 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Custom Wedding Colors */
+  --color-wedding-sage: var(--wedding-sage);
+  --color-wedding-sage-light: var(--wedding-sage-light);
+  --color-wedding-sage-dark: var(--wedding-sage-dark);
+  --color-wedding-mint: var(--wedding-mint);
+  --color-wedding-forest: var(--wedding-forest);
+  --color-wedding-blush: var(--wedding-blush);
+  --color-wedding-rose: var(--wedding-rose);
+  --color-wedding-charcoal: var(--wedding-charcoal);
+  --color-wedding-stone: var(--wedding-stone);
+  --color-wedding-gold: var(--wedding-gold);
+  --color-wedding-ivory: var(--wedding-ivory);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --wedding-sage: hsl(142, 8%, 25%);
+    --wedding-sage-light: hsl(142, 10%, 30%);
+    --wedding-sage-dark: hsl(142, 12%, 20%);
+    --wedding-charcoal: hsl(210, 10%, 85%);
+    --background: var(--wedding-sage);
+    --foreground: var(--wedding-charcoal);
   }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wedding-sage-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--wedding-sage-dark);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wedding-forest);
+}
+
+/* Custom Selection */
+::selection {
+  background: var(--wedding-gold);
+  color: var(--wedding-charcoal);
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+}
+
+/* Wedding-specific styles */
+.wedding-hero {
+  background:
+    linear-gradient(135deg, rgba(196, 205, 191, 0.9) 0%, rgba(206, 220, 211, 0.8) 100%),
+    url('/images/background.jpg') center/cover no-repeat;
+  min-height: 100vh;
+}
+
+.wedding-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 8px 32px rgba(196, 205, 191, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.wedding-button {
+  background: linear-gradient(135deg, var(--wedding-forest) 0%, var(--wedding-sage-dark) 100%);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(74, 107, 82, 0.3);
+}
+
+.wedding-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(74, 107, 82, 0.4);
+}
+
+.wedding-accent {
+  color: var(--wedding-forest);
+}
+
+.wedding-text-glow {
+  text-shadow: 0 0 20px rgba(196, 205, 191, 0.5);
 }

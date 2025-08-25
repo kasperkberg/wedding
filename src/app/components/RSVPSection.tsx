@@ -40,37 +40,38 @@ export function RSVPSection() {
 
   if (!user) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            RSVP
-          </h2>
-          <p className="text-gray-600 mb-6">
-            Log ind for at svare på invitationen og se din RSVP-status.
-          </p>
-          <button
-            onClick={() => router.push("/login")}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-          >
-            Log ind med Google
-          </button>
-        </div>
-      </div>
+      <section id="rsvp-section" className="wedding-card rounded-2xl p-8 text-center">
+        <div className="text-6xl mb-6">💌</div>
+        <h2 className="text-4xl font-bold text-wedding-charcoal mb-6">
+          RSVP
+        </h2>
+        <p className="text-wedding-stone mb-8 text-lg max-w-md mx-auto">
+          Log ind for at svare på invitationen og se din RSVP-status.
+        </p>
+        <button
+          onClick={() => router.push("/login")}
+          className="wedding-button px-8 py-4 rounded-full text-lg font-medium"
+        >
+          Log ind med Google
+        </button>
+      </section>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8">
-      <div className="text-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+    <section id="rsvp-section" className="wedding-card rounded-2xl p-8">
+      <div className="text-center mb-8">
+        <div className="text-6xl mb-6">💌</div>
+        <h2 className="text-4xl font-bold text-wedding-charcoal mb-4">
           RSVP
         </h2>
-        <p className="text-gray-600">
+        <p className="text-wedding-stone text-xl">
           Hej {user.name}! Vi glæder os til at fejre med dig.
         </p>
+        <div className="w-24 h-1 bg-gradient-to-r from-wedding-forest to-wedding-rose mx-auto mt-6 rounded-full"></div>
       </div>
 
       <RSVPForm user={user} />
-    </div>
+    </section>
   );
 }

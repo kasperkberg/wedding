@@ -71,23 +71,22 @@ export function WeddingEventDisplay() {
 
   if (!event) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Bryllupsoplysninger
-          </h2>
-          <p className="text-gray-600 mb-4">
-            Bryllupsoplysningerne er endnu ikke oprettet.
-          </p>
-          {user && canEditEvent(user.role) && (
-            <Link
-              href="/admin"
-              className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              Opret bryllupsoplysninger
-            </Link>
-          )}
-        </div>
+      <div className="wedding-card rounded-2xl p-8 mb-8 text-center">
+        <div className="text-6xl mb-6">📝</div>
+        <h2 className="text-3xl font-bold text-wedding-charcoal mb-4">
+          Bryllupsoplysninger
+        </h2>
+        <p className="text-wedding-stone mb-6 text-lg">
+          Bryllupsoplysningerne er endnu ikke oprettet.
+        </p>
+        {user && canEditEvent(user.role) && (
+          <Link
+            href="/admin"
+            className="wedding-button px-8 py-4 rounded-full text-lg font-medium inline-block"
+          >
+            Opret bryllupsoplysninger
+          </Link>
+        )}
       </div>
     );
   }
@@ -105,75 +104,79 @@ export function WeddingEventDisplay() {
   return (
     <div className="space-y-8 mb-12">
       {/* Event Title and Date */}
-      <div className="bg-white rounded-xl shadow-lg p-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            {event.title}
-          </h2>
-          <div className="text-xl text-gray-700 mb-2">
-            {formatDate(event.date)}
-            {event.time && (
-              <span className="ml-2">kl. {event.time}</span>
-            )}
-          </div>
-          <p className="text-lg text-gray-600">
-            {event.location}
-          </p>
+      <div className="wedding-card rounded-2xl p-8 text-center">
+        <div className="text-6xl mb-6">💒</div>
+        <h2 className="text-4xl font-bold text-wedding-charcoal mb-6">
+          {event.title}
+        </h2>
+        <div className="text-2xl text-wedding-forest mb-4 font-medium">
+          {formatDate(event.date)}
+          {event.time && (
+            <span className="ml-2">kl. {event.time}</span>
+          )}
+        </div>
+        <div className="flex items-center justify-center text-wedding-stone">
+          <span className="text-xl mr-2">📍</span>
+          <span className="text-lg">{event.location}</span>
         </div>
       </div>
 
       {/* Location Details */}
       {event.locationDetails && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            📍 Sted og transport
-          </h3>
-          <div className="prose prose-gray max-w-none">
-            <p className="text-gray-700 whitespace-pre-wrap">
-              {event.locationDetails}
-            </p>
+        <div className="wedding-card rounded-2xl p-8">
+          <div className="flex items-center mb-6">
+            <span className="text-4xl mr-4">📍</span>
+            <h3 className="text-2xl font-bold text-wedding-charcoal">
+              Sted og transport
+            </h3>
+          </div>
+          <div className="text-wedding-stone whitespace-pre-wrap leading-relaxed">
+            {event.locationDetails}
           </div>
         </div>
       )}
 
       {/* Program */}
       {event.program && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            📅 Program
-          </h3>
-          <div className="prose prose-gray max-w-none">
-            <div className="text-gray-700 whitespace-pre-wrap">
-              {event.program}
-            </div>
+        <div className="wedding-card rounded-2xl p-8">
+          <div className="flex items-center mb-6">
+            <span className="text-4xl mr-4">📅</span>
+            <h3 className="text-2xl font-bold text-wedding-charcoal">
+              Program
+            </h3>
+          </div>
+          <div className="text-wedding-stone whitespace-pre-wrap leading-relaxed">
+            {event.program}
           </div>
         </div>
       )}
 
       {/* Dresscode */}
       {event.dresscode && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            👗 Dresscode
-          </h3>
-          <div className="prose prose-gray max-w-none">
-            <p className="text-gray-700 whitespace-pre-wrap">
-              {event.dresscode}
-            </p>
+        <div className="wedding-card rounded-2xl p-8">
+          <div className="flex items-center mb-6">
+            <span className="text-4xl mr-4">👗</span>
+            <h3 className="text-2xl font-bold text-wedding-charcoal">
+              Dresscode
+            </h3>
+          </div>
+          <div className="text-wedding-stone whitespace-pre-wrap leading-relaxed">
+            {event.dresscode}
           </div>
         </div>
       )}
 
       {/* Additional Information */}
       {event.additionalInfo && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            ℹ️ Yderligere information
-          </h3>
-          <div className="prose prose-gray max-w-none">
-            <div className="text-gray-700 whitespace-pre-wrap">
-              {event.additionalInfo}
-            </div>
+        <div className="wedding-card rounded-2xl p-8">
+          <div className="flex items-center mb-6">
+            <span className="text-4xl mr-4">ℹ️</span>
+            <h3 className="text-2xl font-bold text-wedding-charcoal">
+              Yderligere information
+            </h3>
+          </div>
+          <div className="text-wedding-stone whitespace-pre-wrap leading-relaxed">
+            {event.additionalInfo}
           </div>
         </div>
       )}
@@ -183,7 +186,7 @@ export function WeddingEventDisplay() {
         <div className="text-center">
           <Link
             href="/admin"
-            className="inline-block px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+            className="wedding-button px-8 py-4 rounded-full text-lg font-medium inline-block"
           >
             ✏️ Rediger bryllupsoplysninger
           </Link>

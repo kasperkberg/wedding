@@ -179,45 +179,46 @@ export function RSVPForm({ user }: RSVPFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-8">
       {/* Attendance */}
-      <div>
-        <label className="block text-lg font-medium text-gray-900 mb-4">
+      <div className="bg-wedding-sage-light rounded-xl p-6">
+        <label className="block text-xl font-bold text-wedding-charcoal mb-6">
           Vil du deltage? *
         </label>
-        <div className="flex space-x-6">
-          <label className="flex items-center">
+        <div className="grid md:grid-cols-2 gap-4">
+          <label className="flex items-center p-4 bg-white rounded-lg border-2 border-transparent hover:border-wedding-forest cursor-pointer transition-all">
             <input
               type="radio"
               name="attending"
               checked={formData.attending}
               onChange={() => setFormData(prev => ({ ...prev, attending: true }))}
-              className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+              className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
             />
-            <span className="ml-2 text-lg">Ja, jeg deltager med glæde! 🎉</span>
+            <span className="ml-3 text-lg text-wedding-charcoal">Ja, jeg deltager med glæde! 🎉</span>
           </label>
-          <label className="flex items-center">
+          <label className="flex items-center p-4 bg-white rounded-lg border-2 border-transparent hover:border-wedding-rose cursor-pointer transition-all">
             <input
               type="radio"
               name="attending"
               checked={!formData.attending}
               onChange={() => setFormData(prev => ({ ...prev, attending: false }))}
-              className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+              className="w-5 h-5 text-wedding-rose focus:ring-wedding-rose"
             />
-            <span className="ml-2 text-lg">Desværre, jeg kan ikke deltage</span>
+            <span className="ml-3 text-lg text-wedding-charcoal">Desværre, jeg kan ikke deltage</span>
           </label>
         </div>
       </div>
 
       {/* Main Guest Details */}
       {formData.attending && (
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
+        <div className="bg-wedding-sage-light rounded-xl p-6">
+          <h3 className="text-xl font-bold text-wedding-charcoal mb-6 flex items-center">
+            <span className="text-2xl mr-3">🍽️</span>
             Dine oplysninger
-          </label>
+          </h3>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
                 Allergier eller særlige kosthensyn
               </label>
               <input
@@ -225,11 +226,11 @@ export function RSVPForm({ user }: RSVPFormProps) {
                 value={formData.allergies}
                 onChange={(e) => setFormData(prev => ({ ...prev, allergies: e.target.value }))}
                 placeholder="f.eks. nødder, laktose, vegetar"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
                 Madpræferencer
               </label>
               <input
@@ -237,7 +238,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                 value={formData.foodPreferences}
                 onChange={(e) => setFormData(prev => ({ ...prev, foodPreferences: e.target.value }))}
                 placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
               />
             </div>
           </div>
@@ -246,11 +247,12 @@ export function RSVPForm({ user }: RSVPFormProps) {
 
       {/* Additional Guest */}
       {formData.attending && (
-        <div>
-          <label className="block text-lg font-medium text-gray-900 mb-4">
+        <div className="bg-wedding-sage-light rounded-xl p-6">
+          <h3 className="text-xl font-bold text-wedding-charcoal mb-6 flex items-center">
+            <span className="text-2xl mr-3">👥</span>
             Ønsker du at medbringe én person?
-          </label>
-          <div className="border border-gray-200 rounded-lg p-4">
+          </h3>
+          <div className="bg-white rounded-lg p-4 border border-wedding-sage-dark">
             <div className="space-y-4">
               <div>
                 <input
@@ -258,7 +260,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   placeholder="Navn på gæst"
                   value={guestForm.name}
                   onChange={(e) => updateGuestForm("name", e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
                 />
               </div>
 
@@ -267,38 +269,43 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   type="checkbox"
                   checked={guestForm.attending}
                   onChange={(e) => updateGuestForm("attending", e.target.checked)}
-                  className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                  className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
                 />
-                <span className="ml-2">Gæsten deltager også</span>
+                <span className="ml-3 text-wedding-charcoal">Gæsten deltager også</span>
               </div>
 
               {guestForm.name.trim() && (
-                <>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Gæstens allergier eller særlige kosthensyn
-                    </label>
-                    <input
-                      type="text"
-                      value={guestForm.allergies}
-                      onChange={(e) => updateGuestForm("allergies", e.target.value)}
-                      placeholder="f.eks. nødder, laktose, vegetar"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                <div className="mt-6 pt-4 border-t border-wedding-sage-dark">
+                  <h4 className="text-lg font-semibold text-wedding-charcoal mb-4">
+                    {guestForm.name}s oplysninger
+                  </h4>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
+                        Gæstens allergier eller særlige kosthensyn
+                      </label>
+                      <input
+                        type="text"
+                        value={guestForm.allergies}
+                        onChange={(e) => updateGuestForm("allergies", e.target.value)}
+                        placeholder="f.eks. nødder, laktose, vegetar"
+                        className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-wedding-charcoal mb-2">
+                        Gæstens madpræferencer
+                      </label>
+                      <input
+                        type="text"
+                        value={guestForm.foodPreferences}
+                        onChange={(e) => updateGuestForm("foodPreferences", e.target.value)}
+                        placeholder="f.eks. ingen fisk, kan lide spicy mad"
+                        className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest"
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Gæstens madpræferencer
-                    </label>
-                    <input
-                      type="text"
-                      value={guestForm.foodPreferences}
-                      onChange={(e) => updateGuestForm("foodPreferences", e.target.value)}
-                      placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
-                  </div>
-                </>
+                </div>
               )}
             </div>
           </div>
@@ -306,15 +313,16 @@ export function RSVPForm({ user }: RSVPFormProps) {
       )}
 
       {/* Message */}
-      <div>
-        <label className="block text-lg font-medium text-gray-900 mb-2">
+      <div className="bg-wedding-sage-light rounded-xl p-6">
+        <h3 className="text-xl font-bold text-wedding-charcoal mb-4 flex items-center">
+          <span className="text-2xl mr-3">💭</span>
           Besked
-        </label>
+        </h3>
         <textarea
           value={formData.message}
           onChange={(e) => setFormData(prev => ({ ...prev, message: e.target.value }))}
           rows={4}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-forest bg-white"
           placeholder="Eventuelle kommentarer, ønsker eller spørgsmål..."
         />
       </div>
@@ -324,7 +332,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="px-8 py-3 bg-blue-600 text-white text-lg rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="wedding-button px-12 py-4 text-xl font-bold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {saving ? "Gemmer..." : rsvp ? "Opdater RSVP" : "Send RSVP"}
         </button>
@@ -332,7 +340,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
 
       {/* Status */}
       {rsvp && (
-        <div className="text-center text-sm text-gray-500">
+        <div className="text-center text-sm text-wedding-stone bg-wedding-sage-light rounded-lg p-3">
           <p>Sidst opdateret: {new Date(rsvp.updatedAt).toLocaleString('da-DK')}</p>
         </div>
       )}
