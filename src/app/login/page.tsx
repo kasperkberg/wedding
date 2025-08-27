@@ -4,10 +4,21 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { authClient } from "../../../lib/auth-client";
 import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+    name: "",
+  });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   // Check if user is already signed in
   useEffect(() => {
@@ -33,12 +44,74 @@ export default function LoginPage() {
     }
   };
 
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.email) {
+      newErrors.email = "Email er påkrævet";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Ugyldig email format";
+    }
+
+    if (!formData.password) {
+      newErrors.password = "Adgangskode er påkrævet";
+    } else if (formData.password.length < 6) {
+      newErrors.password = "Adgangskode skal være mindst 6 tegn";
+    }
+
+    if (isSignUp) {
+      if (!formData.name) {
+        newErrors.name = "Navn er påkrævet";
+      }
+
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = "Adgangskoder stemmer ikke overens";
+      }
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleEmailAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      if (isSignUp) {
+        // TODO: Implement sign up logic (frontend only for now)
+        console.log("Sign up attempt:", { name: formData.name, email: formData.email });
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } else {
+        // TODO: Implement sign in logic (frontend only for now)
+        console.log("Sign in attempt:", { email: formData.email });
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    } catch (error) {
+      console.error("Auth error:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
-      className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4"
+      className="min-h-screen flex items-center justify-center bg-wedding-sage p-4"
     >
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
@@ -51,7 +124,7 @@ export default function LoginPage() {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="bg-white rounded-xl shadow-lg p-8"
+          className="bg-white rounded-2xl shadow-xl p-8 border border-wedding-linen"
         >
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -59,29 +132,200 @@ export default function LoginPage() {
             transition={{ delay: 0.6, duration: 0.4 }}
             className="text-center mb-8"
           >
+            <motion.div
+              className="text-5xl mb-4 text-wedding-bronze"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
+            >
+              💍
+            </motion.div>
             <motion.h1
               initial={{ scale: 0.8 }}
               animate={{ scale: 1 }}
               transition={{ delay: 0.8, type: "spring", stiffness: 200 }}
-              className="text-3xl font-bold text-gray-900 mb-2"
+              className="text-3xl font-bold wedding-script text-wedding-navy mb-2"
             >
-              Wedding
+              Velkommen
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.4 }}
-              className="text-gray-600"
+              className="text-wedding-stone wedding-serif"
             >
-              Sign in to manage wedding details and guest information
+              Log ind for at se bryllupsinvitationen
             </motion.p>
           </motion.div>
 
+          {/* Toggle between Sign In and Sign Up */}
           <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.1, duration: 0.4 }}
+            className="flex rounded-lg bg-wedding-linen p-1 mb-6"
+          >
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsSignUp(false)}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                !isSignUp
+                  ? "bg-white text-wedding-navy shadow-sm"
+                  : "text-wedding-stone hover:text-wedding-navy"
+              }`}
+            >
+              Log ind
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setIsSignUp(true)}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all duration-200 ${
+                isSignUp
+                  ? "bg-white text-wedding-navy shadow-sm"
+                  : "text-wedding-stone hover:text-wedding-navy"
+              }`}
+            >
+              Opret konto
+            </motion.button>
+          </motion.div>
+
+          {/* Email/Password Form */}
+          <motion.form
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.4 }}
+            onSubmit={handleEmailAuth}
             className="space-y-4"
+          >
+            {isSignUp && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Label htmlFor="name" className="text-sm font-medium text-wedding-navy">
+                  Navn
+                </Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => handleInputChange("name", e.target.value)}
+                  className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
+                    errors.name ? "border-red-300 focus:border-red-500" : ""
+                  }`}
+                  placeholder="Dit fulde navn"
+                />
+                {errors.name && (
+                  <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+                )}
+              </motion.div>
+            )}
+
+            <div>
+              <Label htmlFor="email" className="text-sm font-medium text-wedding-navy">
+                Email
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange("email", e.target.value)}
+                className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
+                  errors.email ? "border-red-300 focus:border-red-500" : ""
+                }`}
+                placeholder="din.email@eksempel.dk"
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <Label htmlFor="password" className="text-sm font-medium text-wedding-navy">
+                Adgangskode
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={formData.password}
+                onChange={(e) => handleInputChange("password", e.target.value)}
+                className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
+                  errors.password ? "border-red-300 focus:border-red-500" : ""
+                }`}
+                placeholder="Mindst 6 tegn"
+              />
+              {errors.password && (
+                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+              )}
+            </div>
+
+            {isSignUp && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Label htmlFor="confirmPassword" className="text-sm font-medium text-wedding-navy">
+                  Bekræft adgangskode
+                </Label>
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                  className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
+                    errors.confirmPassword ? "border-red-300 focus:border-red-500" : ""
+                  }`}
+                  placeholder="Gentag din adgangskode"
+                />
+                {errors.confirmPassword && (
+                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                )}
+              </motion.div>
+            )}
+
+            <motion.div
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
+            >
+              <Button
+                type="submit"
+                disabled={isLoading}
+                className="w-full wedding-button py-3 text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading
+                  ? (isSignUp ? "Opretter konto..." : "Logger ind...")
+                  : (isSignUp ? "Opret konto" : "Log ind")
+                }
+              </Button>
+            </motion.div>
+          </motion.form>
+
+          {/* Divider */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.3, duration: 0.4 }}
+            className="relative my-6"
+          >
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-wedding-linen"></div>
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-white text-wedding-stone wedding-serif">eller</span>
+            </div>
+          </motion.div>
+
+          {/* Google Sign In */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.4 }}
           >
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -89,7 +333,7 @@ export default function LoginPage() {
               transition={{ type: "spring", stiffness: 400, damping: 17 }}
               onClick={handleGoogleSignIn}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-wedding-linen rounded-lg hover:bg-wedding-linen transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <motion.svg
                 initial={{ rotate: 0 }}
@@ -126,9 +370,28 @@ export default function LoginPage() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.2 }}
               >
-                {isLoading ? "Signing in..." : "Continue with Google"}
+                {isLoading ? "Logger ind..." : "Fortsæt med Google"}
               </motion.span>
             </motion.button>
+          </motion.div>
+
+          {/* Footer */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.5, duration: 0.4 }}
+            className="text-center mt-6 pt-6 border-t border-wedding-linen"
+          >
+            <p className="text-sm text-wedding-stone wedding-serif">
+              Ved at logge ind accepterer du vores{" "}
+              <motion.a
+                whileHover={{ scale: 1.05 }}
+                className="text-wedding-bronze hover:text-wedding-navy transition-colors underline"
+                href="#"
+              >
+                vilkår og betingelser
+              </motion.a>
+            </p>
           </motion.div>
 
         </motion.div>
