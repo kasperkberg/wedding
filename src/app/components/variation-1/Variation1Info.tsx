@@ -1,7 +1,7 @@
 "use client";
 
-import { BetterAuthUser } from "../../../lib/auth-types";
-import { isAdmin } from "../../../lib/role-utils";
+import { BetterAuthUser } from "../../../../lib/auth-types";
+import { isAdmin } from "../../../../lib/role-utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";

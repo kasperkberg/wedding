@@ -1,9 +1,9 @@
-import { auth } from "../../lib/auth";
+import { auth } from "../../../lib/auth";
 import { headers } from "next/headers";
 import { Variation2Hero } from "../components/variation-2/Variation2Hero";
 import { Variation2Info } from "../components/variation-2/Variation2Info";
 import { Variation2RSVP } from "../components/variation-2/Variation2RSVP";
-import { BetterAuthUser } from "../../lib/auth-types";
+import { BetterAuthUser } from "../../../lib/auth-types";
 
 // Safe headers utility function
 async function getSafeHeaders() {
@@ -41,9 +41,10 @@ export default async function Variation2Page() {
 
   // Fetch event data on the server
   const eventResponse = await fetch(
-    `${process.env.NODE_ENV === "production"
-      ? process.env.BETTER_AUTH_URL!
-      : "http://localhost:3000"
+    `${
+      process.env.NODE_ENV === "production"
+        ? process.env.BETTER_AUTH_URL!
+        : "http://localhost:3000"
     }/api/wedding`,
     {
       cache: "no-store",

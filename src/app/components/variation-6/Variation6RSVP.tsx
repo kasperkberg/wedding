@@ -7,18 +7,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-interface Variation3RSVPProps {
+interface Variation6RSVPProps {
   user: BetterAuthUser | null;
 }
 
-export function Variation3RSVP({ user }: Variation3RSVPProps) {
+export function Variation6RSVP({ user }: Variation6RSVPProps) {
   const router = useRouter();
 
   if (!user) {
     return (
       <motion.div
         id="rsvp-section"
-        className="py-24 bg-gradient-to-br from-yellow-50 to-amber-50"
+        className="py-24 bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -33,31 +33,39 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
             viewport={{ once: true }}
           >
             <motion.div
-              className="text-6xl mb-8"
+              className="border-4 border-cyan-400 p-8 mb-8 inline-block"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              💌
+              <motion.div
+                className="text-4xl mb-4"
+                initial={{ rotate: -180 }}
+                whileInView={{ rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                viewport={{ once: true }}
+              >
+                🎮
+              </motion.div>
             </motion.div>
             <motion.h3
-              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-6 font-serif"
+              className="text-3xl md:text-4xl font-mono font-bold text-cyan-400 mb-6 tracking-wider"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              RSVP
+              [ PLAYER LOGIN REQUIRED ]
             </motion.h3>
             <motion.p
-              className="text-xl text-amber-600 mb-8 max-w-2xl mx-auto"
+              className="text-xl text-cyan-300 mb-8 max-w-2xl mx-auto font-mono"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              Log ind for at svare på invitationen og opleve naturens skønhed.
+              [ ACCESS DENIED: AUTHENTICATION NEEDED FOR QUEST ]
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -68,9 +76,9 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
               <Button
                 onClick={() => router.push("/login")}
                 size="lg"
-                className="bg-gradient-to-r from-amber-600 to-yellow-600 text-white hover:from-amber-700 hover:to-yellow-700 px-8 py-4 text-lg"
+                className="bg-cyan-600 text-black hover:bg-cyan-500 border-2 border-cyan-400 font-mono tracking-wider"
               >
-                Log ind
+                [ INSERT COIN TO CONTINUE ]
               </Button>
             </motion.div>
           </motion.div>
@@ -82,14 +90,14 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
   return (
     <motion.div
       id="rsvp-section"
-      className="py-24 bg-gradient-to-br from-yellow-50 to-amber-50"
+      className="py-24 bg-gradient-to-br from-purple-900 via-indigo-900 to-slate-900"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        {/* Natural Header */}
+        {/* Game terminal header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
@@ -98,56 +106,64 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
           viewport={{ once: true }}
         >
           <motion.div
-            className="text-6xl mb-8"
+            className="border-4 border-cyan-400 p-8 mb-8 inline-block"
             initial={{ scale: 0, rotate: -180 }}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
             viewport={{ once: true }}
           >
-            🌿
+            <motion.div
+              className="text-5xl mb-4"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              🎯
+            </motion.div>
           </motion.div>
 
           <motion.h3
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-600 to-yellow-600 bg-clip-text text-transparent mb-6 font-serif"
+            className="text-3xl md:text-4xl font-mono font-bold bg-gradient-to-r from-cyan-400 to-magenta-400 bg-clip-text text-transparent mb-6 tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            RSVP
+            [ PLAYER STATUS: {user.name.toUpperCase()} ]
           </motion.h3>
 
           <motion.p
-            className="text-xl text-amber-600 max-w-2xl mx-auto mb-8"
+            className="text-xl text-cyan-300 max-w-2xl mx-auto mb-8 font-mono"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Kære {user.name}, lad os fejre kærligheden i naturens favn.
+            [ READY TO ACCEPT QUEST? CONFIRM YOUR PARTICIPATION BELOW ]
           </motion.p>
 
           <motion.div
-            className="flex items-center justify-center space-x-2 mb-8"
+            className="flex items-center justify-center space-x-4 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <span className="text-2xl">🌱</span>
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent"></div>
-            <span className="text-2xl">🌱</span>
+            <div className="w-16 h-px bg-gradient-to-r from-transparent to-cyan-400"></div>
+            <div className="w-4 h-4 border-2 border-cyan-400 rotate-45"></div>
+            <div className="w-16 h-px bg-gradient-to-l from-transparent to-cyan-400"></div>
           </motion.div>
         </motion.div>
 
-        {/* Natural RSVP Form Container */}
+        {/* Terminal-style form container */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border border-amber-200 rounded-3xl overflow-hidden">
+          <Card className="border-4 border-cyan-400 bg-black/80 backdrop-blur-sm shadow-2xl rounded-none overflow-hidden">
             <CardContent className="p-8 md:p-12">
               <motion.div
                 className="text-center mb-8"
@@ -157,14 +173,13 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
                 viewport={{ once: true }}
               >
                 <motion.p
-                  className="text-lg text-amber-600 font-serif italic"
+                  className="text-lg text-cyan-400 font-mono"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  &quot;Din tilstedeværelse er som en blomst i naturens
-                  have&quot;
+                  [ LOADING QUEST PARAMETERS... ]
                 </motion.p>
               </motion.div>
 
@@ -173,44 +188,46 @@ export function Variation3RSVP({ user }: Variation3RSVPProps) {
           </Card>
         </motion.div>
 
-        {/* Natural Footer */}
+        {/* Game terminal footer */}
         <motion.div
-          className="text-center mt-16 pt-8 border-t border-amber-200"
+          className="text-center mt-16 pt-8 border-t-4 border-cyan-400"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
         >
           <motion.div
-            className="flex items-center justify-center space-x-4 mb-4"
+            className="flex items-center justify-center space-x-6 mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
             viewport={{ once: true }}
           >
-            <motion.span
-              className="text-3xl"
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              🌸
-            </motion.span>
+            <div className="w-4 h-4 border-2 border-cyan-400 rotate-45"></div>
             <motion.p
-              className="text-amber-600 font-serif"
+              className="text-cyan-400 font-mono text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.9 }}
               viewport={{ once: true }}
             >
-              Tak fordi du vil være en del af vores naturlige fejring
+              [ QUEST COMPLETE: THANK YOU FOR JOINING OUR FINAL LEVEL ]
             </motion.p>
-            <motion.span
-              className="text-3xl"
-              animate={{ rotate: [0, -360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            >
-              🍃
-            </motion.span>
+            <div className="w-4 h-4 border-2 border-cyan-400 rotate-45"></div>
+          </motion.div>
+
+          {/* Terminal prompt */}
+          <motion.div
+            className="mt-8 text-left max-w-2xl mx-auto"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 1.1 }}
+            viewport={{ once: true }}
+          >
+            <p className="text-cyan-400 font-mono text-sm">
+              <span className="text-magenta-400">root@wedding-terminal:</span><span className="text-cyan-400">~$ </span>
+              <span className="animate-pulse">_</span>
+            </p>
           </motion.div>
         </motion.div>
       </div>

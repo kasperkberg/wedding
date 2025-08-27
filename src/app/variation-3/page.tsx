@@ -1,9 +1,9 @@
-import { auth } from "../../lib/auth";
+import { auth } from "../../../lib/auth";
 import { headers } from "next/headers";
 import { Variation3Hero } from "../components/variation-3/Variation3Hero";
 import { Variation3Info } from "../components/variation-3/Variation3Info";
 import { Variation3RSVP } from "../components/variation-3/Variation3RSVP";
-import { BetterAuthUser } from "../../lib/auth-types";
+import { BetterAuthUser } from "../../../lib/auth-types";
 
 // Safe headers utility function
 async function getSafeHeaders() {

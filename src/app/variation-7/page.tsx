@@ -1,9 +1,9 @@
-import { headers } from "next/headers";
-import { Variation1Hero } from "../components/variation-1/Variation1Hero";
-import { Variation1Info } from "../components/variation-1/Variation1Info";
-import { Variation1RSVP } from "../components/variation-1/Variation1RSVP";
-import { BetterAuthUser } from "../../../lib/auth-types";
 import { auth } from "../../../lib/auth";
+import { headers } from "next/headers";
+import { Variation7Hero } from "../components/variation-7/Variation7Hero";
+import { Variation7Info } from "../components/variation-7/Variation7Info";
+import { Variation7RSVP } from "../components/variation-7/Variation7RSVP";
+import { BetterAuthUser } from "../../../lib/auth-types";
 
 // Safe headers utility function
 async function getSafeHeaders() {
@@ -16,7 +16,7 @@ async function getSafeHeaders() {
   }
 }
 
-export default async function Variation1Page() {
+export default async function Variation7Page() {
   let user: BetterAuthUser | null = null;
 
   try {
@@ -57,13 +57,13 @@ export default async function Variation1Page() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <Variation1Hero user={user} />
+      <Variation7Hero user={user} />
 
       {/* Main Content - only show if user is logged in */}
       {user && (
         <>
-          <Variation1Info user={user} event={event} />
-          <Variation1RSVP user={user} />
+          <Variation7Info user={user} event={event} />
+          <Variation7RSVP user={user} />
         </>
       )}
     </div>

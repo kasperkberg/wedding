@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { BetterAuthUser } from "../../../lib/auth-types";
+import { BetterAuthUser } from "../../../../lib/auth-types";
 import { motion } from "framer-motion";
 
 interface Variation3HeroProps {

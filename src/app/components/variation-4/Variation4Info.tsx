@@ -156,7 +156,7 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
             <span className="text-3xl">✨</span>
             <div className="w-40 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent"></div>
             <span className="text-3xl">✨</span>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Luxurious Event Showcase */}
@@ -223,7 +223,8 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
               viewport={{ once: true }}
             >
               <p className="text-lg text-burgundy-600 font-serif italic mb-4">
-                "En dag fyldt med elegance og uforglemmelige øjeblikke"
+                &quot;En dag fyldt med elegance og uforglemmelige
+                øjeblikke&quot;
               </p>
               <div className="flex items-center justify-center space-x-2 text-gold-600">
                 <span>✨</span>
@@ -254,7 +255,9 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">🚗</span>
-                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Sted og transport</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">
+                  Sted og transport
+                </h4>
               </motion.div>
               <div className="text-burgundy-700 leading-relaxed">
                 {event.locationDetails.split("\n").map((line, index) => (
@@ -291,7 +294,9 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">📋</span>
-                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Program</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">
+                  Program
+                </h4>
               </motion.div>
               <div className="text-burgundy-700 leading-relaxed">
                 {event.program.split("\n").map((line, index) => (
@@ -328,7 +333,9 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">👔</span>
-                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Dresscode</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">
+                  Dresscode
+                </h4>
               </motion.div>
               <div className="text-burgundy-700 leading-relaxed">
                 {event.dresscode.split("\n").map((line, index) => (
@@ -365,7 +372,9 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">💝</span>
-                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Yderligere information</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">
+                  Yderligere information
+                </h4>
               </motion.div>
               <div className="text-burgundy-700 leading-relaxed">
                 {event.additionalInfo.split("\n").map((line, index) => (
@@ -400,7 +409,7 @@ export function Variation4Info({ user, event }: Variation4InfoProps) {
             transition={{ duration: 0.5, delay: 0.9 }}
             viewport={{ once: true }}
           >
-            "Vi ser frem til at fejres denne særlige dag med jer"
+            &quot;Vi ser frem til at fejres denne særlige dag med jer&quot;
           </motion.p>
         </motion.div>
       </div>

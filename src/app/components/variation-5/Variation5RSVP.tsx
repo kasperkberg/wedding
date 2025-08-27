@@ -7,18 +7,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-interface Variation1RSVPProps {
+interface Variation5RSVPProps {
   user: BetterAuthUser | null;
 }
 
-export function Variation1RSVP({ user }: Variation1RSVPProps) {
+export function Variation5RSVP({ user }: Variation5RSVPProps) {
   const router = useRouter();
 
   if (!user) {
     return (
       <motion.div
         id="rsvp-section"
-        className="py-24 bg-gradient-to-br from-white to-gray-50"
+        className="py-24 bg-white"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -33,31 +33,29 @@ export function Variation1RSVP({ user }: Variation1RSVPProps) {
             viewport={{ once: true }}
           >
             <motion.div
-              className="text-6xl mb-8"
+              className="w-12 h-12 border-2 border-black mx-auto mb-8"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-            >
-              💌
-            </motion.div>
+            />
             <motion.h3
-              className="text-4xl md:text-5xl font-bold text-gray-800 mb-6"
+              className="text-3xl md:text-4xl font-light text-black mb-6 font-mono tracking-wider"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
               viewport={{ once: true }}
             >
-              RSVP
+              [ RSVP ]
             </motion.h3>
             <motion.p
-              className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+              className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto font-mono"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              Log ind for at svare på invitationen og se alle detaljer.
+              [ Log ind for at svare på invitationen ]
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -68,9 +66,9 @@ export function Variation1RSVP({ user }: Variation1RSVPProps) {
               <Button
                 onClick={() => router.push("/login")}
                 size="lg"
-                className="bg-black text-white hover:bg-gray-800 px-8 py-4 text-lg"
+                className="bg-black text-white hover:bg-gray-800 border-0 font-mono tracking-wider"
               >
-                Log ind
+                [ LOG IND ]
               </Button>
             </motion.div>
           </motion.div>
@@ -82,14 +80,14 @@ export function Variation1RSVP({ user }: Variation1RSVPProps) {
   return (
     <motion.div
       id="rsvp-section"
-      className="py-24 bg-gradient-to-br from-white to-gray-50"
+      className="py-24 bg-white"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        {/* Header */}
+        {/* Minimalist Header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
@@ -98,72 +96,112 @@ export function Variation1RSVP({ user }: Variation1RSVPProps) {
           viewport={{ once: true }}
         >
           <motion.div
-            className="text-6xl mb-8"
+            className="w-16 h-16 border-2 border-black mx-auto mb-8"
             initial={{ scale: 0, rotate: -180 }}
             whileInView={{ scale: 1, rotate: 0 }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
             viewport={{ once: true }}
           >
-            💌
+            <motion.div
+              className="w-4 h-4 bg-black mx-auto mt-6"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+            />
           </motion.div>
+
           <motion.h3
-            className="text-4xl md:text-5xl font-bold text-gray-800 mb-6"
+            className="text-3xl md:text-4xl font-light text-black mb-6 font-mono tracking-wider"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
-            RSVP
+            [ RSVP ]
           </motion.h3>
+
           <motion.p
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
+            className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 font-mono"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Hej {user.name}! Vi glæder os til at fejre med dig.
+            [ Kære {user.name}, vi glæder os til din tilstedeværelse ]
           </motion.p>
+
           <motion.div
-            className="w-24 h-px bg-gradient-to-r from-transparent via-black to-transparent mx-auto mt-8"
-            initial={{ scaleX: 0 }}
-            whileInView={{ scaleX: 1 }}
-            transition={{ duration: 1, delay: 0.8 }}
+            className="flex items-center justify-center space-x-4 mb-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
-          />
+          >
+            <div className="w-8 h-px bg-black"></div>
+            <div className="w-4 h-4 border border-black rotate-45"></div>
+            <div className="w-8 h-px bg-black"></div>
+          </motion.div>
         </motion.div>
 
-        {/* RSVP Form Container */}
+        {/* Clean RSVP Form Container */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <Card className="bg-white shadow-2xl border-0">
+          <Card className="border-2 border-black shadow-none rounded-none overflow-hidden">
             <CardContent className="p-8 md:p-12">
+              <motion.div
+                className="text-center mb-8"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                viewport={{ once: true }}
+              >
+                <motion.p
+                  className="text-lg text-gray-600 font-mono"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.5, delay: 0.7 }}
+                  viewport={{ once: true }}
+                >
+                  [ Din tilstedeværelse betyder alt for os ]
+                </motion.p>
+              </motion.div>
+
               <RSVPForm user={user} />
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Footer */}
+        {/* Minimalist Footer */}
         <motion.div
-          className="text-center mt-16 pt-8 border-t border-gray-200"
+          className="text-center mt-16 pt-8 border-t-2 border-black"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
         >
-          <motion.p
-            className="text-gray-600"
+          <motion.div
+            className="flex items-center justify-center space-x-6 mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
             viewport={{ once: true }}
           >
-            Tak fordi du tager dig tid til at svare!
-          </motion.p>
+            <div className="w-4 h-4 border border-black rotate-45"></div>
+            <motion.p
+              className="text-gray-600 font-mono text-center"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              viewport={{ once: true }}
+            >
+              [ Tak for din deltagelse i vores særlige dag ]
+            </motion.p>
+            <div className="w-4 h-4 border border-black rotate-45"></div>
+          </motion.div>
         </motion.div>
       </div>
     </motion.div>

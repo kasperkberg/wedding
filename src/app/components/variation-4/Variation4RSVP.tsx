@@ -163,7 +163,7 @@ export function Variation4RSVP({ user }: Variation4RSVPProps) {
                   transition={{ duration: 0.5, delay: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  "Din tilstedeværelse er den største gave"
+                  &quot;Din tilstedeværelse er den største gave&quot;
                 </motion.p>
               </motion.div>
 
@@ -201,7 +201,8 @@ export function Variation4RSVP({ user }: Variation4RSVPProps) {
               transition={{ duration: 0.5, delay: 0.9 }}
               viewport={{ once: true }}
             >
-              Vi takker for din elegante tilstedeværelse ved denne særlige begivenhed
+              Vi takker for din elegante tilstedeværelse ved denne særlige
+              begivenhed
             </motion.p>
             <motion.span
               className="text-3xl"
