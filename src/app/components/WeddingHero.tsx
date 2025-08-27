@@ -45,33 +45,6 @@ export function WeddingHero() {
       {/* Overlay for better text readability */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"></div>
 
-      {/* Floating elements for visual interest */}
-      <div className="absolute inset-0 z-5">
-        <div
-          className="absolute top-20 left-10 text-6xl opacity-20 animate-bounce"
-          style={{ animationDelay: "0s" }}
-        >
-          🌸
-        </div>
-        <div
-          className="absolute top-32 right-16 text-5xl opacity-30 animate-bounce"
-          style={{ animationDelay: "1s" }}
-        >
-          💐
-        </div>
-        <div
-          className="absolute bottom-40 left-20 text-4xl opacity-25 animate-bounce"
-          style={{ animationDelay: "2s" }}
-        >
-          🌿
-        </div>
-        <div
-          className="absolute bottom-32 right-12 text-5xl opacity-20 animate-bounce"
-          style={{ animationDelay: "0.5s" }}
-        >
-          🌹
-        </div>
-      </div>
 
       {/* Main content */}
       <div className="relative z-20 flex items-center justify-center min-h-screen px-4">

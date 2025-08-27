@@ -7,6 +7,7 @@ import { canEditEvent } from "../../../lib/role-utils";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 interface WeddingEvent {
   id: number;
@@ -102,110 +103,219 @@ export function WeddingEventDisplay() {
     });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut"
+      }
+    }
+  };
+
   return (
-    <div className="space-y-8 mb-12">
+    <motion.div
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+      className="space-y-8 mb-12"
+    >
       {/* Event Title and Date */}
-      <Card>
-        <CardContent className="p-8 text-center">
-          <div className="text-6xl mb-6 font-bold text-wedding-bronze">♣</div>
-          <CardTitle className="text-4xl mb-6 wedding-serif">
-            {event.title}
-          </CardTitle>
-          <div className="text-2xl text-wedding-forest mb-4 font-medium">
-            {formatDate(event.date)}
-            {event.time && <span className="ml-2">kl. {event.time}</span>}
-          </div>
-          <div className="flex items-center justify-center text-muted-foreground">
-            <span className="text-xl mr-2 font-bold text-wedding-bronze">
-              •
-            </span>
-            <span className="text-lg wedding-serif">{event.location}</span>
-          </div>
-        </CardContent>
-      </Card>
+      <motion.div variants={itemVariants}>
+        <Card>
+          <CardContent className="p-8 text-center">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
+              className="text-6xl mb-6 font-bold text-wedding-bronze"
+            >
+              ♣
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+            >
+              <CardTitle className="text-4xl mb-6 wedding-serif">
+                {event.title}
+              </CardTitle>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="text-2xl text-wedding-forest mb-4 font-medium"
+            >
+              {formatDate(event.date)}
+              {event.time && <span className="ml-2">kl. {event.time}</span>}
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.4 }}
+              className="flex items-center justify-center text-muted-foreground"
+            >
+              <span className="text-xl mr-2 font-bold text-wedding-bronze">
+                •
+              </span>
+              <span className="text-lg wedding-serif">{event.location}</span>
+            </motion.div>
+          </CardContent>
+        </Card>
+      </motion.div>
 
       {/* Location Details */}
       {event.locationDetails && (
-        <Card>
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <span className="text-4xl mr-4 font-bold text-wedding-bronze">
-                •
-              </span>
-              <CardTitle className="text-2xl wedding-serif">
-                Sted og transport
-              </CardTitle>
-            </div>
-            <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-              {event.locationDetails}
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardContent className="p-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="flex items-center mb-6"
+              >
+                <span className="text-4xl mr-4 font-bold text-wedding-bronze">
+                  •
+                </span>
+                <CardTitle className="text-2xl wedding-serif">
+                  Sted og transport
+                </CardTitle>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="text-muted-foreground whitespace-pre-wrap leading-relaxed"
+              >
+                {event.locationDetails}
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Program */}
       {event.program && (
-        <Card>
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <span className="text-4xl mr-4 font-bold text-wedding-bronze">
-                •
-              </span>
-              <CardTitle className="text-2xl wedding-serif">Program</CardTitle>
-            </div>
-            <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-              {event.program}
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardContent className="p-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="flex items-center mb-6"
+              >
+                <span className="text-4xl mr-4 font-bold text-wedding-bronze">
+                  •
+                </span>
+                <CardTitle className="text-2xl wedding-serif">Program</CardTitle>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="text-muted-foreground whitespace-pre-wrap leading-relaxed"
+              >
+                {event.program}
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Dresscode */}
       {event.dresscode && (
-        <Card>
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <span className="text-4xl mr-4 font-bold text-wedding-bronze">
-                •
-              </span>
-              <CardTitle className="text-2xl wedding-serif">
-                Dresscode
-              </CardTitle>
-            </div>
-            <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-              {event.dresscode}
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardContent className="p-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="flex items-center mb-6"
+              >
+                <span className="text-4xl mr-4 font-bold text-wedding-bronze">
+                  •
+                </span>
+                <CardTitle className="text-2xl wedding-serif">
+                  Dresscode
+                </CardTitle>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="text-muted-foreground whitespace-pre-wrap leading-relaxed"
+              >
+                {event.dresscode}
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Additional Information */}
       {event.additionalInfo && (
-        <Card>
-          <CardContent className="p-8">
-            <div className="flex items-center mb-6">
-              <span className="text-4xl mr-4 font-bold text-wedding-bronze">
-                •
-              </span>
-              <CardTitle className="text-2xl wedding-serif">
-                Yderligere information
-              </CardTitle>
-            </div>
-            <div className="text-muted-foreground whitespace-pre-wrap leading-relaxed">
-              {event.additionalInfo}
-            </div>
-          </CardContent>
-        </Card>
+        <motion.div variants={itemVariants}>
+          <Card>
+            <CardContent className="p-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2, duration: 0.4 }}
+                className="flex items-center mb-6"
+              >
+                <span className="text-4xl mr-4 font-bold text-wedding-bronze">
+                  •
+                </span>
+                <CardTitle className="text-2xl wedding-serif">
+                  Yderligere information
+                </CardTitle>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4, duration: 0.4 }}
+                className="text-muted-foreground whitespace-pre-wrap leading-relaxed"
+              >
+                {event.additionalInfo}
+              </motion.div>
+            </CardContent>
+          </Card>
+        </motion.div>
       )}
 
       {/* Admin Link */}
       {user && canEditEvent(user.role) && (
-        <div className="text-center">
-          <Button asChild size="lg">
-            <Link href="/admin">✏️ Rediger bryllupsoplysninger</Link>
-          </Button>
-        </div>
+        <motion.div
+          variants={itemVariants}
+          className="text-center"
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            <Button asChild size="lg">
+              <Link href="/admin">✏️ Rediger bryllupsoplysninger</Link>
+            </Button>
+          </motion.div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   );
 }
