@@ -25,6 +25,11 @@ interface MainContentProps {
 }
 
 export function MainContent({ user, event }: MainContentProps) {
+  // Only show main content if user is logged in
+  if (!user) {
+    return null;
+  }
+
   return (
     <>
       {/* Main Content - Seamless transition from hero */}
@@ -79,31 +84,6 @@ export function MainContent({ user, event }: MainContentProps) {
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div
-              className="text-center mb-16"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-            >
-              <motion.h2
-                className="text-4xl md:text-5xl lg:text-6xl font-bold wedding-script text-wedding-navy mb-6"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                viewport={{ once: true }}
-              >
-                RSVP
-              </motion.h2>
-              <motion.div
-                className="w-24 h-1 bg-gradient-to-r from-transparent via-wedding-bronze to-transparent mx-auto"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                viewport={{ once: true }}
-              />
-            </motion.div>
-
             <RSVPSection user={user} />
           </motion.section>
         </div>

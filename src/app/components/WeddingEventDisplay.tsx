@@ -143,21 +143,12 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           )}
         </motion.div>
         <motion.div
-          className="flex items-center justify-center text-wedding-stone"
+          className="text-center text-wedding-stone"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 1.2 }}
           viewport={{ once: true }}
         >
-          <motion.span
-            className="text-2xl mr-3 text-wedding-bronze"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            transition={{ duration: 0.4, delay: 1.4 }}
-            viewport={{ once: true }}
-          >
-            •
-          </motion.span>
           <span className="text-xl md:text-2xl wedding-serif font-light">
             {event.location}
           </span>
@@ -167,46 +158,35 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       {/* Location Details */}
       {event.locationDetails && (
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="text-center"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="flex items-center mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.h4
+            className="text-3xl md:text-4xl lg:text-5xl wedding-script text-wedding-navy mb-12 font-light"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <motion.span
-              className="text-4xl mr-6 text-wedding-bronze"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              •
-            </motion.span>
-            <h4 className="text-3xl md:text-4xl wedding-serif text-wedding-navy font-light">
-              Sted og transport
-            </h4>
-          </motion.div>
+            Sted og transport
+          </motion.h4>
           <motion.div
-            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light"
+            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light max-w-3xl mx-auto space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             {event.locationDetails.split("\n").map((line, index) => (
               <motion.p
                 key={index}
-                className="mb-4"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 viewport={{ once: true }}
               >
                 {line}
@@ -219,46 +199,35 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       {/* Program */}
       {event.program && (
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="text-center"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="flex items-center mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.h4
+            className="text-3xl md:text-4xl lg:text-5xl wedding-script text-wedding-navy mb-12 font-light"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <motion.span
-              className="text-4xl mr-6 text-wedding-bronze"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              •
-            </motion.span>
-            <h4 className="text-3xl md:text-4xl wedding-serif text-wedding-navy font-light">
-              Program
-            </h4>
-          </motion.div>
+            Program
+          </motion.h4>
           <motion.div
-            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light"
+            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light max-w-3xl mx-auto space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             {event.program.split("\n").map((line, index) => (
               <motion.p
                 key={index}
-                className="mb-4"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 viewport={{ once: true }}
               >
                 {line}
@@ -271,46 +240,35 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       {/* Dresscode */}
       {event.dresscode && (
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="text-center"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="flex items-center mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.h4
+            className="text-3xl md:text-4xl lg:text-5xl wedding-script text-wedding-navy mb-12 font-light"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <motion.span
-              className="text-4xl mr-6 text-wedding-bronze"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              •
-            </motion.span>
-            <h4 className="text-3xl md:text-4xl wedding-serif text-wedding-navy font-light">
-              Dresscode
-            </h4>
-          </motion.div>
+            Dresscode
+          </motion.h4>
           <motion.div
-            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light"
+            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light max-w-3xl mx-auto space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             {event.dresscode.split("\n").map((line, index) => (
               <motion.p
                 key={index}
-                className="mb-4"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 viewport={{ once: true }}
               >
                 {line}
@@ -323,46 +281,35 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       {/* Additional Information */}
       {event.additionalInfo && (
         <motion.div
-          className="max-w-4xl mx-auto"
+          className="text-center"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
         >
-          <motion.div
-            className="flex items-center mb-8"
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+          <motion.h4
+            className="text-3xl md:text-4xl lg:text-5xl wedding-script text-wedding-navy mb-12 font-light"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
-            <motion.span
-              className="text-4xl mr-6 text-wedding-bronze"
-              initial={{ scale: 0 }}
-              whileInView={{ scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
-              •
-            </motion.span>
-            <h4 className="text-3xl md:text-4xl wedding-serif text-wedding-navy font-light">
-              Yderligere information
-            </h4>
-          </motion.div>
+            Yderligere information
+          </motion.h4>
           <motion.div
-            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light"
+            className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-serif font-light max-w-3xl mx-auto space-y-6"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             {event.additionalInfo.split("\n").map((line, index) => (
               <motion.p
                 key={index}
-                className="mb-4"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-center"
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.8 + index * 0.1 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
                 viewport={{ once: true }}
               >
                 {line}
