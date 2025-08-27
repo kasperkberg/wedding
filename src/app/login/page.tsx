@@ -62,9 +62,9 @@ export default function LoginPage() {
     }
 
     if (!formData.password) {
-      newErrors.password = "Adgangskode er påkrævet";
+      newErrors.password = "Password er påkrævet";
     } else if (formData.password.length < 6) {
-      newErrors.password = "Adgangskode skal være mindst 6 tegn";
+      newErrors.password = "Password skal være mindst 6 tegn";
     }
 
     if (isSignUp) {
@@ -73,7 +73,7 @@ export default function LoginPage() {
       }
 
       if (formData.password !== formData.confirmPassword) {
-        newErrors.confirmPassword = "Adgangskoder stemmer ikke overens";
+        newErrors.confirmPassword = "Passwords stemmer ikke overens";
       }
     }
 
@@ -246,7 +246,7 @@ export default function LoginPage() {
 
             <div>
               <Label htmlFor="password" className="text-sm font-medium text-wedding-navy">
-                Adgangskode
+                Password
               </Label>
               <Input
                 id="password"
@@ -271,7 +271,7 @@ export default function LoginPage() {
                 transition={{ duration: 0.3 }}
               >
                 <Label htmlFor="confirmPassword" className="text-sm font-medium text-wedding-navy">
-                  Bekræft adgangskode
+                  Bekræft password
                 </Label>
                 <Input
                   id="confirmPassword"
@@ -281,7 +281,7 @@ export default function LoginPage() {
                   className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
                     errors.confirmPassword ? "border-red-300 focus:border-red-500" : ""
                   }`}
-                  placeholder="Gentag din adgangskode"
+                  placeholder="Gentag dit password"
                 />
                 {errors.confirmPassword && (
                   <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
@@ -375,24 +375,7 @@ export default function LoginPage() {
             </motion.button>
           </motion.div>
 
-          {/* Footer */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 0.4 }}
-            className="text-center mt-6 pt-6 border-t border-wedding-linen"
-          >
-            <p className="text-sm text-wedding-stone wedding-serif">
-              Ved at logge ind accepterer du vores{" "}
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                className="text-wedding-bronze hover:text-wedding-navy transition-colors underline"
-                href="#"
-              >
-                vilkår og betingelser
-              </motion.a>
-            </p>
-          </motion.div>
+
 
         </motion.div>
       </motion.div>

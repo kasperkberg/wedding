@@ -63,8 +63,4 @@ export const additionalGuests = pgTable("additional_guests", {
     .notNull(),
 });
 
-// Keep the things table for demo purposes
-export const things = pgTable("things", {
-  id: serial("id").primaryKey(),
-  title: varchar("title", { length: 255 }).notNull(),
-});
+

@@ -176,8 +176,7 @@ export function UserProfile() {
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-2">
-            Note: This demo allows self-role changes. In production, role
-            changes should be restricted to super admins only.
+            Note: Role changes should be restricted to administrators only.
           </p>
         </div>
 
@@ -188,17 +187,18 @@ export function UserProfile() {
           <div className="space-y-1 text-sm text-gray-600">
             {user.role === "admin" ? (
               <>
-                <p>✅ Can view and manage all things</p>
-                <p>✅ Can add, edit, and delete things</p>
-                <p>✅ Can manage user accounts</p>
+                <p>✅ Can view and manage wedding details</p>
                 <p>✅ Can edit wedding information</p>
+                <p>✅ Can manage guest RSVPs</p>
+                <p>✅ Can manage user accounts</p>
                 <p>✅ Full administrative access</p>
               </>
             ) : (
               <>
-                <p>✅ Can view things</p>
-                <p>❌ Cannot add new things (server-side)</p>
-                <p>✅ Can add things via client (demo)</p>
+                <p>✅ Can view wedding invitation</p>
+                <p>✅ Can submit RSVP</p>
+                <p>✅ Can update personal information</p>
+                <p>❌ Cannot edit wedding details</p>
                 <p>❌ Limited administrative access</p>
               </>
             )}
