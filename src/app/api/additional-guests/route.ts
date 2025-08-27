@@ -38,7 +38,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { rsvpId, name, attending } = body;
+    const { rsvpId, name, attending, allergies, foodPreferences } = body;
 
     if (!rsvpId || !name || typeof attending !== "boolean") {
       return NextResponse.json(
@@ -54,6 +54,8 @@ export async function POST(request: Request) {
       rsvpId: parseInt(rsvpId),
       name,
       attending,
+      allergies,
+      foodPreferences,
     };
 
     const result = await addAdditionalGuest(guestData);
@@ -78,7 +80,7 @@ export async function POST(request: Request) {
 export async function PUT(request: Request) {
   try {
     const body = await request.json();
-    const { id, name, attending } = body;
+    const { id, name, attending, allergies, foodPreferences } = body;
 
     if (!id || !name || typeof attending !== "boolean") {
       return NextResponse.json(
@@ -93,6 +95,8 @@ export async function PUT(request: Request) {
     const guestData = {
       name,
       attending,
+      allergies,
+      foodPreferences,
     };
 
     const result = await updateAdditionalGuest(parseInt(id), guestData);

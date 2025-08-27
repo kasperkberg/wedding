@@ -38,7 +38,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { userId, attending, message } = body;
+    const { userId, attending, allergies, foodPreferences, message } = body;
 
     if (!userId || typeof attending !== "boolean") {
       return NextResponse.json(
@@ -53,6 +53,8 @@ export async function POST(request: Request) {
     const rsvpData = {
       userId,
       attending,
+      allergies,
+      foodPreferences,
       message,
     };
 
