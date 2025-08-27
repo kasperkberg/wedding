@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { BetterAuthUser } from "../../../lib/auth-types";
 import { RSVPForm } from "./RSVPForm";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 interface RSVPSectionProps {
   user: BetterAuthUser | null;
@@ -15,43 +15,119 @@ export function RSVPSection({ user }: RSVPSectionProps) {
 
   if (!user) {
     return (
-      <section id="rsvp-section">
-        <Card>
-          <CardContent className="p-8 text-center">
-            <div className="text-6xl mb-6 font-bold text-wedding-bronze">∞</div>
-            <CardTitle className="text-4xl mb-6 wedding-serif">RSVP</CardTitle>
-            <p className="text-muted-foreground mb-8 text-lg max-w-md mx-auto wedding-serif">
-              Log ind for at svare på invitationen og se din RSVP-status.
-            </p>
-            <Button
-              onClick={() => router.push("/login")}
-              size="lg"
-              className="wedding-button px-8 py-4 rounded-full text-lg wedding-serif"
-            >
-              Log ind med Google
-            </Button>
-          </CardContent>
-        </Card>
-      </section>
+      <motion.div
+        className="text-center py-16"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
+        <motion.div
+          className="text-6xl mb-8 text-wedding-bronze"
+          initial={{ scale: 0, rotate: -180 }}
+          whileInView={{ scale: 1, rotate: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          viewport={{ once: true }}
+        >
+          ∞
+        </motion.div>
+        <motion.h3
+          className="text-4xl md:text-5xl lg:text-6xl mb-8 wedding-serif text-wedding-navy font-light"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          RSVP
+        </motion.h3>
+        <motion.p
+          className="text-lg md:text-xl text-wedding-stone mb-12 max-w-2xl mx-auto wedding-serif font-light"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          Log ind for at svare på invitationen og se din RSVP-status.
+        </motion.p>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <Button
+            onClick={() => router.push("/login")}
+            size="lg"
+            className="wedding-button px-8 py-4 rounded-full text-lg wedding-serif"
+          >
+            Log ind med Google
+          </Button>
+        </motion.div>
+      </motion.div>
     );
   }
 
   return (
-    <section id="rsvp-section">
-      <Card>
-        <CardContent className="p-8">
-          <div className="text-center mb-8">
-            <div className="text-6xl mb-6 font-bold text-wedding-bronze">♥</div>
-            <CardTitle className="text-4xl mb-4 wedding-serif">RSVP</CardTitle>
-            <p className="text-muted-foreground text-xl wedding-serif">
-              Hej {user.name}! Vi glæder os til at fejre med dig.
-            </p>
-            <div className="w-24 h-1 bg-gradient-to-r from-wedding-bronze to-wedding-navy mx-auto mt-6 rounded-full"></div>
-          </div>
+    <motion.div
+      className="space-y-12"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.8 }}
+      viewport={{ once: true }}
+    >
+      {/* Welcome Header */}
+      <motion.div
+        className="text-center"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
+        <motion.div
+          className="text-6xl mb-8 text-wedding-bronze"
+          initial={{ scale: 0 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          viewport={{ once: true }}
+        >
+          ♥
+        </motion.div>
+        <motion.h3
+          className="text-4xl md:text-5xl lg:text-6xl mb-8 wedding-serif text-wedding-navy font-light"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          viewport={{ once: true }}
+        >
+          RSVP
+        </motion.h3>
+        <motion.p
+          className="text-xl md:text-2xl text-wedding-stone wedding-serif font-light"
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          viewport={{ once: true }}
+        >
+          Hej {user.name}! Vi glæder os til at fejre med dig.
+        </motion.p>
+        <motion.div
+          className="w-24 h-1 bg-gradient-to-r from-wedding-bronze to-wedding-navy mx-auto mt-8 rounded-full"
+          initial={{ scaleX: 0 }}
+          whileInView={{ scaleX: 1 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          viewport={{ once: true }}
+        />
+      </motion.div>
 
-          <RSVPForm user={user} />
-        </CardContent>
-      </Card>
-    </section>
+      {/* RSVP Form */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4 }}
+        viewport={{ once: true }}
+      >
+        <RSVPForm user={user} />
+      </motion.div>
+    </motion.div>
   );
 }

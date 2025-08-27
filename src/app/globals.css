@@ -19,17 +19,17 @@
     --input: hsl(214, 32%, 91%);
     --ring: hsl(221, 83%, 53%);
     /* Wedding-specific colors */
-    --wedding-sage: var(--background);
-    --wedding-sage-light: var(--card);
-    --wedding-sage-dark: var(--secondary);
-    --wedding-charcoal: var(--foreground);
-    --wedding-stone: var(--muted-foreground);
-    --wedding-ivory: var(--primary-foreground);
-    --wedding-linen: var(--muted);
-    --wedding-navy: var(--foreground);
-    --wedding-bronze: hsl(217, 91%, 33%);
-    --wedding-gold: hsl(221, 83%, 53%);
-    --wedding-rose: var(--destructive);
+    --wedding-sage: hsl(142, 20%, 95%);
+      --wedding-sage-light: hsl(142, 15%, 90%);
+      --wedding-sage-dark: hsl(142, 25%, 85%);
+      --wedding-charcoal: hsl(142, 15%, 25%);
+      --wedding-stone: hsl(142, 10%, 45%);
+      --wedding-ivory: hsl(142, 15%, 98%);
+      --wedding-linen: hsl(142, 12%, 92%);
+      --wedding-navy: hsl(142, 20%, 35%);
+      --wedding-bronze: hsl(25, 65%, 45%);
+      --wedding-gold: hsl(45, 75%, 55%);
+      --wedding-rose: hsl(350, 65%, 60%);
     --radius: 0.5rem;
 }
 

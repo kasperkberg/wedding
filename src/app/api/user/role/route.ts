@@ -5,6 +5,7 @@ import { db } from "../../../../lib/db";
 import { user } from "../../../../lib/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "../../../../../lib/auth";
+import { UserRole } from "../../../../../lib/auth-types";
 
 export async function PUT(request: NextRequest) {
   try {
@@ -20,7 +21,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    if (!isAdmin(session.user.role)) {
+    if (!isAdmin(session.user.role as UserRole)) {
       return NextResponse.json(
         { success: false, error: "Admin access required" },
         { status: 403 }

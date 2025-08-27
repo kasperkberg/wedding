@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { User, UserRole } from "../../../lib/auth-types";
 import { authClient } from "../../../lib/auth-client";
 
@@ -119,9 +120,11 @@ export function UserProfile() {
       <div className="space-y-4">
         <div className="flex items-center space-x-4">
           {user.image && (
-            <img
+            <Image
               src={user.image}
               alt={user.name}
+              width={48}
+              height={48}
               className="w-12 h-12 rounded-full"
             />
           )}
