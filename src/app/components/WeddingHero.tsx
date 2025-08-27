@@ -1,28 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { User } from "../../../lib/auth-types";
-import { authClient } from "../../../lib/auth-client";
+import { BetterAuthUser } from "../../../lib/auth-types";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-export function WeddingHero() {
+interface WeddingHeroProps {
+  user: BetterAuthUser | null;
+}
+
+export function WeddingHero({ user }: WeddingHeroProps) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data } = await authClient.getSession();
-        setUser(data?.user as User | null);
-      } catch (error) {
-        console.error("Error checking auth:", error);
-      }
-    };
-
-    checkAuth();
-  }, []);
 
   const handleAuthAction = () => {
     if (user) {
@@ -69,7 +57,7 @@ export function WeddingHero() {
                 delay: 1.0,
                 duration: 1.2,
                 type: "spring",
-                stiffness: 100
+                stiffness: 100,
               }}
               whileHover={{ scale: 1.05 }}
             >
@@ -80,7 +68,12 @@ export function WeddingHero() {
               className="flex items-center justify-center mb-4"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.5, duration: 0.8, type: "spring", stiffness: 200 }}
+              transition={{
+                delay: 1.5,
+                duration: 0.8,
+                type: "spring",
+                stiffness: 200,
+              }}
             >
               <motion.div
                 className="flex-1 h-px bg-gradient-to-r from-transparent via-wedding-bronze to-transparent"
@@ -96,7 +89,7 @@ export function WeddingHero() {
                   delay: 1.8,
                   duration: 0.8,
                   type: "spring",
-                  stiffness: 300
+                  stiffness: 300,
                 }}
                 whileHover={{ rotate: 360 }}
                 whileTap={{ scale: 1.2 }}
@@ -119,7 +112,7 @@ export function WeddingHero() {
                 delay: 2.0,
                 duration: 1.2,
                 type: "spring",
-                stiffness: 100
+                stiffness: 100,
               }}
               whileHover={{ scale: 1.05 }}
             >
@@ -201,7 +194,7 @@ export function WeddingHero() {
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "easeInOut"
+                ease: "easeInOut",
               }}
             >
               <motion.div
@@ -210,7 +203,7 @@ export function WeddingHero() {
                 transition={{
                   duration: 1.5,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
               ></motion.div>
             </motion.div>

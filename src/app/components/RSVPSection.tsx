@@ -1,46 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { User } from "../../../lib/auth-types";
-import { authClient } from "../../../lib/auth-client";
+import { BetterAuthUser } from "../../../lib/auth-types";
 import { RSVPForm } from "./RSVPForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export function RSVPSection() {
+interface RSVPSectionProps {
+  user: BetterAuthUser | null;
+}
+
+export function RSVPSection({ user }: RSVPSectionProps) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const { data } = await authClient.getSession();
-        const currentUser = data?.user as User | null;
-        setUser(currentUser);
-      } catch (error) {
-        console.error("Error checking auth:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  if (loading) {
-    return (
-      <Card>
-        <CardContent className="p-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-            <p className="text-muted-foreground">Indlæser...</p>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
 
   if (!user) {
     return (

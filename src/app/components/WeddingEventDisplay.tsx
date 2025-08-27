@@ -1,11 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { User } from "../../../lib/auth-types";
-import { authClient } from "../../../lib/auth-client";
-import { canEditEvent } from "../../../lib/role-utils";
+import { BetterAuthUser } from "../../../lib/auth-types";
+import { isAdmin } from "../../../lib/role-utils";
 import Link from "next/link";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 interface WeddingEvent {
@@ -22,57 +20,12 @@ interface WeddingEvent {
   updatedAt: string;
 }
 
-export function WeddingEventDisplay() {
-  const [event, setEvent] = useState<WeddingEvent | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<User | null>(null);
+interface WeddingEventDisplayProps {
+  user: BetterAuthUser | null;
+  event: WeddingEvent | null;
+}
 
-  useEffect(() => {
-    fetchEvent();
-    fetchUser();
-  }, []);
-
-  const fetchEvent = async () => {
-    try {
-      const response = await fetch("/api/wedding");
-      const result = await response.json();
-
-      if (result.success) {
-        setEvent(result.data);
-      }
-    } catch (error) {
-      console.error("Error fetching event:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchUser = async () => {
-    try {
-      const { data } = await authClient.getSession();
-      setUser(data?.user as User | null);
-    } catch (error) {
-      console.error("Error fetching user:", error);
-    }
-  };
-
-  if (loading) {
-    return (
-      <Card className="mb-8">
-        <CardContent className="p-8">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-6"></div>
-            <div className="space-y-4">
-              <div className="h-4 bg-gray-200 rounded w-2/3 mx-auto"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto"></div>
-              <div className="h-4 bg-gray-200 rounded w-3/4 mx-auto"></div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
+export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
   if (!event) {
     return (
       <Card className="mb-8">
@@ -82,7 +35,7 @@ export function WeddingEventDisplay() {
           <p className="text-muted-foreground mb-6 text-lg">
             Bryllupsoplysningerne er endnu ikke oprettet.
           </p>
-          {user && canEditEvent(user.role) && (
+          {user && isAdmin(user.role) && (
             <Button asChild size="lg">
               <Link href="/admin">Opret bryllupsoplysninger</Link>
             </Button>
@@ -107,9 +60,7 @@ export function WeddingEventDisplay() {
       {/* Event Title and Date */}
       <Card>
         <CardContent className="p-8 text-center">
-          <div className="text-6xl mb-6 font-bold text-wedding-bronze">
-            ♣
-          </div>
+          <div className="text-6xl mb-6 font-bold text-wedding-bronze">♣</div>
           <CardTitle className="text-4xl mb-6 wedding-serif">
             {event.title}
           </CardTitle>
@@ -201,7 +152,7 @@ export function WeddingEventDisplay() {
       )}
 
       {/* Admin Link */}
-      {user && canEditEvent(user.role) && (
+      {user && isAdmin(user.role) && (
         <div className="text-center">
           <Button asChild size="lg">
             <Link href="/admin">✏️ Rediger bryllupsoplysninger</Link>
