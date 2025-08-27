@@ -7,14 +7,26 @@ import { headers } from "next/headers";
 import { auth } from "../../../lib/auth";
 import { UserRole } from "../../../lib/auth-types";
 
+// Safe headers utility function
+async function getSafeHeaders() {
+  try {
+    return await headers();
+  } catch (error) {
+    console.error("Headers error:", error);
+    // Return empty headers object if headers() fails
+    return new Headers();
+  }
+}
+
 export async function AddThingServer({
   onSuccess,
 }: {
   onSuccess?: () => void;
 }) {
   // Check user session and role
+  const requestHeaders = await getSafeHeaders();
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: requestHeaders,
   });
 
   const userRole = (session?.user?.role as UserRole) || "guest";

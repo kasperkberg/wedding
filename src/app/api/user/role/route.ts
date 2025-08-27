@@ -7,11 +7,23 @@ import { eq } from "drizzle-orm";
 import { auth } from "../../../../../lib/auth";
 import { UserRole } from "../../../../../lib/auth-types";
 
+// Safe headers utility function
+async function getSafeHeaders() {
+  try {
+    return await headers();
+  } catch (error) {
+    console.error("Headers error:", error);
+    // Return empty headers object if headers() fails
+    return new Headers();
+  }
+}
+
 export async function PUT(request: NextRequest) {
   try {
     // Check if user is authenticated and is admin
+    const requestHeaders = await getSafeHeaders();
     const session = await auth.api.getSession({
-      headers: await headers(),
+      headers: requestHeaders,
     });
 
     if (!session?.user) {
