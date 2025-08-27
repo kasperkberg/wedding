@@ -69,6 +69,7 @@ export function RSVPSection({ user }: RSVPSectionProps) {
 
   return (
     <motion.div
+      id="rsvp-section"
       className="space-y-12"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
