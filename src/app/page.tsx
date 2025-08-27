@@ -5,9 +5,12 @@ import { MainContent } from "./components/MainContent";
 import { BetterAuthUser } from "../../lib/auth-types";
 
 export default async function Home() {
+  // Get headers once to avoid multiple calls
+  const requestHeaders = await headers();
+
   // Fetch user session on the server
   const session = await auth.api.getSession({
-    headers: await headers(),
+    headers: requestHeaders,
   });
 
   // Convert to BetterAuthUser type, handling the image field properly
@@ -27,7 +30,7 @@ export default async function Home() {
         : "http://localhost:3000"
     }/api/wedding`,
     {
-      headers: await headers(),
+      headers: requestHeaders,
       cache: "no-store",
     }
   );
