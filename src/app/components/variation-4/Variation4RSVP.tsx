@@ -1,24 +1,24 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { BetterAuthUser } from "../../../lib/auth-types";
+import { BetterAuthUser } from "../../../../lib/auth-types";
 import { RSVPForm } from "../RSVPForm";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
-interface Variation2RSVPProps {
+interface Variation4RSVPProps {
   user: BetterAuthUser | null;
 }
 
-export function Variation2RSVP({ user }: Variation2RSVPProps) {
+export function Variation4RSVP({ user }: Variation4RSVPProps) {
   const router = useRouter();
 
   if (!user) {
     return (
       <motion.div
         id="rsvp-section"
-        className="py-24 bg-gradient-to-br from-pink-50 to-rose-50"
+        className="py-24 bg-gradient-to-br from-burgundy-50 to-gold-50"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -42,7 +42,7 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
               💌
             </motion.div>
             <motion.h3
-              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mb-6 font-serif"
+              className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-burgundy-600 to-gold-600 bg-clip-text text-transparent mb-6 font-serif"
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.4 }}
@@ -51,13 +51,13 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
               RSVP
             </motion.h3>
             <motion.p
-              className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto"
+              className="text-xl text-burgundy-600 mb-8 max-w-2xl mx-auto"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.6 }}
               viewport={{ once: true }}
             >
-              Log ind for at svare på invitationen og se alle romantiske detaljer.
+              Log ind for at svare på denne ærefulde invitation.
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -68,7 +68,7 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
               <Button
                 onClick={() => router.push("/login")}
                 size="lg"
-                className="bg-gradient-to-r from-rose-500 to-pink-500 text-white hover:from-rose-600 hover:to-pink-600 px-8 py-4 text-lg"
+                className="bg-gradient-to-r from-burgundy-600 to-gold-600 text-white hover:from-burgundy-700 hover:to-gold-700 px-8 py-4 text-lg"
               >
                 Log ind
               </Button>
@@ -82,14 +82,14 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
   return (
     <motion.div
       id="rsvp-section"
-      className="py-24 bg-gradient-to-br from-pink-50 to-rose-50"
+      className="py-24 bg-gradient-to-br from-burgundy-50 to-gold-50"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <div className="max-w-4xl mx-auto px-6 lg:px-8">
-        {/* Romantic Header */}
+        {/* Luxurious Header */}
         <motion.div
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50 }}
@@ -104,11 +104,11 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
             viewport={{ once: true }}
           >
-            💕
+            👑
           </motion.div>
 
           <motion.h3
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mb-6 font-serif"
+            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-burgundy-600 to-gold-600 bg-clip-text text-transparent mb-6 font-serif"
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -118,36 +118,36 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
           </motion.h3>
 
           <motion.p
-            className="text-xl text-gray-600 max-w-2xl mx-auto mb-8"
+            className="text-xl text-burgundy-600 max-w-2xl mx-auto mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.6 }}
             viewport={{ once: true }}
           >
-            Kære {user.name}! Vi glæder os så meget til at fejre vores kærlighed med dig.
+            Ærede {user.name}, din tilstedeværelse vil være en stor ære for os.
           </motion.p>
 
           <motion.div
-            className="flex items-center justify-center space-x-2 mb-8"
+            className="flex items-center justify-center space-x-4 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <span className="text-2xl">🌸</span>
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent"></div>
-            <span className="text-2xl">🌸</span>
+            <span className="text-3xl">💎</span>
+            <div className="w-40 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent"></div>
+            <span className="text-3xl">💎</span>
           </motion.div>
         </motion.div>
 
-        {/* Romantic RSVP Form Container */}
+        {/* Elegant RSVP Form Container */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <Card className="bg-white/80 backdrop-blur-sm shadow-2xl border border-rose-200 rounded-3xl overflow-hidden">
+          <Card className="bg-white/90 backdrop-blur-sm shadow-2xl border-2 border-gold-200 rounded-3xl overflow-hidden">
             <CardContent className="p-8 md:p-12">
               <motion.div
                 className="text-center mb-8"
@@ -157,13 +157,13 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
                 viewport={{ once: true }}
               >
                 <motion.p
-                  className="text-lg text-rose-600 font-serif italic"
+                  className="text-lg text-burgundy-600 font-serif italic"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   transition={{ duration: 0.5, delay: 0.7 }}
                   viewport={{ once: true }}
                 >
-                  Din tilstedeværelse betyder alt for os 💕
+                  "Din tilstedeværelse er den største gave"
                 </motion.p>
               </motion.div>
 
@@ -172,43 +172,43 @@ export function Variation2RSVP({ user }: Variation2RSVPProps) {
           </Card>
         </motion.div>
 
-        {/* Romantic Footer */}
+        {/* Luxurious Footer */}
         <motion.div
-          className="text-center mt-16 pt-8 border-t border-rose-200"
+          className="text-center mt-16 pt-8 border-t-2 border-gold-200"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
         >
           <motion.div
-            className="flex items-center justify-center space-x-4 mb-4"
+            className="flex items-center justify-center space-x-6 mb-4"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.7 }}
             viewport={{ once: true }}
           >
             <motion.span
-              className="text-2xl"
+              className="text-3xl"
               animate={{ rotate: [0, 360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             >
-              🌹
+              💎
             </motion.span>
             <motion.p
-              className="text-gray-600 font-serif"
+              className="text-burgundy-600 font-serif text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.9 }}
               viewport={{ once: true }}
             >
-              Tak fordi du vil være en del af vores særlige dag
+              Vi takker for din elegante tilstedeværelse ved denne særlige begivenhed
             </motion.p>
             <motion.span
-              className="text-2xl"
+              className="text-3xl"
               animate={{ rotate: [0, -360] }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
             >
-              🌸
+              💎
             </motion.span>
           </motion.div>
         </motion.div>

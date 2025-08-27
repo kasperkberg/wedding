@@ -1,7 +1,7 @@
 "use client";
 
-import { BetterAuthUser } from "../../../lib/auth-types";
-import { isAdmin } from "../../../lib/role-utils";
+import { BetterAuthUser } from "../../../../lib/auth-types";
+import { isAdmin } from "../../../../lib/role-utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
@@ -20,16 +20,16 @@ interface WeddingEvent {
   updatedAt: string;
 }
 
-interface Variation2InfoProps {
+interface Variation4InfoProps {
   user: BetterAuthUser | null;
   event: WeddingEvent | null;
 }
 
-export function Variation2Info({ user, event }: Variation2InfoProps) {
+export function Variation4Info({ user, event }: Variation4InfoProps) {
   if (!event) {
     return (
       <motion.div
-        className="text-center py-20 bg-gradient-to-br from-rose-50 to-pink-50"
+        className="text-center py-20 bg-gradient-to-br from-burgundy-50 to-gold-50"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
@@ -45,7 +45,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           📝
         </motion.div>
         <motion.h3
-          className="text-3xl mb-6 text-gray-800 font-serif"
+          className="text-3xl mb-6 text-burgundy-800 font-serif"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.4 }}
@@ -54,7 +54,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           Bryllupsoplysninger
         </motion.h3>
         <motion.p
-          className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto"
+          className="text-lg text-burgundy-600 mb-8 max-w-2xl mx-auto"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.6 }}
@@ -69,7 +69,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
             transition={{ duration: 0.5, delay: 0.8 }}
             viewport={{ once: true }}
           >
-            <Button asChild size="lg" className="bg-rose-500 text-white hover:bg-rose-600">
+            <Button asChild size="lg" className="bg-burgundy-600 text-white hover:bg-burgundy-700">
               <Link href="/admin">Opret bryllupsoplysninger</Link>
             </Button>
           </motion.div>
@@ -90,14 +90,14 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
 
   return (
     <motion.div
-      className="py-24 bg-gradient-to-br from-rose-50 to-pink-50"
+      className="py-24 bg-gradient-to-br from-burgundy-50 to-gold-50"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.8 }}
       viewport={{ once: true }}
     >
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        {/* Romantic Header */}
+        {/* Elegant Header */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 50 }}
@@ -111,52 +111,55 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
             animate={{ scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2, type: "spring" }}
           >
-            <div className="flex space-x-4 text-4xl">
+            <div className="flex items-center space-x-6">
+              <motion.div
+                className="w-20 h-px bg-gradient-to-r from-transparent to-burgundy-400"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 0.4 }}
+                viewport={{ once: true }}
+              />
               <motion.span
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity }}
+                className="text-4xl text-burgundy-600"
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
               >
-                🌹
+                💎
               </motion.span>
-              <motion.span
-                animate={{ rotate: [0, -10, 10, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-              >
-                🌸
-              </motion.span>
-              <motion.span
-                animate={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
-              >
-                🌹
-              </motion.span>
+              <motion.div
+                className="w-20 h-px bg-gradient-to-l from-transparent to-burgundy-400"
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                viewport={{ once: true }}
+              />
             </div>
           </motion.div>
 
           <motion.h2
-            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-rose-500 to-pink-500 bg-clip-text text-transparent mb-6 font-serif"
+            className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-burgundy-600 to-gold-600 bg-clip-text text-transparent mb-6 font-serif"
             initial={{ scale: 0.9 }}
             whileInView={{ scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
             viewport={{ once: true }}
           >
             {event.title}
           </motion.h2>
 
           <motion.div
-            className="flex items-center justify-center space-x-2 mb-8"
+            className="flex items-center justify-center space-x-4 mb-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
+            transition={{ duration: 0.6, delay: 1.0 }}
             viewport={{ once: true }}
           >
-            <span className="text-2xl">✨</span>
-            <div className="w-32 h-px bg-gradient-to-r from-transparent via-rose-400 to-transparent"></div>
-            <span className="text-2xl">✨</span>
-          </motion.div>
+            <span className="text-3xl">✨</span>
+            <div className="w-40 h-px bg-gradient-to-r from-transparent via-gold-400 to-transparent"></div>
+            <span className="text-3xl">✨</span>
+          </div>
         </motion.div>
 
-        {/* Romantic Event Card */}
+        {/* Luxurious Event Showcase */}
         <motion.div
           className="text-center mb-20"
           initial={{ opacity: 0, y: 50 }}
@@ -165,22 +168,22 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           viewport={{ once: true }}
         >
           <motion.div
-            className="inline-block bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-rose-200"
-            whileHover={{ scale: 1.02, y: -5 }}
+            className="inline-block bg-white/80 backdrop-blur-sm rounded-3xl p-12 shadow-2xl border-2 border-gold-200"
+            whileHover={{ scale: 1.02, y: -10 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
             <motion.div
-              className="text-6xl mb-6"
+              className="text-7xl mb-8"
               initial={{ scale: 0 }}
               whileInView={{ scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
               viewport={{ once: true }}
             >
-              💕
+              👑
             </motion.div>
 
             <motion.h3
-              className="text-4xl font-bold text-gray-800 mb-6 font-serif"
+              className="text-4xl font-bold text-burgundy-800 mb-6 font-serif"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.7 }}
@@ -191,7 +194,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
 
             {event.time && (
               <motion.p
-                className="text-2xl text-rose-600 mb-6 font-medium"
+                className="text-2xl text-gold-700 mb-6 font-medium"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.9 }}
@@ -202,34 +205,41 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
             )}
 
             <motion.div
-              className="flex items-center justify-center text-gray-700 mb-6"
+              className="flex items-center justify-center text-burgundy-700 mb-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.1 }}
               viewport={{ once: true }}
             >
-              <span className="text-3xl mr-4">🏰</span>
-              <span className="text-xl font-medium">{event.location}</span>
+              <span className="text-4xl mr-4">🏰</span>
+              <span className="text-2xl font-medium">{event.location}</span>
             </motion.div>
 
             <motion.div
-              className="text-sm text-rose-600 italic"
+              className="text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.5, delay: 1.3 }}
               viewport={{ once: true }}
             >
-              Vi glæder os til at fejre med jer! 💕
+              <p className="text-lg text-burgundy-600 font-serif italic mb-4">
+                "En dag fyldt med elegance og uforglemmelige øjeblikke"
+              </p>
+              <div className="flex items-center justify-center space-x-2 text-gold-600">
+                <span>✨</span>
+                <span>💎</span>
+                <span>✨</span>
+              </div>
             </motion.div>
           </motion.div>
         </motion.div>
 
-        {/* Floral Details Grid */}
+        {/* Elegant Details Grid */}
         <div className="grid md:grid-cols-2 gap-12">
           {/* Location Details */}
           {event.locationDetails && (
             <motion.div
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-rose-200"
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-burgundy-200"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -244,9 +254,9 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">🚗</span>
-                <h4 className="text-2xl font-bold text-rose-700 font-serif">Sted og transport</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Sted og transport</h4>
               </motion.div>
-              <div className="text-gray-700 leading-relaxed">
+              <div className="text-burgundy-700 leading-relaxed">
                 {event.locationDetails.split("\n").map((line, index) => (
                   <motion.p
                     key={index}
@@ -266,7 +276,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           {/* Program */}
           {event.program && (
             <motion.div
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-rose-200"
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-burgundy-200"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -281,9 +291,9 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">📋</span>
-                <h4 className="text-2xl font-bold text-rose-700 font-serif">Program</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Program</h4>
               </motion.div>
-              <div className="text-gray-700 leading-relaxed">
+              <div className="text-burgundy-700 leading-relaxed">
                 {event.program.split("\n").map((line, index) => (
                   <motion.p
                     key={index}
@@ -303,7 +313,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           {/* Dresscode */}
           {event.dresscode && (
             <motion.div
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-rose-200 md:col-span-2"
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-burgundy-200 md:col-span-2"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
@@ -318,9 +328,9 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">👔</span>
-                <h4 className="text-2xl font-bold text-rose-700 font-serif">Dresscode</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Dresscode</h4>
               </motion.div>
-              <div className="text-gray-700 leading-relaxed">
+              <div className="text-burgundy-700 leading-relaxed">
                 {event.dresscode.split("\n").map((line, index) => (
                   <motion.p
                     key={index}
@@ -340,7 +350,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           {/* Additional Info */}
           {event.additionalInfo && (
             <motion.div
-              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-rose-200 md:col-span-2"
+              className="bg-white/60 backdrop-blur-sm rounded-2xl p-8 border border-burgundy-200 md:col-span-2"
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
@@ -355,9 +365,9 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
                 viewport={{ once: true }}
               >
                 <span className="text-4xl mr-4">💝</span>
-                <h4 className="text-2xl font-bold text-rose-700 font-serif">Yderligere information</h4>
+                <h4 className="text-2xl font-bold text-burgundy-700 font-serif">Yderligere information</h4>
               </motion.div>
-              <div className="text-gray-700 leading-relaxed">
+              <div className="text-burgundy-700 leading-relaxed">
                 {event.additionalInfo.split("\n").map((line, index) => (
                   <motion.p
                     key={index}
@@ -375,7 +385,7 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           )}
         </div>
 
-        {/* Romantic Footer */}
+        {/* Elegant Footer */}
         <motion.div
           className="text-center mt-20"
           initial={{ opacity: 0 }}
@@ -384,13 +394,13 @@ export function Variation2Info({ user, event }: Variation2InfoProps) {
           viewport={{ once: true }}
         >
           <motion.p
-            className="text-xl text-rose-600 font-serif italic"
+            className="text-2xl text-burgundy-600 font-serif italic"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.9 }}
             viewport={{ once: true }}
           >
-            Med al vores kærlighed 💕
+            "Vi ser frem til at fejres denne særlige dag med jer"
           </motion.p>
         </motion.div>
       </div>
