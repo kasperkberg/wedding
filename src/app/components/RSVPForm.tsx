@@ -8,10 +8,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
 
 interface RSVP {
   id: number;
   userId: string;
+  name?: string;
   attending: boolean;
   allergies?: string;
   foodPreferences?: string;
@@ -43,6 +45,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
   const [saving, setSaving] = useState(false);
 
   const [formData, setFormData] = useState({
+    name: user.name || "",
     attending: true,
     allergies: "",
     foodPreferences: "",
@@ -68,6 +71,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
       if (result.success && result.data) {
         setRsvp(result.data);
         setFormData({
+          name: result.data.name || user.name || "",
           attending: result.data.attending,
           allergies: result.data.allergies || "",
           foodPreferences: result.data.foodPreferences || "",
@@ -111,6 +115,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
         },
         body: JSON.stringify({
           userId: user.id,
+          name: formData.name,
           attending: formData.attending,
           allergies: formData.allergies,
           foodPreferences: formData.foodPreferences,
@@ -121,7 +126,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
       const rsvpResult = await rsvpResponse.json();
 
       if (!rsvpResult.success) {
-        alert(`Fejl ved gemning af RSVP: ${rsvpResult.error}`);
+        console.error(`Error saving RSVP: ${rsvpResult.error}`);
         return;
       }
 
@@ -131,45 +136,62 @@ export function RSVPForm({ user }: RSVPFormProps) {
       if (guestForm.name.trim()) {
         if (additionalGuests[0]) {
           // Update existing guest
-          await fetch("/api/additional-guests", {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              id: additionalGuests[0].id,
-              name: guestForm.name,
-              attending: guestForm.attending,
-              allergies: guestForm.allergies,
-              foodPreferences: guestForm.foodPreferences,
-            }),
-          });
+          try {
+            await fetch("/api/additional-guests", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                id: additionalGuests[0].id,
+                name: guestForm.name,
+                attending: guestForm.attending,
+                allergies: guestForm.allergies,
+                foodPreferences: guestForm.foodPreferences,
+              }),
+            });
+          } catch (error) {
+            console.error("Error updating guest:", error);
+          }
         } else {
           // Add new guest
-          await fetch("/api/additional-guests", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              rsvpId,
-              name: guestForm.name,
-              attending: guestForm.attending,
-              allergies: guestForm.allergies,
-              foodPreferences: guestForm.foodPreferences,
-            }),
-          });
+          try {
+            await fetch("/api/additional-guests", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                rsvpId,
+                name: guestForm.name,
+                attending: guestForm.attending,
+                allergies: guestForm.allergies,
+                foodPreferences: guestForm.foodPreferences,
+              }),
+            });
+          } catch (error) {
+            console.error("Error adding guest:", error);
+          }
         }
       }
 
-      alert("Din RSVP er gemt! Tak for svaret.");
+      // Show confetti instead of alert
+      showConfetti();
       fetchExistingRSVP(); // Refresh the data
     } catch (error) {
       console.error("Error saving RSVP:", error);
-      alert("Der skete en fejl ved gemning af din RSVP");
+      // Don't show alert for errors either
     } finally {
       setSaving(false);
     }
+  };
+
+  const showConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
   };
 
   const updateGuestForm = (field: string, value: string | boolean) => {
@@ -193,9 +215,9 @@ export function RSVPForm({ user }: RSVPFormProps) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const cardVariants = {
@@ -223,10 +245,32 @@ export function RSVPForm({ user }: RSVPFormProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              <Label className="block text-xl font-bold mb-6">
+              <Label className="block text-xl font-bold mb-6 text-black">
                 Vil du deltage? *
               </Label>
             </motion.div>
+
+            {/* Name Input */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.4 }}
+              className="mb-6"
+            >
+              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                Dit navn
+              </Label>
+              <Input
+                type="text"
+                value={formData.name || user.name || ""}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
+                placeholder="Dit navn"
+                className="max-w-md"
+              />
+            </motion.div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -248,7 +292,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   }
                   className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
                 />
-                <span className="ml-3 text-lg wedding-serif">
+                <span className="ml-3 text-lg wedding-abramo">
                   Ja, jeg deltager med glæde
                 </span>
               </motion.label>
@@ -267,7 +311,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   }
                   className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
                 />
-                <span className="ml-3 text-lg wedding-serif">
+                <span className="ml-3 text-lg wedding-abramo">
                   Desværre, jeg kan ikke deltage
                 </span>
               </motion.label>
@@ -286,7 +330,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
               >
-                <CardTitle className="text-xl mb-6 wedding-serif">
+                <CardTitle className="text-xl mb-6 wedding-abramo text-black">
                   Dine oplysninger
                 </CardTitle>
               </motion.div>
@@ -300,7 +344,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   whileFocus={{ scale: 1.01 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Label className="block text-sm font-semibold mb-2">
+                  <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
                     Allergier eller særlige kosthensyn
                   </Label>
                   <Input
@@ -319,7 +363,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   whileFocus={{ scale: 1.01 }}
                   transition={{ type: "spring", stiffness: 300 }}
                 >
-                  <Label className="block text-sm font-semibold mb-2">
+                  <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
                     Madpræferencer
                   </Label>
                   <Input
@@ -350,7 +394,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.4 }}
               >
-                <CardTitle className="text-xl mb-6 wedding-serif">
+                <CardTitle className="text-xl mb-6 wedding-abramo text-black">
                   Ønsker du at medbringe én person?
                 </CardTitle>
               </motion.div>
@@ -359,7 +403,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.4 }}
               >
-                <Card className="bg-white">
+                <Card className="bg-white py-2">
                   <CardContent className="p-4">
                     <div className="space-y-4">
                       <motion.div
@@ -370,24 +414,29 @@ export function RSVPForm({ user }: RSVPFormProps) {
                           type="text"
                           placeholder="Navn på gæst"
                           value={guestForm.name}
-                          onChange={(e) => updateGuestForm("name", e.target.value)}
+                          onChange={(e) =>
+                            updateGuestForm("name", e.target.value)
+                          }
                         />
                       </motion.div>
 
-                      <motion.div
-                        whileHover={{ scale: 1.02 }}
-                        className="flex items-center"
-                      >
-                        <input
-                          type="checkbox"
-                          checked={guestForm.attending}
-                          onChange={(e) =>
-                            updateGuestForm("attending", e.target.checked)
-                          }
-                          className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
-                        />
-                        <span className="ml-3">Gæsten deltager også</span>
-                      </motion.div>
+                      {/* Only show checkbox when editing an existing guest */}
+                      {additionalGuests.length > 0 && (
+                        <motion.div
+                          whileHover={{ scale: 1.02 }}
+                          className="flex items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            checked={guestForm.attending}
+                            onChange={(e) =>
+                              updateGuestForm("attending", e.target.checked)
+                            }
+                            className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
+                          />
+                          <span className="ml-3">Gæsten deltager også</span>
+                        </motion.div>
+                      )}
 
                       {guestForm.name.trim() && (
                         <motion.div
@@ -415,7 +464,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
                               whileFocus={{ scale: 1.01 }}
                               transition={{ type: "spring", stiffness: 300 }}
                             >
-                              <Label className="block text-sm font-semibold mb-2">
+                              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
                                 Gæstens allergier eller særlige kosthensyn
                               </Label>
                               <Input
@@ -431,14 +480,17 @@ export function RSVPForm({ user }: RSVPFormProps) {
                               whileFocus={{ scale: 1.01 }}
                               transition={{ type: "spring", stiffness: 300 }}
                             >
-                              <Label className="block text-sm font-semibold mb-2">
+                              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
                                 Gæstens madpræferencer
                               </Label>
                               <Input
                                 type="text"
                                 value={guestForm.foodPreferences}
                                 onChange={(e) =>
-                                  updateGuestForm("foodPreferences", e.target.value)
+                                  updateGuestForm(
+                                    "foodPreferences",
+                                    e.target.value
+                                  )
                                 }
                                 placeholder="f.eks. ingen fisk, kan lide spicy mad"
                               />
@@ -464,7 +516,9 @@ export function RSVPForm({ user }: RSVPFormProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
             >
-              <CardTitle className="text-xl mb-4 wedding-serif">Besked</CardTitle>
+              <CardTitle className="text-xl mb-4 wedding-abramo text-black">
+                Besked
+              </CardTitle>
             </motion.div>
             <motion.div
               whileFocus={{ scale: 1.01 }}
@@ -476,7 +530,11 @@ export function RSVPForm({ user }: RSVPFormProps) {
                   setFormData((prev) => ({ ...prev, message: e.target.value }))
                 }
                 rows={4}
-                placeholder="Eventuelle kommentarer, ønsker eller spørgsmål..."
+                placeholder={
+                  formData.attending
+                    ? "Eventuelle kommentarer, ønsker eller spørgsmål..."
+                    : "Årsag til at du ikke kan deltage..."
+                }
               />
             </motion.div>
           </CardContent>
@@ -508,7 +566,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {saving ? "Gemmer..." : rsvp ? "Opdater RSVP" : "Send RSVP"}
+              {saving ? "Gemmer..." : rsvp ? "Opdater RSVP" : "Tilmeld"}
             </motion.span>
           </Button>
         </motion.div>

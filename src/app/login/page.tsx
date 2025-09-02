@@ -152,7 +152,7 @@ export default function LoginPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.0, duration: 0.4 }}
-              className="text-wedding-stone wedding-serif"
+              className="text-wedding-stone wedding-abramo"
             >
               Log ind for at se bryllupsinvitationen
             </motion.p>
@@ -206,7 +206,10 @@ export default function LoginPage() {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <Label htmlFor="name" className="text-sm font-medium text-wedding-navy">
+                <Label
+                  htmlFor="name"
+                  className="text-sm font-medium text-wedding-navy"
+                >
                   Navn
                 </Label>
                 <Input
@@ -226,7 +229,10 @@ export default function LoginPage() {
             )}
 
             <div>
-              <Label htmlFor="email" className="text-sm font-medium text-wedding-navy">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-wedding-navy"
+              >
                 Email
               </Label>
               <Input
@@ -245,7 +251,10 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <Label htmlFor="password" className="text-sm font-medium text-wedding-navy">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium text-wedding-navy"
+              >
                 Password
               </Label>
               <Input
@@ -270,38 +279,47 @@ export default function LoginPage() {
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3 }}
               >
-                <Label htmlFor="confirmPassword" className="text-sm font-medium text-wedding-navy">
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-medium text-wedding-navy"
+                >
                   Bekræft password
                 </Label>
                 <Input
                   id="confirmPassword"
                   type="password"
                   value={formData.confirmPassword}
-                  onChange={(e) => handleInputChange("confirmPassword", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("confirmPassword", e.target.value)
+                  }
                   className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
-                    errors.confirmPassword ? "border-red-300 focus:border-red-500" : ""
+                    errors.confirmPassword
+                      ? "border-red-300 focus:border-red-500"
+                      : ""
                   }`}
                   placeholder="Gentag dit password"
                 />
                 {errors.confirmPassword && (
-                  <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>
+                  <p className="mt-1 text-sm text-red-600">
+                    {errors.confirmPassword}
+                  </p>
                 )}
               </motion.div>
             )}
 
-            <motion.div
-              whileHover={{ scale: 1.01 }}
-              whileTap={{ scale: 0.99 }}
-            >
+            <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
               <Button
                 type="submit"
                 disabled={isLoading}
                 className="w-full wedding-button py-3 text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading
-                  ? (isSignUp ? "Opretter konto..." : "Logger ind...")
-                  : (isSignUp ? "Opret konto" : "Log ind")
-                }
+                  ? isSignUp
+                    ? "Opretter konto..."
+                    : "Logger ind..."
+                  : isSignUp
+                  ? "Opret konto"
+                  : "Log ind"}
               </Button>
             </motion.div>
           </motion.form>
@@ -317,7 +335,9 @@ export default function LoginPage() {
               <div className="w-full border-t border-wedding-linen"></div>
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-white text-wedding-stone wedding-serif">eller</span>
+              <span className="px-4 bg-white text-wedding-stone wedding-abramo">
+                eller
+              </span>
             </div>
           </motion.div>
 
@@ -341,7 +361,7 @@ export default function LoginPage() {
                 transition={{
                   duration: isLoading ? 1 : 0,
                   repeat: isLoading ? Infinity : 0,
-                  ease: "linear"
+                  ease: "linear",
                 }}
                 className="w-5 h-5"
                 viewBox="0 0 24 24"
@@ -374,9 +394,6 @@ export default function LoginPage() {
               </motion.span>
             </motion.button>
           </motion.div>
-
-
-
         </motion.div>
       </motion.div>
     </motion.div>
