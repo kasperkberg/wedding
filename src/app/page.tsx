@@ -2,6 +2,7 @@ import { auth } from "../../lib/auth";
 import { headers } from "next/headers";
 import { WeddingHero } from "./components/WeddingHero";
 import { MainContent } from "./components/MainContent";
+import { WeddingDashboard } from "./components/WeddingDashboard";
 import { BetterAuthUser } from "../../lib/auth-types";
 
 // Safe headers utility function
@@ -53,6 +54,12 @@ export default async function Home() {
   const eventResult = await eventResponse.json();
   const event = eventResult.success ? eventResult.data : null;
 
+  // If user is authenticated, show the combined dashboard
+  if (user) {
+    return <WeddingDashboard user={user} event={event} />;
+  }
+
+  // If user is not authenticated, show the original hero + main content
   return (
     <div className="min-h-screen">
       {/* Hero Section with Background Image */}

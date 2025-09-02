@@ -113,7 +113,7 @@ export function WeddingEventEditor() {
 
   return (
     <div className="wedding-card rounded-2xl p-8">
-      <h2 className="text-3xl font-bold text-wedding-charcoal mb-8 wedding-serif text-center">
+      <h2 className="text-3xl font-bold text-wedding-charcoal mb-8 wedding-abramo text-center">
         {event ? "Rediger bryllupsoplysninger" : "Opret bryllupsoplysninger"}
       </h2>
 
@@ -121,14 +121,14 @@ export function WeddingEventEditor() {
         {/* Basic Information */}
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-wedding-charcoal mb-2 wedding-serif">
+            <label className="block text-sm font-semibold text-wedding-charcoal mb-2 wedding-abramo">
               Titel *
             </label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => handleChange("title", e.target.value)}
-              className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-bronze bg-wedding-ivory wedding-serif"
+              className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-bronze bg-wedding-ivory wedding-abramo"
               placeholder="f.eks. Tirill og Christians bryllup"
               required
             />

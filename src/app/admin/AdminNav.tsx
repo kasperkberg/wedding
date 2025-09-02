@@ -81,7 +81,7 @@ export function AdminNav({ user }: AdminNavProps) {
       <div className="flex space-x-4 mb-4">
         <Link
           href="/"
-          className="wedding-button px-6 py-3 rounded-full text-lg wedding-serif inline-block"
+          className="wedding-button px-6 py-3 rounded-full text-lg wedding-abramo inline-block"
         >
           ← Tilbage til RSVP
         </Link>

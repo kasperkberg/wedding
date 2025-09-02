@@ -57,63 +57,21 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 wedding-script text-wedding-ivory drop-shadow-lg"
+            className="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 wedding-abramo text-wedding-ivory drop-shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.8 }}
             whileHover={{ scale: 1.02 }}
           >
-            Tirill
+            Tirill & Christian
           </motion.h1>
 
-          {/* Simple infinity symbol */}
           <motion.div
-            className="flex items-center justify-center mb-6"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 1.0 }}
-          >
-            <motion.div
-              className="w-16 h-px bg-wedding-bronze rounded-full"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 1.2 }}
-            />
-            <motion.div
-              className="text-3xl md:text-4xl font-bold text-wedding-bronze mx-6"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{
-                duration: 0.6,
-                delay: 1.3,
-                type: "spring",
-                stiffness: 200,
-              }}
-              whileHover={{
-                rotate: 360,
-                scale: 1.1,
-                transition: { duration: 0.5 },
-              }}
-            >
-              ∞
-            </motion.div>
-            <motion.div
-              className="w-16 h-px bg-wedding-bronze rounded-full"
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 0.5, delay: 1.4 }}
-            />
-          </motion.div>
-
-          <motion.h1
-            className="text-4xl md:text-6xl lg:text-7xl font-bold wedding-script text-wedding-ivory drop-shadow-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 1.5 }}
-            whileHover={{ scale: 1.02 }}
-          >
-            Christian
-          </motion.h1>
+            className="wedding-divider"
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          />
         </motion.div>
 
         {/* Wedding announcement */}
@@ -124,7 +82,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           transition={{ duration: 0.6, delay: 1.8 }}
         >
           <motion.p
-            className="text-xl md:text-2xl lg:text-3xl mb-6 wedding-serif font-light tracking-wide text-wedding-ivory"
+            className="text-2xl md:text-3xl lg:text-4xl mb-6 wedding-abramo font-light tracking-wide text-wedding-ivory"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 2.0 }}
@@ -133,7 +91,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           </motion.p>
 
           <motion.p
-            className="text-base md:text-lg opacity-90 wedding-serif font-light text-wedding-ivory max-w-2xl mx-auto"
+            className="text-lg md:text-xl opacity-90 wedding-abramo font-light text-wedding-ivory max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 2.2 }}
@@ -156,9 +114,9 @@ export function WeddingHero({ user }: WeddingHeroProps) {
             <Button
               onClick={handleAuthAction}
               size="lg"
-              className="wedding-button px-8 py-4 rounded-full text-lg font-medium shadow-2xl"
+              className="wedding-button px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium shadow-2xl min-w-[160px] md:min-w-[200px]"
             >
-              Se invitationen
+              Timeld dig
             </Button>
           </motion.div>
         </motion.div>

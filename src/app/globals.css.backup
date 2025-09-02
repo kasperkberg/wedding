@@ -1,0 +1,216 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Abramo&display=swap');
+
+/* Wedding Color Palette */
+:root {
+  --background: hsl(210, 50%, 98%);
+    --foreground: hsl(215, 25%, 27%);
+    --card: hsl(210, 40%, 96.1%);
+    --card-foreground: hsl(215, 25%, 27%);
+    --primary: hsl(221, 83%, 53%);
+    --primary-foreground: hsl(210, 40%, 98%);
+    --secondary: hsl(210, 40%, 90%);
+    --secondary-foreground: hsl(215, 25%, 27%);
+    --muted: hsl(210, 40%, 90%);
+    --muted-foreground: hsl(215, 25%, 40%);
+    --accent: hsl(210, 40%, 90%);
+    --accent-foreground: hsl(215, 25%, 27%);
+    --destructive: hsl(0, 84.2%, 50%);
+    --border: hsl(214, 32%, 91%);
+    --input: hsl(214, 32%, 91%);
+    --ring: hsl(221, 83%, 53%);
+    /* Wedding-specific colors */
+    --wedding-sage: hsl(142, 20%, 95%);
+      --wedding-sage-light: hsl(142, 15%, 90%);
+      --wedding-sage-dark: hsl(142, 25%, 85%);
+      --wedding-charcoal: hsl(142, 15%, 25%);
+      --wedding-stone: hsl(142, 10%, 45%);
+      --wedding-ivory: hsl(142, 15%, 98%);
+      --wedding-linen: hsl(142, 12%, 92%);
+      --wedding-navy: hsl(142, 20%, 35%);
+      --wedding-bronze: hsl(25, 65%, 45%);
+      --wedding-gold: hsl(45, 75%, 55%);
+      --wedding-rose: hsl(350, 65%, 60%);
+      --wedding-button-color: #542E2A;
+    --radius: 0.5rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: 'Crimson Text', 'Times New Roman', serif;
+    --font-script: 'Dancing Script', 'Great Vibes', cursive;
+  
+    /* Wedding Colors */
+  --color-wedding-sage: var(--wedding-sage);
+  --color-wedding-sage-light: var(--wedding-sage-light);
+  --color-wedding-sage-dark: var(--wedding-sage-dark);
+  --color-wedding-ivory: var(--wedding-ivory);
+    --color-wedding-linen: var(--wedding-linen);
+    --color-wedding-stone: var(--wedding-stone);
+  --color-wedding-rose: var(--wedding-rose);
+  --color-wedding-navy: var(--wedding-navy);
+  --color-wedding-charcoal: var(--wedding-charcoal);
+  --color-wedding-gold: var(--wedding-gold);
+  --color-wedding-bronze: var(--wedding-bronze);
+  
+    /* shadcn/ui Colors */
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wedding-sage: hsl(142, 8%, 25%);
+    --wedding-sage-light: hsl(142, 10%, 30%);
+      --wedding-sage-dark: hsl(142, 12%, 20%);
+      --wedding-charcoal: hsl(210, 10%, 85%);
+    --wedding-slate: hsl(215, 15%, 75%);
+      --wedding-navy: hsl(215, 30%, 60%);
+    }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--wedding-sage-light);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--wedding-sage-dark);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+  background: var(--wedding-bronze);
+  }
+  
+  /* Custom Selection */
+  ::selection {
+    background: var(--wedding-gold);
+    color: var(--wedding-charcoal);
+  }
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Crimson Text', 'Times New Roman', serif;
+    line-height: 1.6;
+  }
+
+  /* Wedding-specific styles */
+  .wedding-hero {
+    background:
+    linear-gradient(135deg, rgba(196, 205, 191, 0.95) 0%, rgba(245, 242, 237, 0.9) 100%),
+      url('/images/background.jpg') center/cover no-repeat;
+      min-height: 100vh;
+      }
+      
+      .wedding-card {
+  background: rgba(245, 242, 237, 0.98);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(232, 221, 211, 0.3);
+    box-shadow:
+    0 4px 20px rgba(196, 205, 191, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    
+    .wedding-button {
+  background: var(--wedding-button-color);
+    color: var(--wedding-ivory);
+    border: 1px solid var(--wedding-bronze);
+    transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(42, 58, 74, 0.2);
+  }
+
+  .wedding-button:hover {
+  transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(42, 58, 74, 0.3);
+    background: #4a2622;
+  }
+
+  .wedding-accent {
+  color: var(--wedding-bronze);
+  }
+  
+  .wedding-script {
+    font-family: 'Dancing Script', 'Great Vibes', cursive;
+    font-weight: 400;
+  }
+.wedding-abramo {
+  font-family: 'Abramo', serif;
+  font-weight: 400;
+}
+  
+  .wedding-serif {
+    font-family: 'Crimson Text', 'Times New Roman', serif;
+  }
+  
+  .wedding-border {
+    border: 1px solid var(--wedding-bronze);
+  }
+  
+  .wedding-shadow {
+    box-shadow: 0 2px 12px rgba(196, 205, 191, 0.3);
+  }
+  
+  .dark {
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+  
+  @layer base {
+    * {
+      @apply border-border outline-ring/50;
+    }
+                body {
+                  @apply bg-background text-foreground;
+                }
+                }
