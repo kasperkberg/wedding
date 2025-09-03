@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Mail, ArrowLeft, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { forgetPassword } from "../../../lib/auth-client";
 
 interface ForgotPasswordFormProps {
