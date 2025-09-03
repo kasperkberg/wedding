@@ -15,7 +15,7 @@ interface WeddingEvent {
   location: string;
   locationDetails?: string;
   program?: string;
-  dresscode?: string;
+  wishes?: string;
   additionalInfo?: string;
   createdAt: string;
   updatedAt: string;
@@ -108,18 +108,18 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           viewport={{ once: true }}
         >
           <div className="text-center">
-            <div className="text-5xl mb-6 text-wedding-bronze flex justify-center">
-              <div className="w-16 h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                <Calendar className="w-8 h-8" />
+            <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+                <Calendar className="w-4 h-4 md:w-8 md:h-8" />
               </div>
             </div>
-            <h4 className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-3 wedding-abramo">
+            <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
               Når
             </h4>
-            <div className="text-[hsl(25,10%,50%)] text-sm md:text-base">
+            <div className="text-black text-base md:text-base">
               <div className="font-medium mb-1">{formatDate(event.date)}</div>
               {event.time && (
-                <div className="text-[hsl(25,10%,50%)]">kl. {event.time}</div>
+                <div className="text-black text-base">kl. {event.time}</div>
               )}
             </div>
           </div>
@@ -134,18 +134,18 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           viewport={{ once: true }}
         >
           <div className="text-center">
-            <div className="text-5xl mb-6 text-wedding-bronze flex justify-center">
-              <div className="w-16 h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                <MapPin className="w-8 h-8" />
+            <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+                <MapPin className="w-4 h-4 md:w-8 md:h-8" />
               </div>
             </div>
-            <h4 className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-3 wedding-abramo">
+            <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
               Hvor
             </h4>
-            <div className="text-[hsl(25,10%,50%)] text-sm md:text-base">
-              <div className="font-medium">{event.location}</div>
+            <div className="text-black text-base md:text-base">
+              <div className="font-medium mb-1">{event.location}</div>
               {event.locationDetails && (
-                <div className="text-xs mt-2 text-[hsl(25,10%,50%)]">
+                <div className="text-xs mt-2 text-black">
                   {event.locationDetails.split("\n")[0]}
                 </div>
               )}
@@ -163,15 +163,15 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
             viewport={{ once: true }}
           >
             <div className="text-center">
-              <div className="text-5xl mb-6 text-wedding-bronze flex justify-center">
-                <div className="w-16 h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                  <Clock className="w-8 h-8" />
+              <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+                  <Clock className="w-4 h-4 md:w-8 md:h-8" />
                 </div>
               </div>
-              <h4 className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-3 wedding-abramo">
+              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
                 Program
               </h4>
-              <div className="text-[hsl(25,10%,50%)] text-sm md:text-base text-center">
+              <div className="text-black text-base md:text-base text-center">
                 {event.program
                   .split("\n")
                   .slice(0, 3)
@@ -185,8 +185,8 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           </motion.div>
         )}
 
-        {/* Påklædning (Dress code) Card */}
-        {event.dresscode && (
+        {/* Wishes Card */}
+        {event.wishes && (
           <motion.div
             className="wedding-card-enhanced p-6 md:p-8"
             initial={{ opacity: 0 }}
@@ -195,16 +195,16 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
             viewport={{ once: true }}
           >
             <div className="text-center">
-              <div className="text-5xl mb-6 text-wedding-bronze flex justify-center">
-                <div className="w-16 h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                  <Gift className="w-8 h-8" />
+              <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+                  <Gift className="w-4 h-4 md:w-8 md:h-8" />
                 </div>
               </div>
-              <h4 className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-3 wedding-abramo">
+              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
                 Ønsker
               </h4>
-              <div className="text-[hsl(25,10%,50%)] text-sm md:text-base text-center">
-                {event.dresscode.split("\n").map((line, index) => (
+              <div className="text-black text-base md:text-base text-center">
+                {event.wishes.split("\n").map((line, index) => (
                   <div key={index} className="mb-1">
                     {line}
                   </div>
@@ -218,7 +218,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       {/* Additional Information - Show as expanded card if needed */}
       {event.additionalInfo && (
         <motion.div
-          className="mt-12 max-w-4xl mx-auto"
+          className="mt-12 max-w-7xl mx-auto px-4 md:px-0"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.5 }}

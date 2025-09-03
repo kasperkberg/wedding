@@ -14,7 +14,7 @@ interface WeddingEvent {
   location: string;
   locationDetails?: string;
   program?: string;
-  dresscode?: string;
+  wishes?: string;
   additionalInfo?: string;
   createdAt: string;
   updatedAt: string;

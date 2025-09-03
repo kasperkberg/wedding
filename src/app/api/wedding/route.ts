@@ -32,7 +32,7 @@ export async function POST(request: Request) {
       location,
       locationDetails,
       program,
-      dresscode,
+      wishes,
       additionalInfo,
     } = body;
 
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
       location,
       locationDetails,
       program,
-      dresscode,
+      wishes,
       additionalInfo,
     };
 

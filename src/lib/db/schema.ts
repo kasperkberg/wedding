@@ -20,7 +20,7 @@ export const weddingEvent = pgTable("wedding_event", {
   location: text("location").notNull(),
   locationDetails: text("location_details"),
   program: text("program"),
-  dresscode: text("dresscode"),
+  wishes: text("wishes"),
   additionalInfo: text("additional_info"),
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())

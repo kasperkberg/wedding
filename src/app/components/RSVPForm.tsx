@@ -34,9 +34,14 @@ interface AdditionalGuest {
 interface RSVPFormProps {
   user: User;
   onRSVPSubmitted?: () => void;
+  onRSVPLoaded?: (rsvp: RSVP | null) => void;
 }
 
-export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
+export function RSVPForm({
+  user,
+  onRSVPSubmitted,
+  onRSVPLoaded,
+}: RSVPFormProps) {
   const [rsvp, setRsvp] = useState<RSVP | null>(null);
   const [additionalGuests, setAdditionalGuests] = useState<AdditionalGuest[]>(
     []
@@ -78,6 +83,9 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
           message: result.data.message || "",
         });
 
+        // Notify parent component about loaded RSVP data
+        onRSVPLoaded?.(result.data);
+
         // Fetch additional guests
         const guestsResponse = await fetch(
           `/api/additional-guests?rsvpId=${result.data.id}`
@@ -94,6 +102,10 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
             foodPreferences: guest.foodPreferences || "",
           });
         }
+      } else {
+        setRsvp(null); // Set rsvp to null if no RSVP exists
+        onRSVPLoaded?.(null);
+        setAdditionalGuests([]); // Clear additional guests if no RSVP
       }
     } catch (error) {
       console.error("Error fetching RSVP:", error);
@@ -177,6 +189,8 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
 
       // Show confetti instead of alert
       showConfetti();
+      // Scroll to top after confetti
+      window.scrollTo({ top: 0, behavior: "smooth" });
       fetchExistingRSVP(); // Refresh the data
       onRSVPSubmitted?.(); // Call the prop function
     } catch (error) {
@@ -238,7 +252,10 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
       className="space-y-8"
     >
       {/* Combined Form - All sections in one cohesive form */}
-      <motion.div variants={cardVariants} className="bg-white rounded-lg p-8 shadow-lg border border-wedding-linen">
+      <motion.div
+        variants={cardVariants}
+        className="bg-white rounded-lg p-8 shadow-lg border border-wedding-linen"
+      >
         {/* Attendance */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
@@ -247,7 +264,7 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
           className="mb-8"
         >
           <Label className="block text-xl font-bold mb-6 text-black">
-            Vil du deltage? *
+            Vil du deltage?
           </Label>
         </motion.div>
 
@@ -404,9 +421,7 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
                       type="text"
                       placeholder="Navn på gæst"
                       value={guestForm.name}
-                      onChange={(e) =>
-                        updateGuestForm("name", e.target.value)
-                      }
+                      onChange={(e) => updateGuestForm("name", e.target.value)}
                     />
                   </motion.div>
 
@@ -477,10 +492,7 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
                             type="text"
                             value={guestForm.foodPreferences}
                             onChange={(e) =>
-                              updateGuestForm(
-                                "foodPreferences",
-                                e.target.value
-                              )
+                              updateGuestForm("foodPreferences", e.target.value)
                             }
                             placeholder="f.eks. ingen fisk, kan lide spicy mad"
                           />
@@ -549,7 +561,7 @@ export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              {saving ? "Gemmer..." : rsvp ? "Opdater RSVP" : "Tilmeld"}
+              {saving ? "Gemmer..." : rsvp ? "Opdater tilmelding" : "Tilmeld"}
             </motion.span>
           </Button>
         </motion.div>

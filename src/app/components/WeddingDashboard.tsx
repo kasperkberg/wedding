@@ -14,7 +14,7 @@ interface WeddingEvent {
   location: string;
   locationDetails?: string;
   program?: string;
-  dresscode?: string;
+  wishes?: string;
   additionalInfo?: string;
   createdAt: string;
   updatedAt: string;
@@ -34,7 +34,7 @@ export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
       try {
         const response = await fetch(`/api/rsvp?userId=${user.id}`);
         const result = await response.json();
-        
+
         if (result.success && result.data) {
           setRsvpSubmitted(true);
         }
@@ -42,7 +42,7 @@ export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
         console.error("Error checking RSVP:", error);
       }
     };
-    
+
     checkExistingRSVP();
   }, [user.id]);
 
@@ -93,17 +93,6 @@ export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
             </motion.div>
           </motion.section>
 
-          {/* RSVP Section - Show first */}
-          <motion.section
-            className="mb-20"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-            <RSVPSection user={user} onRSVPSubmitted={() => setRsvpSubmitted(true)} />
-          </motion.section>
-
           {/* Wedding Event Information - Show after RSVP submission */}
           {rsvpSubmitted && (
             <motion.section
@@ -141,6 +130,20 @@ export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
               <WeddingEventDisplay user={user} event={event} />
             </motion.section>
           )}
+
+          {/* RSVP Section - Show first */}
+          <motion.section
+            className="mb-20"
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <RSVPSection
+              user={user}
+              onRSVPSubmitted={() => setRsvpSubmitted(true)}
+            />
+          </motion.section>
         </div>
       </motion.div>
     </div>

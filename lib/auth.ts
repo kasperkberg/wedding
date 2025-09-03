@@ -8,6 +8,25 @@ export const auth = betterAuth({
     provider: "pg",
     schema: authSchema,
   }),
+  emailAndPassword: {
+    enabled: true,
+    autoSignIn: true,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      // For now, we'll just log the reset URL
+      // In production, you'd send an actual email
+      console.log(`Password reset for ${user.email}: ${url}`);
+      
+      // TODO: Implement actual email sending
+      // You can use services like Resend, SendGrid, or your own SMTP server
+      // Example with Resend:
+      // await resend.emails.send({
+      //   from: 'noreply@yourdomain.com',
+      //   to: user.email,
+      //   subject: 'Nulstil dit password',
+      //   html: `<p>Klik på linket for at nulstille dit password: <a href="${url}">${url}</a></p>`
+      // });
+    }
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,

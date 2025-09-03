@@ -3,6 +3,7 @@
 import { BetterAuthUser } from "../../../lib/auth-types";
 import { RSVPForm } from "./RSVPForm";
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface RSVPSectionProps {
   user: BetterAuthUser | null;
@@ -10,9 +11,16 @@ interface RSVPSectionProps {
 }
 
 export function RSVPSection({ user, onRSVPSubmitted }: RSVPSectionProps) {
+  const [isAttending, setIsAttending] = useState<boolean | null>(null);
+
   if (!user) {
     return null;
   }
+
+  const handleRSVPLoaded = (rsvp: { attending: boolean } | null) => {
+    setIsAttending(rsvp?.attending ?? null);
+  };
+
   return (
     <motion.div
       id="rsvp-section"
@@ -36,7 +44,7 @@ export function RSVPSection({ user, onRSVPSubmitted }: RSVPSectionProps) {
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
         >
-          Svar venligst
+          {isAttending ? "Opdater tilmelding" : "Svar venligst"}
         </motion.h2>
         <motion.p
           className="text-xl md:text-2xl text-[hsl(25,10%,50%)] wedding-abramo font-light"
@@ -45,7 +53,9 @@ export function RSVPSection({ user, onRSVPSubmitted }: RSVPSectionProps) {
           transition={{ duration: 0.6, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          Hej {user.name}! Vi glæder os til at fejre dagen med dig.
+          {isAttending
+            ? `Hej ${user.name}! Hvis du har noget at ændre, kan du gøre det her`
+            : `Hej ${user.name}! Vi glæder os til at fejre dagen med dig.`}
         </motion.p>
         <motion.div
           className="wedding-divider"
@@ -63,7 +73,11 @@ export function RSVPSection({ user, onRSVPSubmitted }: RSVPSectionProps) {
         transition={{ duration: 0.8, delay: 0.4 }}
         viewport={{ once: true }}
       >
-        <RSVPForm user={user} onRSVPSubmitted={onRSVPSubmitted} />
+        <RSVPForm
+          user={user}
+          onRSVPSubmitted={onRSVPSubmitted}
+          onRSVPLoaded={handleRSVPLoaded}
+        />
       </motion.div>
     </motion.div>
   );
