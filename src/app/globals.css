@@ -131,9 +131,9 @@ body {
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
     
-    .wedding-button {
+.wedding-button {
   background: var(--wedding-button-color);
-    color: var(--wedding-ivory);
+  color: var(--wedding-ivory);
     border: 1px solid var(--wedding-bronze);
     transition: all 0.3s ease;
   box-shadow: 0 2px 8px rgba(42, 58, 74, 0.2);
@@ -154,13 +154,14 @@ body {
   font-weight: 400;
   }
   
-        .wedding-abramo {
-          font-family: 'Times New Roman', 'Crimson Text', serif;
-          font-weight: 400;
-        }
-  .wedding-serif {
-    font-family: 'Times New Roman', 'Crimson Text', serif;
+.wedding-abramo {
+  font-family: 'Abramo', 'Crimson Text', serif;
+    font-weight: 400;
   }
+
+.wedding-serif {
+  font-family: 'Times New Roman', 'Crimson Text', serif;
+}
 .wedding-border {
   border: 1px solid var(--wedding-bronze);
 }

@@ -10,7 +10,7 @@ interface WeddingEvent {
   location: string;
   locationDetails?: string;
   program?: string;
-  dresscode?: string;
+  wishes?: string;
   additionalInfo?: string;
   createdAt: string;
   updatedAt: string;
@@ -27,7 +27,7 @@ export function WeddingEventEditor() {
     location: "",
     locationDetails: "",
     program: "",
-    dresscode: "",
+    wishes: "",
     additionalInfo: "",
   });
 
@@ -44,12 +44,14 @@ export function WeddingEventEditor() {
         setEvent(result.data);
         setFormData({
           title: result.data.title || "",
-          date: result.data.date ? new Date(result.data.date).toISOString().split('T')[0] : "",
+          date: result.data.date
+            ? new Date(result.data.date).toISOString().split("T")[0]
+            : "",
           time: result.data.time || "",
           location: result.data.location || "",
           locationDetails: result.data.locationDetails || "",
           program: result.data.program || "",
-          dresscode: result.data.dresscode || "",
+          wishes: result.data.wishes || "",
           additionalInfo: result.data.additionalInfo || "",
         });
       }
@@ -90,9 +92,9 @@ export function WeddingEventEditor() {
   };
 
   const handleChange = (field: string, value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
@@ -202,17 +204,17 @@ export function WeddingEventEditor() {
           />
         </div>
 
-        {/* Dresscode */}
+        {/* Wishes */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Dresscode
+            Ønsker
           </label>
           <textarea
-            value={formData.dresscode}
-            onChange={(e) => handleChange("dresscode", e.target.value)}
+            value={formData.wishes}
+            onChange={(e) => handleChange("wishes", e.target.value)}
             rows={3}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Beskriv dresscoden (f.eks. festligt, mørkt tøj, etc.)"
+            placeholder="Beskriv dine ønsker til gæsterne"
           />
         </div>
 
@@ -226,7 +228,7 @@ export function WeddingEventEditor() {
             onChange={(e) => handleChange("additionalInfo", e.target.value)}
             rows={4}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Eventuelle særlige oplysninger, gaveønsker, transport, etc."
+            placeholder="Eventuelle særlige oplysninger, transport, etc."
           />
         </div>
 

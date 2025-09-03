@@ -23,20 +23,11 @@ export function WeddingHero({ user }: WeddingHeroProps) {
     }
   };
 
-  const handleScrollToRSVP = () => {
-    if (user) {
-      document.getElementById("rsvp-section")?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  };
-
   return (
     <section className="wedding-hero relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Reduced background overlay */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 z-10"
+        className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}
@@ -98,6 +89,18 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           >
             Vi inviterer jer til at fejre vores kærlighed
           </motion.p>
+
+          {/* Save the date */}
+          <motion.p
+            className="text-xl md:text-2xl lg:text-3xl mt-6 wedding-abramo font-medium text-wedding-ivory"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 2.4 }}
+          >
+            Save the date
+            <br />
+            26.06.2026
+          </motion.p>
         </motion.div>
 
         {/* Call to action button */}
@@ -106,67 +109,15 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 2.5 }}
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
+          <Button
+            onClick={handleAuthAction}
+            size="lg"
+            className="hover:scale-105 wedding-button cursor-pointer px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium shadow-2xl min-w-[160px] md:min-w-[200px]"
           >
-            <Button
-              onClick={handleAuthAction}
-              size="lg"
-              className="wedding-button px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium shadow-2xl min-w-[160px] md:min-w-[200px]"
-            >
-              Timeld dig
-            </Button>
-          </motion.div>
+            Tilmeld dig
+          </Button>
         </motion.div>
       </motion.div>
-
-      {/* Scroll indicator - only show if user is logged in */}
-      {user && (
-        <motion.div
-          className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 3.0 }}
-        >
-          <motion.div
-            className="flex flex-col items-center cursor-pointer"
-            animate={{ y: [0, 8, 0] }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            onClick={handleScrollToRSVP}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            {/* Arrow */}
-            <motion.svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              className="text-white/80 hover:text-white transition-colors duration-200"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <path
-                d="M12 5L12 19M12 19L6 13M12 19L18 13"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.svg>
-          </motion.div>
-        </motion.div>
-      )}
     </section>
   );
 }

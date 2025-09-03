@@ -14,7 +14,7 @@ export async function createOrUpdateWeddingEvent(eventData: {
   location: string;
   locationDetails?: string;
   program?: string;
-  dresscode?: string;
+  wishes?: string;
   additionalInfo?: string;
 }) {
   const existingEvent = await getWeddingEvent();
