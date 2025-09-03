@@ -21,10 +21,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
   const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     
-    console.log("handleSubmit called with email:", email);
-    
     if (!email) {
-      console.log("No email provided");
       return;
     }
 
@@ -32,25 +29,19 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
     setError(null);
 
     try {
-      console.log("Calling forgetPassword with:", { email, redirectTo: `${window.location.origin}/reset-password` });
-      
       const response = await forgetPassword({
         email,
         redirectTo: `${window.location.origin}/reset-password`,
       });
 
-      console.log("forgetPassword response:", response);
-
       if (response.error) {
-        console.log("Error in response:", response.error);
         setError(
           response.error.message ||
-          "Failed to send reset email. Please try again."
+              "Failed to send reset email. Please try again."
         );
         return;
       }
 
-      console.log("Success! Setting isSubmitted to true");
       setIsSubmitted(true);
     } catch (error) {
       console.error("Error in handleSubmit:", error);
