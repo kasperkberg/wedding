@@ -4,6 +4,7 @@ import { WeddingEventDisplay } from "./WeddingEventDisplay";
 import { RSVPSection } from "./RSVPSection";
 import { motion } from "framer-motion";
 import { BetterAuthUser } from "../../../lib/auth-types";
+import { useState, useEffect } from "react";
 
 interface WeddingEvent {
   id: number;
@@ -25,6 +26,26 @@ interface WeddingDashboardProps {
 }
 
 export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
+  const [rsvpSubmitted, setRsvpSubmitted] = useState(false);
+
+  useEffect(() => {
+    // Check if the user has submitted their RSVP
+    const checkExistingRSVP = async () => {
+      try {
+        const response = await fetch(`/api/rsvp?userId=${user.id}`);
+        const result = await response.json();
+        
+        if (result.success && result.data) {
+          setRsvpSubmitted(true);
+        }
+      } catch (error) {
+        console.error("Error checking RSVP:", error);
+      }
+    };
+    
+    checkExistingRSVP();
+  }, [user.id]);
+
   return (
     <div className="min-h-screen wedding-gradient-sage">
       {/* Main Content */}
@@ -69,59 +90,57 @@ export function WeddingDashboard({ user, event }: WeddingDashboardProps) {
               >
                 Vi gifter os
               </motion.p>
-
-
             </motion.div>
           </motion.section>
 
-          {/* Wedding Event Information */}
+          {/* RSVP Section - Show first */}
           <motion.section
             className="mb-20"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div
-              className="text-center mb-12"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              viewport={{ once: true }}
+            <RSVPSection user={user} onRSVPSubmitted={() => setRsvpSubmitted(true)} />
+          </motion.section>
+
+          {/* Wedding Event Information - Show after RSVP submission */}
+          {rsvpSubmitted && (
+            <motion.section
+              className="mb-20"
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewport={{ once: true, margin: "-100px" }}
             >
-              <motion.h2
-                className="text-3xl md:text-4xl lg:text-5xl font-bold wedding-abramo text-black mb-4"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.4, delay: 0.2 }}
+              <motion.div
+                className="text-center mb-12"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
                 viewport={{ once: true }}
               >
-                Bryllupsdetaljer
-              </motion.h2>
-              <motion.div
-                className="wedding-divider"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                viewport={{ once: true }}
-              />
-            </motion.div>
+                <motion.h2
+                  className="text-3xl md:text-4xl lg:text-5xl font-bold wedding-abramo text-black mb-4"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.4, delay: 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  Bryllupsdetaljer
+                </motion.h2>
+                <motion.div
+                  className="wedding-divider"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  transition={{ duration: 0.6, delay: 0.3 }}
+                  viewport={{ once: true }}
+                />
+              </motion.div>
 
-            <WeddingEventDisplay user={user} event={event} />
-          </motion.section>
-
-          {/* RSVP Section */}
-          <motion.section
-            className="mb-16"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, margin: "-100px" }}
-          >
-
-
-            <RSVPSection user={user} />
-          </motion.section>
+              <WeddingEventDisplay user={user} event={event} />
+            </motion.section>
+          )}
         </div>
       </motion.div>
     </div>

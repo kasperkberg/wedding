@@ -5,7 +5,7 @@ import { isAdmin } from "../../../lib/role-utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Clock, User } from "lucide-react";
+import { Calendar, MapPin, Clock, Gift } from "lucide-react";
 
 interface WeddingEvent {
   id: number;
@@ -197,11 +197,11 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
             <div className="text-center">
               <div className="text-5xl mb-6 text-wedding-bronze flex justify-center">
                 <div className="w-16 h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                  <User className="w-8 h-8" />
+                  <Gift className="w-8 h-8" />
                 </div>
               </div>
               <h4 className="text-lg md:text-xl lg:text-2xl font-bold text-black mb-3 wedding-abramo">
-                Påklædning
+                Ønsker
               </h4>
               <div className="text-[hsl(25,10%,50%)] text-sm md:text-base text-center">
                 {event.dresscode.split("\n").map((line, index) => (

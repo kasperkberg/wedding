@@ -6,9 +6,10 @@ import { motion } from "framer-motion";
 
 interface RSVPSectionProps {
   user: BetterAuthUser | null;
+  onRSVPSubmitted?: () => void;
 }
 
-export function RSVPSection({ user }: RSVPSectionProps) {
+export function RSVPSection({ user, onRSVPSubmitted }: RSVPSectionProps) {
   if (!user) {
     return null;
   }
@@ -44,7 +45,7 @@ export function RSVPSection({ user }: RSVPSectionProps) {
           transition={{ duration: 0.6, delay: 0.8 }}
           viewport={{ once: true }}
         >
-          Hej {user.name}! Vi glæder os til at fejre med dig.
+          Hej {user.name}! Vi glæder os til at fejre dagen med dig.
         </motion.p>
         <motion.div
           className="wedding-divider"
@@ -62,7 +63,7 @@ export function RSVPSection({ user }: RSVPSectionProps) {
         transition={{ duration: 0.8, delay: 0.4 }}
         viewport={{ once: true }}
       >
-        <RSVPForm user={user} />
+        <RSVPForm user={user} onRSVPSubmitted={onRSVPSubmitted} />
       </motion.div>
     </motion.div>
   );

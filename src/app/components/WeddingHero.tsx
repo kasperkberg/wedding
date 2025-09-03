@@ -98,6 +98,16 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           >
             Vi inviterer jer til at fejre vores kærlighed
           </motion.p>
+
+          {/* Save the date */}
+          <motion.p
+            className="text-xl md:text-2xl lg:text-3xl mt-6 wedding-abramo font-medium text-wedding-bronze"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 2.4 }}
+          >
+            Save the date, 26.06.2026
+          </motion.p>
         </motion.div>
 
         {/* Call to action button */}
@@ -116,7 +126,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
               size="lg"
               className="wedding-button px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium shadow-2xl min-w-[160px] md:min-w-[200px]"
             >
-              Timeld dig
+              Tilmeld dig
             </Button>
           </motion.div>
         </motion.div>

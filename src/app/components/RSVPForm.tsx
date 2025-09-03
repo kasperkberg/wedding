@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 
@@ -34,9 +33,10 @@ interface AdditionalGuest {
 
 interface RSVPFormProps {
   user: User;
+  onRSVPSubmitted?: () => void;
 }
 
-export function RSVPForm({ user }: RSVPFormProps) {
+export function RSVPForm({ user, onRSVPSubmitted }: RSVPFormProps) {
   const [rsvp, setRsvp] = useState<RSVP | null>(null);
   const [additionalGuests, setAdditionalGuests] = useState<AdditionalGuest[]>(
     []
@@ -178,6 +178,7 @@ export function RSVPForm({ user }: RSVPFormProps) {
       // Show confetti instead of alert
       showConfetti();
       fetchExistingRSVP(); // Refresh the data
+      onRSVPSubmitted?.(); // Call the prop function
     } catch (error) {
       console.error("Error saving RSVP:", error);
       // Don't show alert for errors either
@@ -236,309 +237,291 @@ export function RSVPForm({ user }: RSVPFormProps) {
       onSubmit={handleSubmit}
       className="space-y-8"
     >
-      {/* Attendance */}
-      <motion.div variants={cardVariants}>
-        <Card>
-          <CardContent className="p-6">
+      {/* Combined Form - All sections in one cohesive form */}
+      <motion.div variants={cardVariants} className="bg-white rounded-lg p-8 shadow-lg border border-wedding-linen">
+        {/* Attendance */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="mb-8"
+        >
+          <Label className="block text-xl font-bold mb-6 text-black">
+            Vil du deltage? *
+          </Label>
+        </motion.div>
+
+        {/* Name Input */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.4 }}
+          className="mb-6"
+        >
+          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+            Dit navn
+          </Label>
+          <Input
+            type="text"
+            value={formData.name || user.name || ""}
+            onChange={(e) =>
+              setFormData((prev) => ({ ...prev, name: e.target.value }))
+            }
+            placeholder="Dit navn"
+            className="max-w-md"
+          />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.4 }}
+          className="grid md:grid-cols-2 gap-4 mb-8"
+        >
+          <motion.label
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border"
+          >
+            <input
+              type="radio"
+              name="attending"
+              checked={formData.attending}
+              onChange={() =>
+                setFormData((prev) => ({ ...prev, attending: true }))
+              }
+              className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+            />
+            <span className="ml-3 text-lg wedding-abramo">
+              Ja, jeg deltager med glæde
+            </span>
+          </motion.label>
+          <motion.label
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: "spring", stiffness: 300 }}
+            className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border"
+          >
+            <input
+              type="radio"
+              name="attending"
+              checked={!formData.attending}
+              onChange={() =>
+                setFormData((prev) => ({ ...prev, attending: false }))
+              }
+              className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+            />
+            <span className="ml-3 text-lg wedding-abramo">
+              Desværre, jeg kan ikke deltage
+            </span>
+          </motion.label>
+        </motion.div>
+
+        {/* Main Guest Details - Only show if attending */}
+        {formData.attending && (
+          <>
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
+              className="mb-6 pt-6 border-t border-wedding-linen"
             >
-              <Label className="block text-xl font-bold mb-6 text-black">
-                Vil du deltage? *
-              </Label>
+              <h3 className="text-xl mb-6 wedding-abramo text-black font-semibold">
+                Dine oplysninger
+              </h3>
             </motion.div>
-
-            {/* Name Input */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
-              className="mb-6"
-            >
-              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
-                Dit navn
-              </Label>
-              <Input
-                type="text"
-                value={formData.name || user.name || ""}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, name: e.target.value }))
-                }
-                placeholder="Dit navn"
-                className="max-w-md"
-              />
-            </motion.div>
-
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.4 }}
-              className="grid md:grid-cols-2 gap-4"
+              className="space-y-4 mb-8"
             >
-              <motion.label
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              <motion.div
+                whileFocus={{ scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border"
               >
-                <input
-                  type="radio"
-                  name="attending"
-                  checked={formData.attending}
-                  onChange={() =>
-                    setFormData((prev) => ({ ...prev, attending: true }))
+                <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                  Allergier eller særlige kosthensyn
+                </Label>
+                <Input
+                  type="text"
+                  value={formData.allergies}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      allergies: e.target.value,
+                    }))
                   }
-                  className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+                  placeholder="f.eks. nødder, laktose, vegetar"
                 />
-                <span className="ml-3 text-lg wedding-abramo">
-                  Ja, jeg deltager med glæde
-                </span>
-              </motion.label>
-              <motion.label
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+              </motion.div>
+              <motion.div
+                whileFocus={{ scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="flex items-center p-4 bg-wedding-ivory rounded-lg border-2 border-transparent hover:border-wedding-bronze cursor-pointer transition-all wedding-border"
               >
-                <input
-                  type="radio"
-                  name="attending"
-                  checked={!formData.attending}
-                  onChange={() =>
-                    setFormData((prev) => ({ ...prev, attending: false }))
+                <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                  Madpræferencer
+                </Label>
+                <Input
+                  type="text"
+                  value={formData.foodPreferences}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      foodPreferences: e.target.value,
+                    }))
                   }
-                  className="w-5 h-5 text-wedding-bronze focus:ring-wedding-bronze"
+                  placeholder="f.eks. ingen fisk, kan lide spicy mad"
                 />
-                <span className="ml-3 text-lg wedding-abramo">
-                  Desværre, jeg kan ikke deltage
-                </span>
-              </motion.label>
+              </motion.div>
             </motion.div>
-          </CardContent>
-        </Card>
-      </motion.div>
 
-      {/* Main Guest Details */}
-      {formData.attending && (
-        <motion.div variants={cardVariants}>
-          <Card>
-            <CardContent className="p-6">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-              >
-                <CardTitle className="text-xl mb-6 wedding-abramo text-black">
-                  Dine oplysninger
-                </CardTitle>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-                className="space-y-4"
-              >
-                <motion.div
-                  whileFocus={{ scale: 1.01 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
-                    Allergier eller særlige kosthensyn
-                  </Label>
-                  <Input
-                    type="text"
-                    value={formData.allergies}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        allergies: e.target.value,
-                      }))
-                    }
-                    placeholder="f.eks. nødder, laktose, vegetar"
-                  />
-                </motion.div>
-                <motion.div
-                  whileFocus={{ scale: 1.01 }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                >
-                  <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
-                    Madpræferencer
-                  </Label>
-                  <Input
-                    type="text"
-                    value={formData.foodPreferences}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        foodPreferences: e.target.value,
-                      }))
-                    }
-                    placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                  />
-                </motion.div>
-              </motion.div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
-
-      {/* Additional Guest */}
-      {formData.attending && (
-        <motion.div variants={cardVariants}>
-          <Card>
-            <CardContent className="p-6">
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-              >
-                <CardTitle className="text-xl mb-6 wedding-abramo text-black">
-                  Ønsker du at medbringe én person?
-                </CardTitle>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.4 }}
-              >
-                <Card className="bg-white py-2">
-                  <CardContent className="p-4">
-                    <div className="space-y-4">
-                      <motion.div
-                        whileFocus={{ scale: 1.01 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <Input
-                          type="text"
-                          placeholder="Navn på gæst"
-                          value={guestForm.name}
-                          onChange={(e) =>
-                            updateGuestForm("name", e.target.value)
-                          }
-                        />
-                      </motion.div>
-
-                      {/* Only show checkbox when editing an existing guest */}
-                      {additionalGuests.length > 0 && (
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          className="flex items-center"
-                        >
-                          <input
-                            type="checkbox"
-                            checked={guestForm.attending}
-                            onChange={(e) =>
-                              updateGuestForm("attending", e.target.checked)
-                            }
-                            className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
-                          />
-                          <span className="ml-3">Gæsten deltager også</span>
-                        </motion.div>
-                      )}
-
-                      {guestForm.name.trim() && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3 }}
-                          className="mt-6 pt-4 border-t"
-                        >
-                          <motion.h4
-                            initial={{ opacity: 0, x: -10 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.1, duration: 0.3 }}
-                            className="text-lg font-semibold mb-4"
-                          >
-                            {guestForm.name}s oplysninger
-                          </motion.h4>
-                          <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.3 }}
-                            className="space-y-4"
-                          >
-                            <motion.div
-                              whileFocus={{ scale: 1.01 }}
-                              transition={{ type: "spring", stiffness: 300 }}
-                            >
-                              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
-                                Gæstens allergier eller særlige kosthensyn
-                              </Label>
-                              <Input
-                                type="text"
-                                value={guestForm.allergies}
-                                onChange={(e) =>
-                                  updateGuestForm("allergies", e.target.value)
-                                }
-                                placeholder="f.eks. nødder, laktose, vegetar"
-                              />
-                            </motion.div>
-                            <motion.div
-                              whileFocus={{ scale: 1.01 }}
-                              transition={{ type: "spring", stiffness: 300 }}
-                            >
-                              <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
-                                Gæstens madpræferencer
-                              </Label>
-                              <Input
-                                type="text"
-                                value={guestForm.foodPreferences}
-                                onChange={(e) =>
-                                  updateGuestForm(
-                                    "foodPreferences",
-                                    e.target.value
-                                  )
-                                }
-                                placeholder="f.eks. ingen fisk, kan lide spicy mad"
-                              />
-                            </motion.div>
-                          </motion.div>
-                        </motion.div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            </CardContent>
-          </Card>
-        </motion.div>
-      )}
-
-      {/* Message */}
-      <motion.div variants={cardVariants}>
-        <Card>
-          <CardContent className="p-6">
+            {/* Additional Guest */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.4 }}
+              className="mb-6 pt-6 border-t border-wedding-linen"
             >
-              <CardTitle className="text-xl mb-4 wedding-abramo text-black">
-                Besked
-              </CardTitle>
+              <h3 className="text-xl mb-6 wedding-abramo text-black font-semibold">
+                Ønsker du at svare på vegne af flere inviterede?
+              </h3>
             </motion.div>
             <motion.div
-              whileFocus={{ scale: 1.01 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.4 }}
+              className="mb-8"
             >
-              <Textarea
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, message: e.target.value }))
-                }
-                rows={4}
-                placeholder={
-                  formData.attending
-                    ? "Eventuelle kommentarer, ønsker eller spørgsmål..."
-                    : "Årsag til at du ikke kan deltage..."
-                }
-              />
+              <div className="bg-wedding-ivory rounded-lg p-6 border border-wedding-linen">
+                <div className="space-y-4">
+                  <motion.div
+                    whileFocus={{ scale: 1.01 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Input
+                      type="text"
+                      placeholder="Navn på gæst"
+                      value={guestForm.name}
+                      onChange={(e) =>
+                        updateGuestForm("name", e.target.value)
+                      }
+                    />
+                  </motion.div>
+
+                  {/* Only show checkbox when editing an existing guest */}
+                  {additionalGuests.length > 0 && (
+                    <motion.div
+                      whileHover={{ scale: 1.02 }}
+                      className="flex items-center"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={guestForm.attending}
+                        onChange={(e) =>
+                          updateGuestForm("attending", e.target.checked)
+                        }
+                        className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
+                      />
+                      <span className="ml-3">Gæsten deltager også</span>
+                    </motion.div>
+                  )}
+
+                  {guestForm.name.trim() && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="mt-6 pt-4 border-t border-wedding-linen"
+                    >
+                      <motion.h4
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.1, duration: 0.3 }}
+                        className="text-lg font-semibold mb-4"
+                      >
+                        {guestForm.name}s oplysninger
+                      </motion.h4>
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 0.2, duration: 0.3 }}
+                        className="space-y-4"
+                      >
+                        <motion.div
+                          whileFocus={{ scale: 1.01 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                            Gæstens allergier eller særlige kosthensyn
+                          </Label>
+                          <Input
+                            type="text"
+                            value={guestForm.allergies}
+                            onChange={(e) =>
+                              updateGuestForm("allergies", e.target.value)
+                            }
+                            placeholder="f.eks. nødder, laktose, vegetar"
+                          />
+                        </motion.div>
+                        <motion.div
+                          whileFocus={{ scale: 1.01 }}
+                          transition={{ type: "spring", stiffness: 300 }}
+                        >
+                          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                            Gæstens madpræferencer
+                          </Label>
+                          <Input
+                            type="text"
+                            value={guestForm.foodPreferences}
+                            onChange={(e) =>
+                              updateGuestForm(
+                                "foodPreferences",
+                                e.target.value
+                              )
+                            }
+                            placeholder="f.eks. ingen fisk, kan lide spicy mad"
+                          />
+                        </motion.div>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
             </motion.div>
-          </CardContent>
-        </Card>
+          </>
+        )}
+
+        {/* Message */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.4 }}
+          className="pt-6 border-t border-wedding-linen"
+        >
+          <h3 className="text-xl mb-4 wedding-abramo text-black font-semibold">
+            Besked
+          </h3>
+          <motion.div
+            whileFocus={{ scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <Textarea
+              value={formData.message}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, message: e.target.value }))
+              }
+              rows={4}
+              placeholder={
+                formData.attending
+                  ? "Eventuelle kommentarer, ønsker eller spørgsmål..."
+                  : "Årsag til at du ikke kan deltage..."
+              }
+            />
+          </motion.div>
+        </motion.div>
       </motion.div>
 
       {/* Submit Button */}
@@ -580,19 +563,17 @@ export function RSVPForm({ user }: RSVPFormProps) {
           transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
           variants={cardVariants}
         >
-          <Card>
-            <CardContent className="p-3 text-center text-sm">
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.7, duration: 0.3 }}
-                className="text-muted-foreground"
-              >
-                Sidst opdateret:{" "}
-                {new Date(rsvp.updatedAt).toLocaleString("da-DK")}
-              </motion.p>
-            </CardContent>
-          </Card>
+          <div className="bg-white rounded-lg p-6 shadow-lg border border-wedding-linen">
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.3 }}
+              className="text-muted-foreground"
+            >
+              Sidst opdateret:{" "}
+              {new Date(rsvp.updatedAt).toLocaleString("da-DK")}
+            </motion.p>
+          </div>
         </motion.div>
       )}
     </motion.form>
