@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "../../../lib/auth-client";
+import { ForgotPasswordForm } from "@/components/auth/forgot-password-form";
 
 interface EmailLoginFormProps {
   onBack: () => void;
@@ -23,13 +24,12 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [authError, setAuthError] = useState<string>("");
   const [showForgotPassword, setShowForgotPassword] = useState(false);
-  const [resetEmailSent, setResetEmailSent] = useState(false);
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (errors[field]) {
-      setErrors(prev => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }));
     }
     // Clear auth error when user starts typing
     if (authError) {
@@ -76,20 +76,29 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
 
     try {
       if (isSignUp) {
-        const { data, error } = await authClient.signUp.email({
-          email: formData.email,
-          password: formData.password,
-          name: formData.name,
-          callbackURL: "/",
-        }, {
-          onError: (ctx) => {
-            setAuthError(`Opretning af konto fejlede: ${ctx.error.message}`);
+        const { data, error } = await authClient.signUp.email(
+          {
+            email: formData.email,
+            password: formData.password,
+            name: formData.name,
+            callbackURL: "/",
           },
-        });
+          {
+            onError: (ctx) => {
+              setAuthError(`Opretning af konto fejlede: ${ctx.error.message}`);
+            },
+          }
+        );
 
         if (error) {
-          if (error.message?.includes("already exists") || error.message?.includes("duplicate") || error.message?.includes("unique")) {
-            setAuthError("En bruger med denne email findes allerede. Prøv at logge ind i stedet.");
+          if (
+            error.message?.includes("already exists") ||
+            error.message?.includes("duplicate") ||
+            error.message?.includes("unique")
+          ) {
+            setAuthError(
+              "En bruger med denne email findes allerede. Prøv at logge ind i stedet."
+            );
           } else {
             setAuthError(`Opretning af konto fejlede: ${error.message}`);
           }
@@ -113,22 +122,34 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
           }
         }
       } else {
-        const { data, error } = await authClient.signIn.email({
-          email: formData.email,
-          password: formData.password,
-          callbackURL: "/",
-          rememberMe: true,
-        }, {
-        onError: (ctx) => {
-            setAuthError(`Log ind fejlede: ${ctx.error.message}`);
+        const { data, error } = await authClient.signIn.email(
+          {
+            email: formData.email,
+            password: formData.password,
+            callbackURL: "/",
+            rememberMe: true,
           },
-        });
+          {
+            onError: (ctx) => {
+              setAuthError(`Log ind fejlede: ${ctx.error.message}`);
+            },
+          }
+        );
 
         if (error) {
-          if (error.message?.includes("invalid") || error.message?.includes("wrong") || error.message?.includes("incorrect")) {
+          if (
+            error.message?.includes("invalid") ||
+            error.message?.includes("wrong") ||
+            error.message?.includes("incorrect")
+          ) {
             setAuthError("Forkert email eller password. Prøv igen.");
-          } else if (error.message?.includes("not found") || error.message?.includes("doesn't exist")) {
-            setAuthError("Ingen bruger fundet med denne email. Opret en konto i stedet.");
+          } else if (
+            error.message?.includes("not found") ||
+            error.message?.includes("doesn't exist")
+          ) {
+            setAuthError(
+              "Ingen bruger fundet med denne email. Opret en konto i stedet."
+            );
           } else {
             setAuthError(`Log ind fejlede: ${error.message}`);
           }
@@ -141,7 +162,9 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
               if (session.data?.user) {
                 window.location.href = "/";
               } else {
-                setAuthError("Log ind fejlede. Tjek venligst dine oplysninger.");
+                setAuthError(
+                  "Log ind fejlede. Tjek venligst dine oplysninger."
+                );
               }
             } catch (sessionError) {
               console.error("Error getting session:", sessionError);
@@ -152,34 +175,11 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
       }
     } catch (error) {
       console.error("Auth error:", error);
-      setAuthError(`Autentificering fejlede: ${error instanceof Error ? error.message : 'Ukendt fejl'}`);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleForgotPassword = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!formData.email) {
-      setErrors({ email: "Email er påkrævet" });
-      return;
-    }
-
-    setIsLoading(true);
-    setAuthError("");
-
-    try {
-      // For now, just console log the password reset attempt
-      console.log(`Password reset requested for: ${formData.email}`);
-      console.log("In a real implementation, this would send a reset email");
-      
-      // Simulate success
-      setResetEmailSent(true);
-      setAuthError("");
-    } catch (error) {
-      console.error("Password reset error:", error);
-      setAuthError(`Password reset fejlede: ${error instanceof Error ? error.message : 'Ukendt fejl'}`);
+      setAuthError(
+        `Autentificering fejlede: ${
+          error instanceof Error ? error.message : "Ukendt fejl"
+        }`
+      );
     } finally {
       setIsLoading(false);
     }
@@ -396,89 +396,7 @@ export function EmailLoginForm({ onBack }: EmailLoginFormProps) {
 
       {/* Forgot Password Form */}
       {showForgotPassword && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          transition={{ duration: 0.2 }}
-          className="mt-6 space-y-4"
-        >
-          {!resetEmailSent ? (
-            <>
-              <h3 className="text-lg font-medium text-wedding-navy mb-4">
-                Glemt password?
-              </h3>
-              <p className="text-sm text-wedding-stone mb-4">
-                Indtast din email for at få et nyt password.
-              </p>
-              <form onSubmit={handleForgotPassword} className="space-y-3">
-                <div>
-                  <Label htmlFor="forgotEmail" className="text-sm font-medium text-wedding-navy">
-                    Email
-                  </Label>
-                  <Input
-                    id="forgotEmail"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={`mt-1 border-wedding-linen focus:border-wedding-bronze ${
-                      errors.email ? "border-red-300 focus:border-red-500" : ""
-                    }`}
-                    placeholder="din.email@eksempel.dk"
-                  />
-                  {errors.email && (
-                    <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-                  )}
-                </div>
-                <motion.div whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full wedding-button cursor-pointer py-3 text-lg font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {isLoading ? "Sender..." : "Send reset link"}
-                  </Button>
-                </motion.div>
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  type="button"
-                  onClick={() => setShowForgotPassword(false)}
-                  className="w-full text-sm text-wedding-navy hover:text-wedding-bronze transition-colors duration-200"
-                >
-                  Tilbage til login
-                </motion.button>
-              </form>
-            </>
-          ) : (
-            <div className="text-center">
-              <div className="text-5xl mb-4 text-wedding-bronze flex justify-center">
-                <div className="w-12 h-12 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                  <svg className="w-6 h-6 text-wedding-bronze" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 00-2-2H5a2 2 0 002 2z" />
-                  </svg>
-                </div>
-              </div>
-              <h3 className="text-lg font-medium text-wedding-navy mb-2">
-                Email sendt!
-              </h3>
-              <p className="text-sm text-wedding-stone mb-4">
-                Tjek din email for et link til at nulstille dit password.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => {
-                  setShowForgotPassword(false);
-                  setResetEmailSent(false);
-                }}
-                className="text-sm text-wedding-bronze hover:text-wedding-bronze/80 transition-colors duration-200"
-              >
-                Tilbage til login
-              </motion.button>
-            </div>
-          )}
-        </motion.div>
+        <ForgotPasswordForm onBack={() => setShowForgotPassword(false)} />
       )}
     </motion.div>
   );

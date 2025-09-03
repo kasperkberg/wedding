@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/lib/db";
 import * as authSchema from "../auth-schema";
+import { sendPasswordResetEmail } from "./email-service";
 
 export const auth = betterAuth({
   database: drizzleAdapter(db, {
@@ -12,20 +13,25 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: true,
     sendResetPassword: async ({ user, url, token }, request) => {
-      // For now, we'll just log the reset URL
-      // In production, you'd send an actual email
-      console.log(`Password reset for ${user.email}: ${url}`);
-      
-      // TODO: Implement actual email sending
-      // You can use services like Resend, SendGrid, or your own SMTP server
-      // Example with Resend:
-      // await resend.emails.send({
-      //   from: 'noreply@yourdomain.com',
-      //   to: user.email,
-      //   subject: 'Nulstil dit password',
-      //   html: `<p>Klik på linket for at nulstille dit password: <a href="${url}">${url}</a></p>`
-      // });
-    }
+      try {
+        const result = await sendPasswordResetEmail({
+          to: user.email,
+          resetUrl: url,
+          userName: user.name,
+          token: token,
+        });
+
+        if (!result.success) {
+          console.error("Failed to send password reset email:", result.error);
+          throw new Error("Failed to send password reset email");
+        }
+
+        console.log(`Password reset email sent to ${user.email}`);
+      } catch (error) {
+        console.error("Error sending password reset email:", error);
+        throw error;
+      }
+    },
   },
   socialProviders: {
     google: {
