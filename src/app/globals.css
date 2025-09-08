@@ -117,11 +117,18 @@ body {
 /* Wedding-specific styles */
 .wedding-hero {
   background:
-    linear-gradient(135deg, rgba(196, 205, 191, 0.95) 0%, rgba(245, 242, 237, 0.9) 100%),
-    url('/images/background.jpg') center/cover no-repeat;
+    linear-gradient(135deg, rgba(196, 205, 191, 0.8) 0%, rgba(245, 242, 237, 0.9) 100%),
+      url('/images/bg-mobile.png') center/cover no-repeat;
   min-height: 100vh;
 }
 
+@media (min-width: 768px) {
+  .wedding-hero {
+    background:
+      linear-gradient(135deg, rgba(196, 205, 191, 0.8) 0%, rgba(245, 242, 237, 0.9) 100%),
+      url('/images/bg-desktop.png') center/cover no-repeat;
+  }
+}
 .wedding-card {
   background: rgba(245, 242, 237, 0.98);
   backdrop-filter: blur(8px);

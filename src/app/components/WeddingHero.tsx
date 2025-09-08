@@ -27,7 +27,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
     <section className="wedding-hero relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Reduced background overlay */}
       <motion.div
-        className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/50 z-10"
+        className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, ease: "easeOut" }}

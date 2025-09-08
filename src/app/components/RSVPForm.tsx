@@ -427,10 +427,7 @@ export function RSVPForm({
 
                   {/* Only show checkbox when editing an existing guest */}
                   {additionalGuests.length > 0 && (
-                    <motion.div
-                      whileHover={{ scale: 1.02 }}
-                      className="flex items-center"
-                    >
+                    <motion.div className="flex items-center">
                       <input
                         type="checkbox"
                         checked={guestForm.attending}
