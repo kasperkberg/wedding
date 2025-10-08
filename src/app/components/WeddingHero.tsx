@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { BetterAuthUser } from "../../../lib/auth-types";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface WeddingHeroProps {
   user: BetterAuthUser | null;
@@ -11,6 +12,37 @@ interface WeddingHeroProps {
 
 export function WeddingHero({ user }: WeddingHeroProps) {
   const router = useRouter();
+  const [weddingDate, setWeddingDate] = useState<string>("");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchWeddingDate = async () => {
+      try {
+        const response = await fetch("/api/wedding");
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          const date = new Date(result.data.date);
+          // Format the date in Europe/Oslo timezone
+          const formattedDate = date.toLocaleDateString("da-DK", {
+            timeZone: "Europe/Oslo",
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          });
+          setWeddingDate(formattedDate);
+        }
+      } catch (error) {
+        console.error("Error fetching wedding date:", error);
+        // Fallback to default date
+        setWeddingDate("26.06.2026");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchWeddingDate();
+  }, []);
 
   const handleAuthAction = () => {
     if (user) {
@@ -99,7 +131,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
           >
             Save the date
             <br />
-            26.06.2026
+            {loading ? "..." : weddingDate || "26.06.2026"}
           </motion.p>
         </motion.div>
 

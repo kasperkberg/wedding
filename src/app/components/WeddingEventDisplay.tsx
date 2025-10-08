@@ -81,12 +81,15 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("da-DK", {
+    // Format the date in Europe/Oslo timezone using toLocaleString
+    const osloDateString = date.toLocaleString("da-DK", {
+      timeZone: "Europe/Oslo",
       weekday: "long",
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+    return osloDateString;
   };
 
   return (
@@ -121,6 +124,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
               {event.time && (
                 <div className="text-black text-base">kl. {event.time}</div>
               )}
+              <div className="text-xs text-wedding-stone mt-1">Norsk tid</div>
             </div>
           </div>
         </motion.div>
