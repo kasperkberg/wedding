@@ -124,7 +124,6 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
               {event.time && (
                 <div className="text-black text-base">kl. {event.time}</div>
               )}
-              <div className="text-xs text-wedding-stone mt-1">Norsk tid</div>
             </div>
           </div>
         </motion.div>
