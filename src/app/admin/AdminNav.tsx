@@ -31,6 +31,7 @@ export function AdminNav({ user }: AdminNavProps) {
     { id: "participants", label: "Deltagere", href: "/admin/participants" },
     { id: "numbers", label: "Deltagerantal", href: "/admin/numbers" },
     { id: "dietary", label: "Allergier & Madpræferencer", href: "/admin/dietary" },
+    { id: "emails", label: "Emails", href: "/admin/emails" },
   ];
 
   const getCurrentTab = () => {
@@ -38,6 +39,7 @@ export function AdminNav({ user }: AdminNavProps) {
     if (pathname === "/admin/participants") return "participants";
     if (pathname === "/admin/numbers") return "numbers";
     if (pathname === "/admin/dietary") return "dietary";
+    if (pathname === "/admin/emails") return "emails";
     return "event-info";
   };
 

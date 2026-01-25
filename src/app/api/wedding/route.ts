@@ -34,6 +34,9 @@ export async function POST(request: Request) {
       program,
       wishes,
       additionalInfo,
+      dresscode,
+      toastmaster,
+      timeline,
     } = body;
 
     if (!title || !date || !location) {
@@ -55,6 +58,9 @@ export async function POST(request: Request) {
       program,
       wishes,
       additionalInfo,
+      dresscode: dresscode ?? null,
+      toastmaster: toastmaster ?? null,
+      timeline: timeline ?? null,
     };
 
     const result = await createOrUpdateWeddingEvent(eventData);

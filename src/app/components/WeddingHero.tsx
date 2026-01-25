@@ -146,7 +146,7 @@ export function WeddingHero({ user }: WeddingHeroProps) {
             size="lg"
             className="hover:scale-105 wedding-button cursor-pointer px-6 md:px-8 py-3 md:py-4 rounded-full text-base md:text-lg font-medium shadow-2xl min-w-[160px] md:min-w-[200px]"
           >
-            Tilmeld dig
+            Tilmeld dig / Log ind
           </Button>
         </motion.div>
       </motion.div>

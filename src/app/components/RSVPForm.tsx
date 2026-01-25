@@ -219,8 +219,8 @@ export function RSVPForm({
   if (loading) {
     return (
       <div className="text-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-        <p className="text-muted-foreground">Indlæser din RSVP...</p>
+        <div className="animate-spin rounded-full h-8 w-8 border-2 border-wedding-linen border-t-wedding-lemon mx-auto mb-4"></div>
+        <p className="wedding-abramo text-wedding-stone text-sm">Indlæser din RSVP...</p>
       </div>
     );
   }
@@ -254,7 +254,7 @@ export function RSVPForm({
       {/* Combined Form - All sections in one cohesive form */}
       <motion.div
         variants={cardVariants}
-        className="bg-white rounded-lg p-8 shadow-lg border border-wedding-linen"
+        className="wedding-card-enhanced p-6 md:p-8"
       >
         {/* Attendance */}
         <motion.div
@@ -263,7 +263,7 @@ export function RSVPForm({
           transition={{ delay: 0.2, duration: 0.4 }}
           className="mb-8"
         >
-          <Label className="block text-xl font-bold mb-6 text-black">
+          <Label className="block text-xl font-bold mb-6 text-wedding-charcoal">
             Vil du deltage?
           </Label>
         </motion.div>
@@ -275,7 +275,7 @@ export function RSVPForm({
           transition={{ delay: 0.3, duration: 0.4 }}
           className="mb-6"
         >
-          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+          <Label className="block text-sm font-semibold mb-2 text-wedding-stone">
             Dit navn
           </Label>
           <Input
@@ -344,7 +344,7 @@ export function RSVPForm({
               transition={{ delay: 0.2, duration: 0.4 }}
               className="mb-6 pt-6 border-t border-wedding-linen"
             >
-              <h3 className="text-xl mb-6 wedding-abramo text-black font-semibold">
+              <h3 className="text-xl mb-6 wedding-abramo text-wedding-charcoal font-semibold">
                 Dine oplysninger
               </h3>
             </motion.div>
@@ -358,7 +358,7 @@ export function RSVPForm({
                 whileFocus={{ scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                <Label className="block text-sm font-semibold mb-2 text-wedding-stone">
                   Allergier eller særlige kosthensyn
                 </Label>
                 <Input
@@ -377,7 +377,7 @@ export function RSVPForm({
                 whileFocus={{ scale: 1.01 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                <Label className="block text-sm font-semibold mb-2 text-wedding-stone">
                   Madpræferencer
                 </Label>
                 <Input
@@ -401,7 +401,7 @@ export function RSVPForm({
               transition={{ delay: 0.2, duration: 0.4 }}
               className="mb-6 pt-6 border-t border-wedding-linen"
             >
-              <h3 className="text-xl mb-6 wedding-abramo text-black font-semibold">
+              <h3 className="text-xl mb-6 wedding-abramo text-wedding-charcoal font-semibold">
                 Ønsker du at svare på vegne af flere inviterede?
               </h3>
             </motion.div>
@@ -434,7 +434,7 @@ export function RSVPForm({
                         onChange={(e) =>
                           updateGuestForm("attending", e.target.checked)
                         }
-                        className="w-5 h-5 text-wedding-forest focus:ring-wedding-forest"
+                        className="w-5 h-5 text-wedding-bronze focus:ring-wedding-forest"
                       />
                       <span className="ml-3">Gæsten deltager også</span>
                     </motion.div>
@@ -466,7 +466,7 @@ export function RSVPForm({
                           whileFocus={{ scale: 1.01 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
-                          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                          <Label className="block text-sm font-semibold mb-2 text-wedding-stone">
                             Gæstens allergier eller særlige kosthensyn
                           </Label>
                           <Input
@@ -482,7 +482,7 @@ export function RSVPForm({
                           whileFocus={{ scale: 1.01 }}
                           transition={{ type: "spring", stiffness: 300 }}
                         >
-                          <Label className="block text-sm font-semibold mb-2 text-[hsl(25,10%,50%)]">
+                          <Label className="block text-sm font-semibold mb-2 text-wedding-stone">
                             Gæstens madpræferencer
                           </Label>
                           <Input
@@ -510,7 +510,7 @@ export function RSVPForm({
           transition={{ delay: 0.2, duration: 0.4 }}
           className="pt-6 border-t border-wedding-linen"
         >
-          <h3 className="text-xl mb-4 wedding-abramo text-black font-semibold">
+          <h3 className="text-xl mb-4 wedding-abramo text-wedding-charcoal font-semibold">
             Besked
           </h3>
           <motion.div
@@ -572,12 +572,12 @@ export function RSVPForm({
           transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
           variants={cardVariants}
         >
-          <div className="bg-white rounded-lg p-6 shadow-lg border border-wedding-linen">
+          <div className="wedding-card-enhanced p-5 md:p-6">
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.7, duration: 0.3 }}
-              className="text-muted-foreground"
+              className="wedding-abramo text-wedding-stone text-sm"
             >
               Sidst opdateret:{" "}
               {new Date(rsvp.updatedAt).toLocaleString("da-DK")}

@@ -6,6 +6,7 @@ import {
   timestamp,
   boolean,
   integer,
+  jsonb,
 } from "drizzle-orm/pg-core";
 import { user } from "../../../auth-schema";
 
@@ -22,6 +23,9 @@ export const weddingEvent = pgTable("wedding_event", {
   program: text("program"),
   wishes: text("wishes"),
   additionalInfo: text("additional_info"),
+  dresscode: text("dresscode"),
+  toastmaster: text("toastmaster"),
+  timeline: jsonb("timeline"),
   createdAt: timestamp("created_at")
     .$defaultFn(() => new Date())
     .notNull(),

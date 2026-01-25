@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 
+type TimelineDay = { dayLabel: string; items: { timeFrom: string; timeTo: string; label: string }[] };
+type Timeline = { days: TimelineDay[] };
+
 interface WeddingEvent {
   id: number;
   title: string;
@@ -12,6 +15,9 @@ interface WeddingEvent {
   program?: string;
   wishes?: string;
   additionalInfo?: string;
+  dresscode?: string;
+  toastmaster?: string;
+  timeline?: Timeline | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -20,7 +26,19 @@ export function WeddingEventEditor() {
   const [event, setEvent] = useState<WeddingEvent | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    title: string;
+    date: string;
+    time: string;
+    location: string;
+    locationDetails: string;
+    program: string;
+    wishes: string;
+    additionalInfo: string;
+    dresscode: string;
+    toastmaster: string;
+    timeline: Timeline;
+  }>({
     title: "",
     date: "",
     time: "",
@@ -29,6 +47,9 @@ export function WeddingEventEditor() {
     program: "",
     wishes: "",
     additionalInfo: "",
+    dresscode: "",
+    toastmaster: "",
+    timeline: { days: [] },
   });
 
   useEffect(() => {
@@ -42,6 +63,9 @@ export function WeddingEventEditor() {
 
       if (result.success && result.data) {
         setEvent(result.data);
+        const t = result.data.timeline;
+        const timeline: Timeline =
+          t && Array.isArray(t.days) ? { days: t.days } : { days: [] };
         setFormData({
           title: result.data.title || "",
           date: result.data.date
@@ -51,8 +75,11 @@ export function WeddingEventEditor() {
           location: result.data.location || "",
           locationDetails: result.data.locationDetails || "",
           program: result.data.program || "",
-          wishes: result.data.wishes || "",
+          wishes: result.data.wishes || result.data.wishlist || "",
           additionalInfo: result.data.additionalInfo || "",
+          dresscode: result.data.dresscode || "",
+          toastmaster: result.data.toastmaster || "",
+          timeline,
         });
       }
     } catch (error) {
@@ -97,6 +124,46 @@ export function WeddingEventEditor() {
       [field]: value,
     }));
   };
+
+  const setTimeline = (updater: (prev: Timeline) => Timeline) => {
+    setFormData((prev) => ({ ...prev, timeline: updater(prev.timeline) }));
+  };
+
+  const addDay = () =>
+    setTimeline((t) => ({ days: [...t.days, { dayLabel: "Ny dag", items: [] }] }));
+  const deleteDay = (i: number) =>
+    setTimeline((t) => ({ days: t.days.filter((_, j) => j !== i) }));
+  const setDayLabel = (i: number, v: string) =>
+    setTimeline((t) => ({
+      days: t.days.map((d, j) => (j === i ? { ...d, dayLabel: v } : d)),
+    }));
+  const addItem = (dayI: number) =>
+    setTimeline((t) => ({
+      days: t.days.map((d, j) =>
+        j === dayI
+          ? { ...d, items: [...d.items, { timeFrom: "", timeTo: "", label: "" }] }
+          : d
+      ),
+    }));
+  const deleteItem = (dayI: number, itemI: number) =>
+    setTimeline((t) => ({
+      days: t.days.map((d, j) =>
+        j === dayI ? { ...d, items: d.items.filter((_, k) => k !== itemI) } : d
+      ),
+    }));
+  const setItem = (dayI: number, itemI: number, field: "timeFrom" | "timeTo" | "label", v: string) =>
+    setTimeline((t) => ({
+      days: t.days.map((d, j) =>
+        j === dayI
+          ? {
+              ...d,
+              items: d.items.map((it, k) =>
+                k === itemI ? { ...it, [field]: v } : it
+              ),
+            }
+          : d
+      ),
+    }));
 
   if (loading) {
     return (
@@ -204,6 +271,97 @@ export function WeddingEventEditor() {
           />
         </div>
 
+        {/* Tidslinje (program for flere dager) */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tidslinje (program for flere dager)
+          </label>
+          <p className="text-sm text-gray-500 mb-3">
+            Tilføj dager og for hver dag: fra/til klokkeslett og label.
+          </p>
+          {formData.timeline.days.map((day, dayI) => (
+            <fieldset
+              key={dayI}
+              className="mb-6 p-4 border border-gray-200 rounded-lg"
+            >
+              <div className="flex flex-wrap items-center gap-2 mb-3">
+                <input
+                  type="text"
+                  value={day.dayLabel}
+                  onChange={(e) => setDayLabel(dayI, e.target.value)}
+                  className="flex-1 min-w-[200px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  placeholder="F.eks. Fredag 26. juni 2026"
+                />
+                <button
+                  type="button"
+                  onClick={() => deleteDay(dayI)}
+                  className="px-2 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
+                >
+                  Slet dag
+                </button>
+              </div>
+              <div className="space-y-2 ml-2">
+                {day.items.map((item, itemI) => (
+                  <div
+                    key={itemI}
+                    className="flex flex-wrap gap-2 items-center"
+                  >
+                    <input
+                      type="text"
+                      value={item.timeFrom}
+                      onChange={(e) =>
+                        setItem(dayI, itemI, "timeFrom", e.target.value)
+                      }
+                      className="w-24 px-2 py-1.5 border border-gray-300 rounded text-sm"
+                      placeholder="12:45"
+                    />
+                    <span className="text-gray-400">–</span>
+                    <input
+                      type="text"
+                      value={item.timeTo}
+                      onChange={(e) =>
+                        setItem(dayI, itemI, "timeTo", e.target.value)
+                      }
+                      className="w-24 px-2 py-1.5 border border-gray-300 rounded text-sm"
+                      placeholder="13:00"
+                    />
+                    <input
+                      type="text"
+                      value={item.label}
+                      onChange={(e) =>
+                        setItem(dayI, itemI, "label", e.target.value)
+                      }
+                      className="flex-1 min-w-[180px] px-2 py-1.5 border border-gray-300 rounded text-sm"
+                      placeholder="Ankomst til kirken"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => deleteItem(dayI, itemI)}
+                      className="px-2 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
+                    >
+                      Slet
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={() => addItem(dayI)}
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  + Tilføj punkt
+                </button>
+              </div>
+            </fieldset>
+          ))}
+          <button
+            type="button"
+            onClick={addDay}
+            className="text-sm text-blue-600 hover:underline"
+          >
+            + Tilføj dag
+          </button>
+        </div>
+
         {/* Wishes */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -214,13 +372,42 @@ export function WeddingEventEditor() {
             onChange={(e) => handleChange("wishes", e.target.value)}
             rows={3}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Beskriv dine ønsker til gæsterne"
+            placeholder="Tekst (Inspo)[https://url]"
           />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-medium text-black mb-2">
+              Dresscode
+            </label>
+            <input
+              type="text"
+              value={formData.dresscode}
+              onChange={(e) => handleChange("dresscode", e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Tekst (Inspo)[https://url]"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-black mb-2">
+              Toastmaster
+            </label>
+            <textarea
+              value={formData.toastmaster}
+              onChange={(e) => handleChange("toastmaster", e.target.value)}
+              rows={4}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder={
+                "Navn, e-mail og telefon for begge toastmasters. Fx:\nOle: ole@mail.dk, +45 12 34 56 78\nKirsten: kirsten@mail.dk, 20 30 40 50"
+              }
+            />
+          </div>
         </div>
 
         {/* Additional Information */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-black mb-2">
             Yderligere information
           </label>
           <textarea
@@ -242,8 +429,8 @@ export function WeddingEventEditor() {
             {saving
               ? "Gemmer..."
               : event
-              ? "Opdater oplysninger"
-              : "Gem oplysninger"}
+                ? "Opdater oplysninger"
+                : "Gem oplysninger"}
           </button>
         </div>
       </form>

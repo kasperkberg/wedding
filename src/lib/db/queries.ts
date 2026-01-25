@@ -7,6 +7,10 @@ export async function getWeddingEvent() {
   return await db.select().from(weddingEvent).limit(1);
 }
 
+export type Timeline = {
+  days: { dayLabel: string; items: { timeFrom: string; timeTo: string; label: string }[] }[];
+};
+
 export async function createOrUpdateWeddingEvent(eventData: {
   title: string;
   date: Date;
@@ -16,6 +20,9 @@ export async function createOrUpdateWeddingEvent(eventData: {
   program?: string;
   wishes?: string;
   additionalInfo?: string;
+  dresscode?: string;
+  toastmaster?: string;
+  timeline?: Timeline | null;
 }) {
   const existingEvent = await getWeddingEvent();
 

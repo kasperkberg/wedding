@@ -5,7 +5,7 @@ import { isAdmin } from "../../../lib/role-utils";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Clock, Gift } from "lucide-react";
+import { Calendar, Gift, Shirt, Mic2 } from "lucide-react";
 
 interface WeddingEvent {
   id: number;
@@ -17,6 +17,8 @@ interface WeddingEvent {
   program?: string;
   wishes?: string;
   additionalInfo?: string;
+  dresscode?: string;
+  toastmaster?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -37,7 +39,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
         viewport={{ once: true }}
       >
         <motion.div
-          className="text-6xl mb-8 text-wedding-bronze flex justify-center"
+          className="text-6xl mb-8 text-wedding-lemon flex justify-center"
           initial={{ scale: 0 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -46,7 +48,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           <Calendar className="w-12 h-12" />
         </motion.div>
         <motion.h3
-          className="text-3xl mb-6 wedding-abramo text-black"
+          className="text-3xl mb-6 wedding-abramo text-wedding-charcoal"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -81,7 +83,6 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    // Format the date in Europe/Oslo timezone using toLocaleString
     const osloDateString = date.toLocaleString("da-DK", {
       timeZone: "Europe/Oslo",
       weekday: "long",
@@ -90,6 +91,83 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       day: "numeric",
     });
     return osloDateString;
+  };
+
+  const linkifyBareUrls = (s: string, keyPrefix: string): React.ReactNode[] => {
+    const out: React.ReactNode[] = [];
+    const re = /https?:\/\/[^\s\]\)]+/g;
+    let last = 0;
+    let mm;
+    while ((mm = re.exec(s)) !== null) {
+      if (mm.index > last) out.push(s.slice(last, mm.index));
+      out.push(
+        <a
+          key={`${keyPrefix}-${mm.index}`}
+          href={mm[0]}
+          className="text-wedding-lemon underline hover:no-underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {mm[0]}
+        </a>
+      );
+      last = re.lastIndex;
+    }
+    if (last < s.length) out.push(s.slice(last));
+    return out;
+  };
+
+  const formatDresscode = (str: string): React.ReactNode[] => {
+    const out: React.ReactNode[] = [];
+    const re = /\(([^)]+)\)\[([^\]]+)\]/g;
+    let last = 0;
+    let m;
+    while ((m = re.exec(str)) !== null) {
+      const before = str.slice(last, m.index).trimEnd();
+      if (before) out.push(...linkifyBareUrls(before, `pre-${m.index}`));
+      out.push(<br key={`br-${m.index}`} />);
+      out.push(
+        <a
+          key={`a-${m.index}`}
+          href={m[2]}
+          className="text-wedding-lemon underline hover:no-underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {m[1]}
+        </a>
+      );
+      last = re.lastIndex;
+    }
+    const after = str.slice(last);
+    if (after) out.push(...linkifyBareUrls(after, `post-${last}`));
+    return out;
+  };
+
+  const linkify = (str: string): React.ReactNode[] => {
+    const re = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})|(\+?[\d][\d\s\-\.()]{6,})/g;
+    const out: React.ReactNode[] = [];
+    let last = 0;
+    let m;
+    while ((m = re.exec(str)) !== null) {
+      if (m.index > last) out.push(str.slice(last, m.index));
+      if (m[1]) {
+        out.push(
+          <a key={`e-${m.index}`} href={`mailto:${m[1]}`} className="text-wedding-lemon underline hover:no-underline">
+            {m[1]}
+          </a>
+        );
+      } else if (m[2]) {
+        out.push(
+          <a key={`p-${m.index}`} href={`tel:${m[2].replace(/[^\d+]/g, "")}`} className="text-wedding-lemon underline hover:no-underline">
+            {m[2]}
+          </a>
+        );
+      }
+      last = re.lastIndex;
+    }
+    if (last < str.length) out.push(str.slice(last));
+    return out;
   };
 
   return (
@@ -101,8 +179,8 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
       viewport={{ once: true }}
     >
       {/* Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto px-4 md:px-0">
-        {/* Når (When) Card */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 max-w-7xl mx-auto px-4 md:px-0">
+        {/* Tid og sted Card */}
         <motion.div
           className="wedding-card-enhanced p-6 md:p-8"
           initial={{ opacity: 0 }}
@@ -111,44 +189,22 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           viewport={{ once: true }}
         >
           <div className="text-center">
-            <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
-              <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+            <div className="text-5xl mb-2 text-wedding-lemon flex justify-center">
+              <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-lemon/15 rounded-full flex items-center justify-center">
                 <Calendar className="w-4 h-4 md:w-8 md:h-8" />
               </div>
             </div>
-            <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
-              Når
+            <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-wedding-stone mb-3 wedding-abramo">
+              Tid og sted
             </h4>
-            <div className="text-black text-base md:text-base">
+            <div className="text-wedding-charcoal text-base md:text-base">
               <div className="font-medium mb-1">{formatDate(event.date)}</div>
               {event.time && (
-                <div className="text-black text-base">kl. {event.time}</div>
+                <div className="text-wedding-charcoal text-base">kl. {event.time}</div>
               )}
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Hvor (Where) Card */}
-        <motion.div
-          className="wedding-card-enhanced p-6 md:p-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          <div className="text-center">
-            <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
-              <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                <MapPin className="w-4 h-4 md:w-8 md:h-8" />
-              </div>
-            </div>
-            <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
-              Hvor
-            </h4>
-            <div className="text-black text-base md:text-base">
-              <div className="font-medium mb-1">{event.location}</div>
+              <div className="font-medium mt-2">{event.location}</div>
               {event.locationDetails && (
-                <div className="text-xs mt-2 text-black">
+                <div className="text-sm text-wedding-charcoal/90 mt-1">
                   {event.locationDetails.split("\n")[0]}
                 </div>
               )}
@@ -156,63 +212,77 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
           </div>
         </motion.div>
 
-        {/* Program Card */}
-        {event.program && (
+        {/* Toastmaster Card */}
+        {event.toastmaster?.trim() && (
           <motion.div
             className="wedding-card-enhanced p-6 md:p-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.3 }}
+            transition={{ duration: 0.4, delay: 0.15 }}
             viewport={{ once: true }}
           >
             <div className="text-center">
-              <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
-                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
-                  <Clock className="w-4 h-4 md:w-8 md:h-8" />
+              <div className="text-5xl mb-2 text-wedding-lemon flex justify-center">
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-lemon/15 rounded-full flex items-center justify-center">
+                  <Mic2 className="w-4 h-4 md:w-8 md:h-8" />
                 </div>
               </div>
-              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
-                Program
+              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-wedding-stone mb-3 wedding-abramo">
+                Toastmaster
               </h4>
-              <div className="text-black text-base md:text-base text-center">
-                {event.program
-                  .split("\n")
-                  .slice(0, 3)
-                  .map((line, index) => (
-                    <div key={index} className="mb-1">
-                      {line.length > 40 ? line.substring(0, 37) + "..." : line}
-                    </div>
-                  ))}
-              </div>
+              <p className="text-wedding-charcoal text-base md:text-base text-center whitespace-pre-wrap">
+                {linkify(event.toastmaster.trim())}
+              </p>
             </div>
           </motion.div>
         )}
 
-        {/* Wishes Card */}
+        {/* Dresscode Card */}
+        {event.dresscode?.trim() && (
+          <motion.div
+            className="wedding-card-enhanced p-6 md:p-8"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.4, delay: 0.2 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center">
+              <div className="text-5xl mb-2 text-wedding-lemon flex justify-center">
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-lemon/15 rounded-full flex items-center justify-center">
+                  <Shirt className="w-4 h-4 md:w-8 md:h-8" />
+                </div>
+              </div>
+              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-wedding-stone mb-3 wedding-abramo">
+                Dresscode
+              </h4>
+              <p className="text-wedding-charcoal text-base md:text-base text-center whitespace-pre-wrap">
+                {formatDresscode(event.dresscode.trim())}
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Ønsker Card */}
         {event.wishes && (
           <motion.div
             className="wedding-card-enhanced p-6 md:p-8"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.4, delay: 0.4 }}
+            transition={{ duration: 0.4, delay: 0.25 }}
             viewport={{ once: true }}
           >
             <div className="text-center">
-              <div className="text-5xl mb-2 text-wedding-bronze flex justify-center">
-                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-bronze/10 rounded-full flex items-center justify-center">
+              <div className="text-5xl mb-2 text-wedding-lemon flex justify-center">
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-wedding-lemon/15 rounded-full flex items-center justify-center">
                   <Gift className="w-4 h-4 md:w-8 md:h-8" />
                 </div>
               </div>
-              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-[hsl(25,10%,50%)] mb-3 wedding-abramo">
+              <h4 className="text-xl md:text-xl lg:text-2xl font-bold text-wedding-stone mb-3 wedding-abramo">
                 Ønsker
               </h4>
-              <div className="text-black text-base md:text-base text-center">
-                {event.wishes.split("\n").map((line, index) => (
-                  <div key={index} className="mb-1">
-                    {line}
-                  </div>
-                ))}
-              </div>
+              <p className="text-wedding-charcoal text-base md:text-base text-center whitespace-pre-wrap">
+                {formatDresscode(event.wishes)}
+              </p>
             </div>
           </motion.div>
         )}
@@ -235,7 +305,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
             viewport={{ once: true }}
           >
             <motion.h4
-              className="text-2xl md:text-3xl wedding-abramo text-black mb-6 font-light text-center"
+              className="text-2xl md:text-3xl wedding-abramo text-wedding-charcoal mb-6 font-light text-center"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.4, delay: 0.7 }}
@@ -243,7 +313,7 @@ export function WeddingEventDisplay({ user, event }: WeddingEventDisplayProps) {
             >
               Yderligere information
             </motion.h4>
-            <div className="text-lg md:text-xl text-[hsl(25,10%,50%)] leading-relaxed wedding-abramo font-light text-center space-y-4">
+            <div className="text-lg md:text-xl text-wedding-stone leading-relaxed wedding-abramo font-light text-center space-y-4">
               {event.additionalInfo.split("\n").map((line, index) => (
                 <div key={index} className="mb-1">
                   {line}

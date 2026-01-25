@@ -2,35 +2,37 @@
 
 /* Wedding Color Palette */
 :root {
-  --background: hsl(210, 50%, 98%);
-  --foreground: hsl(215, 25%, 27%);
-    --card: hsl(210, 40%, 96.1%);
-    --card-foreground: hsl(215, 25%, 27%);
+  --background: hsl(40, 35%, 97%);
+  --foreground: hsl(25, 18%, 22%);
+  --card: hsl(40, 30%, 98%);
+  --card-foreground: hsl(25, 18%, 22%);
     --primary: hsl(221, 83%, 53%);
     --primary-foreground: hsl(210, 40%, 98%);
     --secondary: hsl(210, 40%, 90%);
-    --secondary-foreground: hsl(215, 25%, 27%);
-    --muted: hsl(210, 40%, 90%);
-    --muted-foreground: hsl(215, 25%, 40%);
-    --accent: hsl(210, 40%, 90%);
-    --accent-foreground: hsl(215, 25%, 27%);
+  --secondary-foreground: hsl(25, 18%, 22%);
+  --muted: hsl(40, 25%, 92%);
+  --muted-foreground: hsl(25, 12%, 42%);
+  --accent: hsl(40, 25%, 92%);
+  --accent-foreground: hsl(25, 18%, 22%);
     --destructive: hsl(0, 84.2%, 50%);
     --border: hsl(214, 32%, 91%);
     --input: hsl(214, 32%, 91%);
     --ring: hsl(221, 83%, 53%);
-    /* Wedding-specific colors */
-    --wedding-sage: hsl(142, 20%, 95%);
-    --wedding-sage-light: hsl(142, 15%, 90%);
-      --wedding-sage-dark: hsl(142, 25%, 85%);
-      --wedding-charcoal: hsl(142, 15%, 25%);
-      --wedding-stone: hsl(142, 10%, 45%);
-      --wedding-ivory: hsl(142, 15%, 98%);
-      --wedding-linen: hsl(142, 12%, 92%);
-      --wedding-navy: hsl(142, 20%, 35%);
-      --wedding-bronze: hsl(25, 65%, 45%);
-      --wedding-gold: hsl(45, 75%, 55%);
-      --wedding-rose: hsl(350, 65%, 60%);
-  --wedding-button-color: #542E2A;
+    /* Wedding-specific — Marius & Bea / mariusogbea.no: cream, lemon, warm charcoal */
+    --wedding-sage: hsl(80, 18%, 94%);
+    --wedding-sage-light: hsl(40, 25%, 92%);
+    --wedding-sage-dark: hsl(40, 20%, 86%);
+    --wedding-charcoal: hsl(25, 18%, 22%);
+    --wedding-stone: hsl(25, 12%, 42%);
+    --wedding-ivory: hsl(40, 35%, 98%);
+    --wedding-bg-page: hsl(40, 35%, 96%);
+    --wedding-linen: hsl(40, 20%, 91%);
+    --wedding-navy: hsl(25, 20%, 28%);
+    --wedding-bronze: hsl(25, 45%, 40%);
+    --wedding-lemon: hsl(48, 72%, 58%);
+    --wedding-gold: hsl(45, 75%, 55%);
+    --wedding-rose: hsl(350, 65%, 60%);
+  --wedding-button-color: #4a3c34;
   --radius: 0.5rem;
 }
 
@@ -45,7 +47,9 @@
   --color-wedding-sage-light: var(--wedding-sage-light);
   --color-wedding-sage-dark: var(--wedding-sage-dark);
   --color-wedding-ivory: var(--wedding-ivory);
+  --color-wedding-bg-page: var(--wedding-bg-page);
   --color-wedding-linen: var(--wedding-linen);
+  --color-wedding-lemon: var(--wedding-lemon);
     --color-wedding-stone: var(--wedding-stone);
   --color-wedding-rose: var(--wedding-rose);
   --color-wedding-navy: var(--wedding-navy);
@@ -69,14 +73,12 @@
   --color-ring: var(--ring);
 }
 
+/* Keep text dark — page stays cream in dark mode to avoid white-on-light */
 @media (prefers-color-scheme: dark) {
   :root {
-    --wedding-sage: hsl(142, 8%, 25%);
-    --wedding-sage-light: hsl(142, 10%, 30%);
-    --wedding-sage-dark: hsl(142, 12%, 20%);
-    --wedding-charcoal: hsl(210, 10%, 85%);
-    --wedding-stone: hsl(215, 15%, 75%);
-    --wedding-navy: hsl(215, 30%, 60%);
+    --wedding-sage: hsl(80, 10%, 28%);
+    --wedding-sage-light: hsl(80, 8%, 32%);
+    --wedding-sage-dark: hsl(80, 12%, 22%);
   }
 }
 
@@ -148,9 +150,9 @@ body {
 
 .wedding-button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(42, 58, 74, 0.3);
-  background: #4a2622;
-  }
+  box-shadow: 0 4px 16px rgba(74, 60, 52, 0.35);
+  background: #3d312b;
+}
 
 .wedding-accent {
   color: var(--wedding-bronze);
@@ -178,22 +180,22 @@ body {
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
+  --background: hsl(25, 15%, 11%);
+  --foreground: hsl(40, 15%, 90%);
+  --card: hsl(25, 12%, 14%);
+  --card-foreground: hsl(40, 15%, 90%);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
+  --muted: hsl(25, 10%, 22%);
+  --muted-foreground: hsl(40, 10%, 70%);
   --accent: oklch(0.269 0 0);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
+  --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.488 0.243 264.376);
@@ -209,6 +211,35 @@ body {
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Wedding palette — dark theme */
+  --wedding-sage: hsl(25, 12%, 18%);
+  --wedding-sage-light: hsl(25, 10%, 22%);
+  --wedding-sage-dark: hsl(25, 14%, 14%);
+  --wedding-charcoal: hsl(40, 15%, 90%);
+  --wedding-stone: hsl(40, 10%, 72%);
+  --wedding-ivory: hsl(25, 12%, 14%);
+  --wedding-bg-page: hsl(25, 15%, 12%);
+  --wedding-linen: hsl(25, 10%, 18%);
+  --wedding-navy: hsl(40, 12%, 78%);
+  --wedding-bronze: hsl(35, 50%, 58%);
+  --wedding-lemon: hsl(48, 75%, 62%);
+  --wedding-button-color: #6b5d52;
+}
+
+.dark .wedding-card-enhanced {
+  background: rgba(38, 35, 33, 0.98);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dark .wedding-card-enhanced:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4), 0 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.dark .wedding-gradient-sage {
+  background: linear-gradient(135deg, hsl(25, 15%, 12%) 0%, hsl(25, 12%, 10%) 100%);
 }
 
 @layer base {
@@ -223,30 +254,31 @@ body {
 
 /* Enhanced card styles inspired by the template */
        .wedding-card-enhanced {
-         background: rgba(255, 255, 255, 0.95);
-         backdrop-filter: blur(15px);
-         border: 1px solid rgba(84, 46, 42, 0.15);
+  background: rgba(255, 252, 248, 0.98);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(74, 60, 52, 0.12);
          border-radius: 0.75rem;
          box-shadow:
-           0 8px 32px rgba(0, 0, 0, 0.08),
-           0 2px 8px rgba(84, 46, 42, 0.1);
+    0 8px 32px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(74, 60, 52, 0.08);
          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
        }
 
 .wedding-card-enhanced:hover {
   transform: translateY(-4px);
   box-shadow: 
-    0 16px 48px rgba(0, 0, 0, 0.12),
-    0 4px 16px rgba(84, 46, 42, 0.15);
-  border-color: rgba(84, 46, 42, 0.25);
+    0 16px 48px rgba(0, 0, 0, 0.08),
+    0 4px 16px rgba(74, 60, 52, 0.12);
+  border-color: rgba(74, 60, 52, 0.2);
 }
 
 /* Beautiful gradient backgrounds */
+/* Cream gradient — mariusogbea.no style */
 .wedding-gradient-sage {
-  background: linear-gradient(135deg, 
-    hsl(142, 15%, 95%) 0%, 
-    hsl(142, 12%, 90%) 50%, 
-    hsl(142, 10%, 85%) 100%);
+  background: linear-gradient(135deg,
+    hsl(40, 35%, 97%) 0%,
+    hsl(40, 30%, 95%) 50%,
+    hsl(40, 25%, 93%) 100%);
 }
 
 .wedding-gradient-accent {
@@ -265,12 +297,12 @@ body {
   background-clip: text;
 }
 
-/* Subtle borders and dividers */
+/* Subtle borders and dividers — lemon accent like mariusogbea.no */
 .wedding-divider {
   height: 1px;
-  background: linear-gradient(90deg, 
-    transparent 0%, 
-    var(--wedding-bronze) 50%, 
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--wedding-lemon) 50%,
     transparent 100%);
   margin: 2rem auto;
   width: 80px;
