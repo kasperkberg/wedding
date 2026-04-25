@@ -167,13 +167,13 @@ export function WeddingEventEditor() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-6">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="animate-pulse">
-          <div className="h-6 bg-gray-200 rounded w-1/4 mb-4"></div>
-          <div className="space-y-3">
-            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+          <div className="h-5 bg-wedding-sage rounded w-1/4 mb-6"></div>
+          <div className="space-y-4">
+            <div className="h-4 bg-wedding-sage rounded w-3/4"></div>
+            <div className="h-4 bg-wedding-sage rounded w-1/2"></div>
+            <div className="h-4 bg-wedding-sage rounded w-2/3"></div>
           </div>
         </div>
       </div>
@@ -181,62 +181,51 @@ export function WeddingEventEditor() {
   }
 
   return (
-    <div className="wedding-card rounded-2xl p-8">
-      <h2 className="text-3xl font-bold text-wedding-charcoal mb-8 wedding-abramo text-center">
+    <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+      <h2 className="admin-section-title mb-8">
         {event ? "Rediger bryllupsoplysninger" : "Opret bryllupsoplysninger"}
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Basic Information */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-semibold text-wedding-charcoal mb-2 wedding-abramo">
-              Titel *
-            </label>
+            <label className="admin-label">Titel *</label>
             <input
               type="text"
               value={formData.title}
               onChange={(e) => handleChange("title", e.target.value)}
-              className="w-full px-4 py-3 border border-wedding-sage-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-wedding-bronze bg-wedding-ivory wedding-abramo"
+              className="admin-input"
               placeholder="f.eks. Tirill og Christians bryllup"
               required
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Dato *
-            </label>
+            <label className="admin-label">Dato *</label>
             <input
               type="date"
               value={formData.date}
               onChange={(e) => handleChange("date", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="admin-input"
               required
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Tidspunkt
-            </label>
+            <label className="admin-label">Tidspunkt</label>
             <input
               type="time"
               value={formData.time}
               onChange={(e) => handleChange("time", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="admin-input"
             />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Sted *
-            </label>
+            <label className="admin-label">Sted *</label>
             <input
               type="text"
               value={formData.location}
               onChange={(e) => handleChange("location", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="admin-input"
               placeholder="f.eks. Rådhuset, København"
               required
             />
@@ -245,159 +234,151 @@ export function WeddingEventEditor() {
 
         {/* Location Details */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Detaljer om stedet
-          </label>
+          <label className="admin-label">Detaljer om stedet</label>
           <textarea
             value={formData.locationDetails}
             onChange={(e) => handleChange("locationDetails", e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="admin-input resize-y"
             placeholder="Adresse, hvordan man kommer derhen, parkeringsmuligheder, etc."
           />
         </div>
 
         {/* Program */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Program/Tidsplan
-          </label>
+          <label className="admin-label">Program / Tidsplan</label>
           <textarea
             value={formData.program}
             onChange={(e) => handleChange("program", e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="admin-input resize-y"
             placeholder="Skriv programmet/tidsplanen her..."
           />
         </div>
 
-        {/* Tidslinje (program for flere dager) */}
+        {/* Timeline */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tidslinje (program for flere dager)
-          </label>
-          <p className="text-sm text-gray-500 mb-3">
-            Tilføj dager og for hver dag: fra/til klokkeslett og label.
+          <label className="admin-label">Tidslinje (program for flere dager)</label>
+          <p className="text-sm text-wedding-stone mb-3 wedding-abramo">
+            Tilf&oslash;j dager og for hver dag: fra/til klokkeslett og label.
           </p>
-          {formData.timeline.days.map((day, dayI) => (
-            <fieldset
-              key={dayI}
-              className="mb-6 p-4 border border-gray-200 rounded-lg"
-            >
-              <div className="flex flex-wrap items-center gap-2 mb-3">
-                <input
-                  type="text"
-                  value={day.dayLabel}
-                  onChange={(e) => setDayLabel(dayI, e.target.value)}
-                  className="flex-1 min-w-[200px] px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="F.eks. Fredag 26. juni 2026"
-                />
-                <button
-                  type="button"
-                  onClick={() => deleteDay(dayI)}
-                  className="px-2 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
-                >
-                  Slet dag
-                </button>
-              </div>
-              <div className="space-y-2 ml-2">
-                {day.items.map((item, itemI) => (
-                  <div
-                    key={itemI}
-                    className="flex flex-wrap gap-2 items-center"
+
+          <div className="space-y-5">
+            {formData.timeline.days.map((day, dayI) => (
+              <fieldset
+                key={dayI}
+                className="p-4 bg-wedding-ivory/60 border border-wedding-linen rounded-xl"
+              >
+                <div className="flex flex-wrap items-center gap-2 mb-3">
+                  <input
+                    type="text"
+                    value={day.dayLabel}
+                    onChange={(e) => setDayLabel(dayI, e.target.value)}
+                    className="admin-input flex-1 min-w-[200px]"
+                    placeholder="F.eks. Fredag 26. juni 2026"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => deleteDay(dayI)}
+                    className="wedding-abramo px-3 py-1.5 text-sm text-wedding-rose hover:bg-wedding-rose/10 rounded-lg transition-colors"
                   >
-                    <input
-                      type="text"
-                      value={item.timeFrom}
-                      onChange={(e) =>
-                        setItem(dayI, itemI, "timeFrom", e.target.value)
-                      }
-                      className="w-24 px-2 py-1.5 border border-gray-300 rounded text-sm"
-                      placeholder="12:45"
-                    />
-                    <span className="text-gray-400">–</span>
-                    <input
-                      type="text"
-                      value={item.timeTo}
-                      onChange={(e) =>
-                        setItem(dayI, itemI, "timeTo", e.target.value)
-                      }
-                      className="w-24 px-2 py-1.5 border border-gray-300 rounded text-sm"
-                      placeholder="13:00"
-                    />
-                    <input
-                      type="text"
-                      value={item.label}
-                      onChange={(e) =>
-                        setItem(dayI, itemI, "label", e.target.value)
-                      }
-                      className="flex-1 min-w-[180px] px-2 py-1.5 border border-gray-300 rounded text-sm"
-                      placeholder="Ankomst til kirken"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => deleteItem(dayI, itemI)}
-                      className="px-2 py-1 text-sm text-red-600 hover:bg-red-50 rounded"
+                    Slet dag
+                  </button>
+                </div>
+                <div className="space-y-2 ml-2">
+                  {day.items.map((item, itemI) => (
+                    <div
+                      key={itemI}
+                      className="flex flex-wrap gap-2 items-center"
                     >
-                      Slet
-                    </button>
-                  </div>
-                ))}
-                <button
-                  type="button"
-                  onClick={() => addItem(dayI)}
-                  className="text-sm text-blue-600 hover:underline"
-                >
-                  + Tilføj punkt
-                </button>
-              </div>
-            </fieldset>
-          ))}
+                      <input
+                        type="text"
+                        value={item.timeFrom}
+                        onChange={(e) =>
+                          setItem(dayI, itemI, "timeFrom", e.target.value)
+                        }
+                        className="admin-input w-24 text-sm"
+                        placeholder="12:45"
+                      />
+                      <span className="text-wedding-stone wedding-abramo">&ndash;</span>
+                      <input
+                        type="text"
+                        value={item.timeTo}
+                        onChange={(e) =>
+                          setItem(dayI, itemI, "timeTo", e.target.value)
+                        }
+                        className="admin-input w-24 text-sm"
+                        placeholder="13:00"
+                      />
+                      <input
+                        type="text"
+                        value={item.label}
+                        onChange={(e) =>
+                          setItem(dayI, itemI, "label", e.target.value)
+                        }
+                        className="admin-input flex-1 min-w-[180px] text-sm"
+                        placeholder="Ankomst til kirken"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => deleteItem(dayI, itemI)}
+                        className="wedding-abramo px-2 py-1 text-sm text-wedding-rose hover:bg-wedding-rose/10 rounded-lg transition-colors"
+                      >
+                        Slet
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => addItem(dayI)}
+                    className="wedding-abramo text-sm text-wedding-bronze hover:text-wedding-charcoal transition-colors"
+                  >
+                    + Tilf&oslash;j punkt
+                  </button>
+                </div>
+              </fieldset>
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={addDay}
-            className="text-sm text-blue-600 hover:underline"
+            className="wedding-abramo text-sm text-wedding-bronze hover:text-wedding-charcoal transition-colors mt-3"
           >
-            + Tilføj dag
+            + Tilf&oslash;j dag
           </button>
         </div>
 
         {/* Wishes */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Ønsker
-          </label>
+          <label className="admin-label">&Oslash;nsker</label>
           <textarea
             value={formData.wishes}
             onChange={(e) => handleChange("wishes", e.target.value)}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="admin-input resize-y"
             placeholder="Tekst (Inspo)[https://url]"
           />
         </div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-5">
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              Dresscode
-            </label>
+            <label className="admin-label">Dresscode</label>
             <input
               type="text"
               value={formData.dresscode}
               onChange={(e) => handleChange("dresscode", e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="admin-input"
               placeholder="Tekst (Inspo)[https://url]"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-black mb-2">
-              Toastmaster
-            </label>
+            <label className="admin-label">Toastmaster</label>
             <textarea
               value={formData.toastmaster}
               onChange={(e) => handleChange("toastmaster", e.target.value)}
               rows={4}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="admin-input resize-y"
               placeholder={
                 "Navn, e-mail og telefon for begge toastmasters. Fx:\nOle: ole@mail.dk, +45 12 34 56 78\nKirsten: kirsten@mail.dk, 20 30 40 50"
               }
@@ -407,24 +388,22 @@ export function WeddingEventEditor() {
 
         {/* Additional Information */}
         <div>
-          <label className="block text-sm font-medium text-black mb-2">
-            Yderligere information
-          </label>
+          <label className="admin-label">Yderligere information</label>
           <textarea
             value={formData.additionalInfo}
             onChange={(e) => handleChange("additionalInfo", e.target.value)}
             rows={4}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="admin-input resize-y"
             placeholder="Eventuelle særlige oplysninger, transport, etc."
           />
         </div>
 
         {/* Submit Button */}
-        <div className="flex justify-end">
+        <div className="flex justify-end pt-2">
           <button
             type="submit"
             disabled={saving}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="wedding-button wedding-abramo px-8 py-3 rounded-full text-base disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {saving
               ? "Gemmer..."
@@ -436,8 +415,8 @@ export function WeddingEventEditor() {
       </form>
 
       {event && (
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-sm text-gray-500">
+        <div className="mt-6 pt-5 border-t border-wedding-linen">
+          <p className="text-sm text-wedding-stone wedding-abramo">
             Sidst opdateret: {new Date(event.updatedAt).toLocaleString("da-DK")}
           </p>
         </div>

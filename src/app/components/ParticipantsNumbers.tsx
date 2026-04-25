@@ -53,10 +53,10 @@ export function ParticipantsNumbers() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Indlæser statistikker...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-wedding-lemon mx-auto mb-4"></div>
+          <p className="wedding-abramo text-wedding-stone">Indl&aelig;ser statistikker...</p>
         </div>
       </div>
     );
@@ -64,62 +64,100 @@ export function ParticipantsNumbers() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <p className="text-red-600">Fejl: {error}</p>
+          <p className="wedding-abramo text-wedding-rose">Fejl: {error}</p>
         </div>
       </div>
     );
   }
 
-  const attendingCount = rsvps.filter(rsvp => rsvp.attending).length;
-  const notAttendingCount = rsvps.filter(rsvp => !rsvp.attending).length;
+  const attendingCount = rsvps.filter((rsvp) => rsvp.attending).length;
+  const notAttendingCount = rsvps.filter((rsvp) => !rsvp.attending).length;
   const totalGuests = rsvps.reduce((total, rsvp) => {
     let count = rsvp.attending ? 1 : 0;
-    count += rsvp.additionalGuests.filter(guest => guest.attending).length;
+    count += rsvp.additionalGuests.filter((guest) => guest.attending).length;
     return total + count;
   }, 0);
 
   const additionalGuestsCount = rsvps.reduce((total, rsvp) => {
-    return total + rsvp.additionalGuests.filter(guest => guest.attending).length;
+    return total + rsvp.additionalGuests.filter((guest) => guest.attending).length;
   }, 0);
 
   const totalRSVPs = rsvps.length;
-  const responseRate = totalRSVPs > 0 ? ((attendingCount + notAttendingCount) / totalRSVPs * 100).toFixed(1) : "0";
+  const responseRate =
+    totalRSVPs > 0
+      ? (((attendingCount + notAttendingCount) / totalRSVPs) * 100).toFixed(1)
+      : "0";
+
+  const stats = [
+    {
+      value: attendingCount,
+      label: "Deltager",
+      accent: "var(--wedding-bronze)",
+    },
+    {
+      value: notAttendingCount,
+      label: "Deltager ikke",
+      accent: "var(--wedding-rose)",
+    },
+    {
+      value: totalGuests,
+      label: "Totale g\u00e6ster",
+      accent: "var(--wedding-gold)",
+    },
+  ];
+
+  const extraStats = [
+    {
+      value: additionalGuestsCount,
+      label: "Medbragte g\u00e6ster",
+      accent: "var(--wedding-lemon)",
+    },
+    {
+      value: `${responseRate}%`,
+      label: `Svarprocent (${totalRSVPs} inv.)`,
+      accent: "var(--wedding-bronze)",
+    },
+  ];
 
   return (
     <div className="space-y-6">
-      {/* Summary Stats */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Deltagerstatistikker</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-blue-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">{attendingCount}</div>
-            <div className="text-sm text-blue-800">Deltager</div>
-          </div>
-          <div className="bg-red-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-red-600">{notAttendingCount}</div>
-            <div className="text-sm text-red-800">Deltager ikke</div>
-          </div>
-          <div className="bg-green-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">{totalGuests}</div>
-            <div className="text-sm text-green-800">Totale gæster</div>
-          </div>
+      <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+        <h2 className="admin-section-title mb-6">Deltagerstatistikker</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {stats.map((s) => (
+            <div key={s.label} className="admin-stat-card text-center">
+              <div
+                className="wedding-abramo text-3xl mb-1"
+                style={{ color: s.accent }}
+              >
+                {s.value}
+              </div>
+              <div className="wedding-abramo text-sm text-wedding-stone">
+                {s.label}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* Additional Stats */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Yderligere statistikker</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-purple-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">{additionalGuestsCount}</div>
-            <div className="text-sm text-purple-800">Medbragte gæster</div>
-          </div>
-          <div className="bg-orange-50 p-4 rounded-lg">
-            <div className="text-2xl font-bold text-orange-600">{responseRate}%</div>
-            <div className="text-sm text-orange-800">Svarprocent ({totalRSVPs} invitationer)</div>
-          </div>
+      <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+        <h3 className="admin-section-title mb-6">Yderligere</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {extraStats.map((s) => (
+            <div key={s.label} className="admin-stat-card text-center">
+              <div
+                className="wedding-abramo text-3xl mb-1"
+                style={{ color: s.accent }}
+              >
+                {s.value}
+              </div>
+              <div className="wedding-abramo text-sm text-wedding-stone">
+                {s.label}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

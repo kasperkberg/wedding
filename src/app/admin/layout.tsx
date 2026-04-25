@@ -45,12 +45,12 @@ export default async function AdminLayout({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-6xl mx-auto py-8">
+    <div className="min-h-screen admin-bg">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10">
         <AdminNav user={user} />
 
         {/* Page Content */}
-        <div className="space-y-8">{children}</div>
+        <div className="space-y-6">{children}</div>
       </div>
     </div>
   );

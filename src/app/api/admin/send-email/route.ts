@@ -10,7 +10,7 @@ import type { UserRole } from "lib/auth-types";
 async function getSafeHeaders() {
   try {
     return await headers();
-  } catch (e) {
+  } catch {
     return new Headers();
   }
 }
