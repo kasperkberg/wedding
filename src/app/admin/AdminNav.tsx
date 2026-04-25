@@ -46,66 +46,61 @@ export function AdminNav({ user }: AdminNavProps) {
   const currentTab = getCurrentTab();
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-      <div className="flex items-center justify-between mb-6">
+    <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8 mb-8">
+      {/* Top row: title + user */}
+      <div className="flex items-start justify-between mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Bryllups Administration
-          </h1>
-          <p className="text-gray-600">
-            Administrer bryllupsoplysninger og se RSVP&apos;er
+          <p className="wedding-script text-wedding-bronze text-sm tracking-wide mb-1">
+            Administration
           </p>
+          <h1 className="wedding-abramo text-2xl sm:text-3xl text-wedding-charcoal">
+            Bryllups&shy;administration
+          </h1>
         </div>
-        <div className="flex items-center space-x-4">
-          <div className="text-right">
-            <p className="font-medium text-gray-900">{user.name}</p>
-            <p className="text-sm text-gray-600">{user.email}</p>
-            <span
-              className={`inline-block px-2 py-1 text-xs font-medium rounded-full mt-1 ${
-                user.role === "admin"
-                  ? "bg-red-100 text-red-800"
-                  : "bg-gray-100 text-gray-800"
-              }`}
-            >
+        <div className="flex items-center gap-4">
+          <div className="text-right hidden sm:block">
+            <p className="wedding-abramo text-wedding-charcoal text-sm">
+              {user.name}
+            </p>
+            <span className="admin-badge admin-badge-admin mt-0.5 inline-block">
               {user.role}
             </span>
           </div>
           <button
             onClick={handleSignOut}
-            className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition-colors"
+            className="wedding-button px-4 py-2 rounded-full wedding-abramo text-sm"
           >
             Log ud
           </button>
         </div>
       </div>
 
-      {/* Navigation */}
-      <div className="flex space-x-4 mb-4">
-        <Link
-          href="/"
-          className="wedding-button px-6 py-3 rounded-full text-lg wedding-abramo inline-block"
-        >
-          ← Tilbage til RSVP
-        </Link>
-      </div>
+      {/* Divider */}
+      <div className="wedding-divider !my-4" />
 
-      {/* Tab Navigation */}
-      <div className="border-b border-gray-200">
-        <nav className="flex space-x-8" aria-label="Tabs">
+      {/* Navigation row */}
+      <div className="flex items-center justify-between gap-4">
+        <nav
+          className="flex gap-6 sm:gap-8 overflow-x-auto pb-1 -mb-1 border-b border-wedding-linen flex-1"
+          aria-label="Admin navigation"
+        >
           {tabs.map((tab) => (
             <Link
               key={tab.id}
               href={tab.href}
-              className={`whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm ${
-                currentTab === tab.id
-                  ? "border-blue-500 text-blue-600"
-                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
-              }`}
+              className={`admin-tab ${currentTab === tab.id ? "admin-tab-active" : ""}`}
             >
               {tab.label}
             </Link>
           ))}
         </nav>
+
+        <Link
+          href="/"
+          className="wedding-abramo text-sm text-wedding-stone hover:text-wedding-charcoal transition-colors whitespace-nowrap shrink-0"
+        >
+          &larr; RSVP
+        </Link>
       </div>
     </div>
   );

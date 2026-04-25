@@ -53,10 +53,10 @@ export function ParticipantsList() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Indlæser deltagere...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-wedding-lemon mx-auto mb-4"></div>
+          <p className="wedding-abramo text-wedding-stone">Indl&aelig;ser deltagere...</p>
         </div>
       </div>
     );
@@ -64,51 +64,68 @@ export function ParticipantsList() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <p className="text-red-600">Fejl: {error}</p>
+          <p className="wedding-abramo text-wedding-rose">Fejl: {error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
-      <h3 className="text-xl font-bold text-gray-900 mb-4">Alle deltagere</h3>
+    <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+      <h3 className="admin-section-title mb-6">Alle deltagere</h3>
+
       <div className="space-y-4">
         {rsvps.map((rsvp) => (
-          <div key={rsvp.id} className="border border-gray-200 rounded-lg p-4">
+          <div
+            key={rsvp.id}
+            className="border border-wedding-linen rounded-xl p-4 bg-wedding-ivory/40 hover:bg-wedding-ivory/70 transition-colors"
+          >
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-semibold text-gray-900">
+              <h4 className="wedding-abramo text-wedding-charcoal text-base">
                 {rsvp.user?.name || "Ukendt bruger"}
               </h4>
-              <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                rsvp.attending
-                  ? "bg-green-100 text-green-800"
-                  : "bg-red-100 text-red-800"
-              }`}>
+              <span
+                className={`admin-badge ${
+                  rsvp.attending
+                    ? "admin-badge-attending"
+                    : "admin-badge-not-attending"
+                }`}
+              >
                 {rsvp.attending ? "Deltager" : "Deltager ikke"}
               </span>
             </div>
 
             {rsvp.user?.email && (
-              <p className="text-sm text-gray-600 mb-2">{rsvp.user.email}</p>
+              <p className="text-sm text-wedding-stone wedding-abramo mb-2">
+                {rsvp.user.email}
+              </p>
             )}
 
             {/* Additional guests */}
             {rsvp.additionalGuests.length > 0 && (
-              <div className="mt-3 pt-3 border-t border-gray-200">
-                <h5 className="font-medium text-sm text-gray-700 mb-2">Medbragte gæster:</h5>
+              <div className="mt-3 pt-3 border-t border-wedding-linen/60">
+                <h5 className="wedding-abramo text-sm text-wedding-stone mb-2">
+                  Medbragte g&aelig;ster:
+                </h5>
                 <div className="space-y-2">
                   {rsvp.additionalGuests.map((guest) => (
-                    <div key={guest.id} className="bg-gray-50 p-3 rounded">
+                    <div
+                      key={guest.id}
+                      className="bg-wedding-sage/30 p-3 rounded-lg"
+                    >
                       <div className="flex items-center justify-between">
-                        <span className="font-medium text-sm">{guest.name}</span>
-                        <span className={`px-2 py-1 text-xs rounded-full ${
-                          guest.attending
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}>
+                        <span className="wedding-abramo text-sm text-wedding-charcoal">
+                          {guest.name}
+                        </span>
+                        <span
+                          className={`admin-badge ${
+                            guest.attending
+                              ? "admin-badge-attending"
+                              : "admin-badge-not-attending"
+                          }`}
+                        >
                           {guest.attending ? "Deltager" : "Deltager ikke"}
                         </span>
                       </div>
@@ -120,18 +137,24 @@ export function ParticipantsList() {
 
             {/* Message */}
             {rsvp.message && (
-              <div className="mt-3 pt-3 border-t border-gray-200">
-                <h5 className="font-medium text-sm text-gray-700 mb-1">Besked:</h5>
-                                  <p className="text-sm text-gray-600 italic">&quot;{rsvp.message}&quot;</p>
+              <div className="mt-3 pt-3 border-t border-wedding-linen/60">
+                <h5 className="wedding-abramo text-sm text-wedding-stone mb-1">
+                  Besked:
+                </h5>
+                <p className="text-sm text-wedding-charcoal italic wedding-abramo">
+                  &quot;{rsvp.message}&quot;
+                </p>
               </div>
             )}
 
-            <div className="mt-3 pt-3 border-t border-gray-200">
-              <p className="text-xs text-gray-500">
-                RSVP sendt: {new Date(rsvp.createdAt).toLocaleString('da-DK')}
+            <div className="mt-3 pt-3 border-t border-wedding-linen/60">
+              <p className="text-xs text-wedding-stone wedding-abramo">
+                RSVP sendt:{" "}
+                {new Date(rsvp.createdAt).toLocaleString("da-DK")}
                 {rsvp.createdAt !== rsvp.updatedAt && (
                   <span className="ml-2">
-                    • Sidst opdateret: {new Date(rsvp.updatedAt).toLocaleString('da-DK')}
+                    &bull; Opdateret:{" "}
+                    {new Date(rsvp.updatedAt).toLocaleString("da-DK")}
                   </span>
                 )}
               </p>
@@ -140,8 +163,10 @@ export function ParticipantsList() {
         ))}
 
         {rsvps.length === 0 && (
-          <div className="text-center py-8">
-            <p className="text-gray-500">Ingen RSVP&apos;er endnu</p>
+          <div className="text-center py-10">
+            <p className="wedding-abramo text-wedding-stone">
+              Ingen RSVP&apos;er endnu
+            </p>
           </div>
         )}
       </div>

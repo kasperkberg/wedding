@@ -115,7 +115,7 @@ export function AdminEmails() {
 
   if (loading) {
     return (
-      <div className="wedding-card-enhanced rounded-xl p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-wedding-lemon mx-auto mb-4" />
           <p className="wedding-abramo text-wedding-stone">Indlæser modtagere...</p>
@@ -126,42 +126,36 @@ export function AdminEmails() {
 
   return (
     <div className="space-y-6">
-      <div className="wedding-card-enhanced rounded-xl p-6">
-        <h3 className="wedding-abramo text-xl font-semibold text-wedding-charcoal mb-4">
-          Send email til gæster
+      <div className="wedding-card-enhanced rounded-2xl p-6">
+        <h3 className="admin-section-title mb-6">
+          Send email til g&aelig;ster
         </h3>
-        <div className="wedding-divider mb-6" />
+        <div className="wedding-divider !my-4" />
 
         <div className="space-y-4">
           <div>
-            <label className="wedding-abramo block text-sm font-medium text-wedding-charcoal mb-1">
-              Emne
-            </label>
+            <label className="admin-label">Emne</label>
             <input
               value={subject}
               onChange={(e) => setSubject(e.target.value)}
-              className="w-full px-3 py-2 border border-wedding-linen rounded-lg wedding-abramo text-wedding-charcoal bg-white focus:outline-none focus:ring-2 focus:ring-wedding-lemon/50"
+              className="admin-input"
               placeholder="Fx: Påmindelse om bryllup"
             />
           </div>
 
           <div>
-            <label className="wedding-abramo block text-sm font-medium text-wedding-charcoal mb-1">
-              Tekst
-            </label>
+            <label className="admin-label">Tekst</label>
             <textarea
               value={text}
               onChange={(e) => setText(e.target.value)}
               rows={8}
-              className="w-full px-3 py-2 border border-wedding-linen rounded-lg wedding-abramo text-wedding-charcoal bg-white focus:outline-none focus:ring-2 focus:ring-wedding-lemon/50 resize-y"
+              className="admin-input resize-y"
               placeholder="Skriv din besked her..."
             />
           </div>
 
           <div>
-            <label className="wedding-abramo block text-sm font-medium text-wedding-charcoal mb-2">
-              Modtagere
-            </label>
+            <label className="admin-label">Modtagere</label>
             <div className="flex gap-4 mb-3">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -253,7 +247,7 @@ export function AdminEmails() {
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
-            className="wedding-card-enhanced rounded-xl p-6"
+            className="wedding-card-enhanced rounded-2xl p-6"
           >
             <h4 className="wedding-abramo text-lg font-semibold text-wedding-charcoal mb-2">
               Forhåndsvisning

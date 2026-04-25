@@ -26,7 +26,7 @@ interface RSVPWithGuests {
 
 interface DietaryItem {
   name: string;
-  type: 'allergy' | 'preference';
+  type: "allergy" | "preference";
   guestName: string;
   details: string;
 }
@@ -60,10 +60,10 @@ export function DietaryInfo() {
 
   if (loading) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Indlæser kostinformation...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-wedding-lemon mx-auto mb-4"></div>
+          <p className="wedding-abramo text-wedding-stone">Indl&aelig;ser kostinformation...</p>
         </div>
       </div>
     );
@@ -71,54 +71,51 @@ export function DietaryInfo() {
 
   if (error) {
     return (
-      <div className="bg-white rounded-xl shadow-lg p-8">
+      <div className="wedding-card-enhanced rounded-2xl p-8">
         <div className="text-center">
-          <p className="text-red-600">Fejl: {error}</p>
+          <p className="wedding-abramo text-wedding-rose">Fejl: {error}</p>
         </div>
       </div>
     );
   }
 
-  // Collect all dietary information
   const dietaryItems: DietaryItem[] = [];
 
-  rsvps.forEach(rsvp => {
+  rsvps.forEach((rsvp) => {
     if (rsvp.attending) {
-      // Main guest dietary info
       if (rsvp.allergies) {
         dietaryItems.push({
           name: rsvp.user?.name || "Ukendt bruger",
-          type: 'allergy',
+          type: "allergy",
           guestName: rsvp.user?.name || "Ukendt bruger",
-          details: rsvp.allergies
+          details: rsvp.allergies,
         });
       }
       if (rsvp.foodPreferences) {
         dietaryItems.push({
           name: rsvp.user?.name || "Ukendt bruger",
-          type: 'preference',
+          type: "preference",
           guestName: rsvp.user?.name || "Ukendt bruger",
-          details: rsvp.foodPreferences
+          details: rsvp.foodPreferences,
         });
       }
 
-      // Additional guests dietary info
-      rsvp.additionalGuests.forEach(guest => {
+      rsvp.additionalGuests.forEach((guest) => {
         if (guest.attending) {
           if (guest.allergies) {
             dietaryItems.push({
               name: rsvp.user?.name || "Ukendt bruger",
-              type: 'allergy',
+              type: "allergy",
               guestName: guest.name,
-              details: guest.allergies
+              details: guest.allergies,
             });
           }
           if (guest.foodPreferences) {
             dietaryItems.push({
               name: rsvp.user?.name || "Ukendt bruger",
-              type: 'preference',
+              type: "preference",
               guestName: guest.name,
-              details: guest.foodPreferences
+              details: guest.foodPreferences,
             });
           }
         }
@@ -126,73 +123,113 @@ export function DietaryInfo() {
     }
   });
 
-  const allergies = dietaryItems.filter(item => item.type === 'allergy');
-  const preferences = dietaryItems.filter(item => item.type === 'preference');
+  const allergies = dietaryItems.filter((item) => item.type === "allergy");
+  const preferences = dietaryItems.filter((item) => item.type === "preference");
 
   return (
     <div className="space-y-6">
-      {/* Allergies Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Allergier</h3>
+      {/* Allergies */}
+      <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+        <h3 className="admin-section-title mb-6">Allergier</h3>
         {allergies.length > 0 ? (
           <div className="space-y-3">
             {allergies.map((allergy, index) => (
-              <div key={index} className="bg-red-50 border border-red-200 rounded-lg p-4">
+              <div
+                key={index}
+                className="border border-wedding-rose/20 rounded-xl p-4 bg-wedding-rose/5"
+              >
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-red-800">{allergy.guestName}</h4>
-                  <span className="bg-red-100 text-red-800 px-2 py-1 text-xs font-medium rounded-full">
+                  <h4 className="wedding-abramo text-wedding-charcoal">
+                    {allergy.guestName}
+                  </h4>
+                  <span className="admin-badge admin-badge-not-attending">
                     Allergi
                   </span>
                 </div>
-                <p className="text-red-700">{allergy.details}</p>
-                <p className="text-xs text-red-600 mt-1">Fra: {allergy.name}</p>
+                <p className="wedding-abramo text-sm text-wedding-charcoal/80">
+                  {allergy.details}
+                </p>
+                {allergy.guestName !== allergy.name && (
+                  <p className="wedding-abramo text-xs text-wedding-stone mt-1">
+                    Fra: {allergy.name}
+                  </p>
+                )}
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-gray-500">Ingen allergier registreret</p>
+            <p className="wedding-abramo text-wedding-stone">
+              Ingen allergier registreret
+            </p>
           </div>
         )}
       </div>
 
-      {/* Food Preferences Section */}
-      <div className="bg-white rounded-xl shadow-lg p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">Madpræferencer</h3>
+      {/* Preferences */}
+      <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+        <h3 className="admin-section-title mb-6">Madpr&aelig;ferencer</h3>
         {preferences.length > 0 ? (
           <div className="space-y-3">
             {preferences.map((preference, index) => (
-              <div key={index} className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div
+                key={index}
+                className="border border-wedding-bronze/20 rounded-xl p-4 bg-wedding-bronze/5"
+              >
                 <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-semibold text-blue-800">{preference.guestName}</h4>
-                  <span className="bg-blue-100 text-blue-800 px-2 py-1 text-xs font-medium rounded-full">
-                    Præference
+                  <h4 className="wedding-abramo text-wedding-charcoal">
+                    {preference.guestName}
+                  </h4>
+                  <span className="admin-badge admin-badge-admin">
+                    Pr&aelig;ference
                   </span>
                 </div>
-                <p className="text-blue-700">{preference.details}</p>
-                <p className="text-xs text-blue-600 mt-1">Fra: {preference.name}</p>
+                <p className="wedding-abramo text-sm text-wedding-charcoal/80">
+                  {preference.details}
+                </p>
+                {preference.guestName !== preference.name && (
+                  <p className="wedding-abramo text-xs text-wedding-stone mt-1">
+                    Fra: {preference.name}
+                  </p>
+                )}
               </div>
             ))}
           </div>
         ) : (
           <div className="text-center py-8">
-            <p className="text-gray-500">Ingen madpræferencer registreret</p>
+            <p className="wedding-abramo text-wedding-stone">
+              Ingen madpr&aelig;ferencer registreret
+            </p>
           </div>
         )}
       </div>
 
       {/* Summary */}
       {(allergies.length > 0 || preferences.length > 0) && (
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-xl font-bold text-gray-900 mb-4">Sammendrag</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="bg-red-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-red-600">{allergies.length}</div>
-              <div className="text-sm text-red-800">Allergier</div>
+        <div className="wedding-card-enhanced rounded-2xl p-6 sm:p-8">
+          <h3 className="admin-section-title mb-6">Sammendrag</h3>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="admin-stat-card text-center">
+              <div
+                className="wedding-abramo text-3xl mb-1"
+                style={{ color: "var(--wedding-rose)" }}
+              >
+                {allergies.length}
+              </div>
+              <div className="wedding-abramo text-sm text-wedding-stone">
+                Allergier
+              </div>
             </div>
-            <div className="bg-blue-50 p-4 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600">{preferences.length}</div>
-              <div className="text-sm text-blue-800">Madpræferencer</div>
+            <div className="admin-stat-card text-center">
+              <div
+                className="wedding-abramo text-3xl mb-1"
+                style={{ color: "var(--wedding-bronze)" }}
+              >
+                {preferences.length}
+              </div>
+              <div className="wedding-abramo text-sm text-wedding-stone">
+                Madpr&aelig;ferencer
+              </div>
             </div>
           </div>
         </div>
