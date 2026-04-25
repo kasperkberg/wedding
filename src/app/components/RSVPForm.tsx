@@ -66,6 +66,7 @@ export function RSVPForm({
 
   useEffect(() => {
     fetchExistingRSVP();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.id]);
 
   const fetchExistingRSVP = async () => {

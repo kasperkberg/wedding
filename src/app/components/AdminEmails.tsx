@@ -36,7 +36,7 @@ export function AdminEmails() {
         const json = await res.json();
         if (json.success) setRecipients(json.data);
         else setError(json.error || "Kunne ikke hente modtagere");
-      } catch (e) {
+      } catch {
         setError("Kunne ikke hente modtagere");
       } finally {
         setLoading(false);
@@ -105,7 +105,7 @@ export function AdminEmails() {
         setSendResult("err");
         setError(json.error || "Kunne ikke sende");
       }
-    } catch (e) {
+    } catch {
       setSendResult("err");
       setError("Kunne ikke sende");
     } finally {
